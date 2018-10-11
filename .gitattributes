@@ -1,0 +1,18 @@
+# Image files
+*.png binary
+*.jpg binary
+
+# 3D files
+*.obj binary
+*.fbx binary
+*.3ds binary
+
+# Audio files
+*.wav binary
+*.ogg binary
+*.mp3 binary
+
+# Scene, prefab and ScriptableObject files
+*.unity merge=unityyamlmerge
+*.prefab merge=unityyamlmerge
+*.asset merge=unityyamlmerge
