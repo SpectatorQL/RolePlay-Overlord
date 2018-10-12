@@ -12,12 +12,8 @@ using UnityEngine;
 
 public class MouseCamLook : MonoBehaviour {
 
-    [SerializeField]
     public float sensitivity = 5.0f;
-    [SerializeField]
     public float smoothing = 2.0f;
-    // the chacter is the capsule
-    [SerializeField]
     public GameObject character;
     // get the incremental value of mouse moving
     private Vector2 mouseLook;
