@@ -10,37 +10,45 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MouseCamLook : MonoBehaviour {
+public class MouseCamLook : MonoBehaviour
+{
+    float _yaw;
+    float _pitch;
+    public float Sensitivity = 2.0f;
 
-    public float sensitivity = 5.0f;
-    public float smoothing = 2.0f;
-    public GameObject character;
-    // get the incremental value of mouse moving
-    private Vector2 mouseLook;
-    // smooth the mouse moving
-    private Vector2 smoothV;
-
-	// Use this for initialization
-	void Start () {
-        character = this.transform.parent.gameObject;
-	}
+    void Start() 
+    {
+        _yaw = transform.eulerAngles.y;
+        _pitch = transform.eulerAngles.x;
+    }
 	
-	// Update is called once per frame
-	void Update () {
-        // md is mouse delta
-        var md = new Vector2(Input.GetAxisRaw("Mouse X"), Input.GetAxisRaw("Mouse Y"));
-        md = Vector2.Scale(md, new Vector2(sensitivity * smoothing, sensitivity * smoothing));
-        // the interpolated float result between the two float values
-        smoothV.x = Mathf.Lerp(smoothV.x, md.x, 1f / smoothing);
-        smoothV.y = Mathf.Lerp(smoothV.y, md.y, 1f / smoothing);
-        // incrementally add to the camera look
-        mouseLook += smoothV;
+	void Update()
+    {
+        float rotMin = -30.0f;
+        float rotMax = 30.0f;
+        float inputX = Input.GetAxisRaw("Mouse X");
+        float inputY = Input.GetAxisRaw("Mouse Y");
 
-        // vector3.right means the x-axis
-        transform.localRotation = Quaternion.AngleAxis(-mouseLook.y, Vector3.right);
-        character.transform.localRotation = Quaternion.AngleAxis(mouseLook.x, character.transform.up);
+        _yaw += inputX * Sensitivity;
+        _pitch -= inputY * Sensitivity;
+        if(_yaw > rotMax)
+        {
+            _yaw = rotMax;
+        }
+        if(_yaw < rotMin)
+        {
+            _yaw = rotMin;
+        }
+        if(_pitch > rotMax)
+        {
+            _pitch = rotMax;
+        }
+        if(_pitch < rotMin)
+        {
+            _pitch = rotMin;
+        }
+
+        Vector3 rotation = new Vector3(_pitch, _yaw, 0.0f);
+        transform.eulerAngles = rotation;
     }
 }
-
-
-
