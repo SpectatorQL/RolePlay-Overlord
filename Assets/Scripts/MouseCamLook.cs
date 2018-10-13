@@ -16,10 +16,16 @@ public class MouseCamLook : MonoBehaviour
     float _pitch;
     public float Sensitivity = 2.0f;
 
+    Transform _characterHead;
+
     void Start() 
     {
+        //Cursor.lockState = CursorLockMode.Locked;
+
         _yaw = transform.eulerAngles.y;
         _pitch = transform.eulerAngles.x;
+
+        _characterHead = transform.parent;
     }
 	
 	void Update()
@@ -31,24 +37,10 @@ public class MouseCamLook : MonoBehaviour
 
         _yaw += inputX * Sensitivity;
         _pitch -= inputY * Sensitivity;
-        if(_yaw > rotMax)
-        {
-            _yaw = rotMax;
-        }
-        if(_yaw < rotMin)
-        {
-            _yaw = rotMin;
-        }
-        if(_pitch > rotMax)
-        {
-            _pitch = rotMax;
-        }
-        if(_pitch < rotMin)
-        {
-            _pitch = rotMin;
-        }
+        _yaw = Mathf.Clamp(_yaw, rotMin, rotMax);
+        _pitch = Mathf.Clamp(_pitch, rotMin, rotMax);
 
         Vector3 rotation = new Vector3(_pitch, _yaw, 0.0f);
-        transform.eulerAngles = rotation;
+        _characterHead.eulerAngles = rotation;
     }
 }
