@@ -25,7 +25,8 @@ namespace RolePlayOverlord
         [ClientCallback]
         void Update()
         {
-            if(isLocalPlayer)
+            // TODO: Pull this into the ClientEntity Update function
+            if(isLocalPlayer && !isServer)
             {
                 float rotMin = -30.0f;
                 float rotMax = 30.0f;
