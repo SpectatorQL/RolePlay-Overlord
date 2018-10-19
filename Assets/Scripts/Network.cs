@@ -12,7 +12,62 @@ namespace RolePlayOverlord
 
         NetworkLobbyManager _networkManager;
 
+        string _dataPath;
+        string _modPath;
+        // TODO: This is static for now. Change it once we implement
+        // dynamic asset loading?
+        static Dictionary<string, Texture2D> _textureCache = new Dictionary<string, Texture2D>();
         Wall[] _walls;
+
+        string GetAssetFilePath(string file)
+        {
+            string result = _dataPath + _modPath + file;
+            return result;
+        }
+
+        // TODO: Turn this into something more reasonable.
+        IEnumerator LoadTex(Texture2D tex, string url)
+        {
+            using(WWW www = new WWW(url))
+            {
+                yield return www;
+                www.LoadImageIntoTexture(tex);
+            }
+        }
+
+        public void SetTexture(string texName)
+        {
+            int textureWidth = 1024;
+            int textureHeight = 1024;
+            string texUrl = GetAssetFilePath(texName);
+
+            Texture2D tex;
+            if(_textureCache.ContainsKey(texUrl))
+            {
+                tex = _textureCache[texUrl];
+            }
+            else
+            {
+                tex = new Texture2D(textureWidth, textureHeight);
+                StartCoroutine(LoadTex(tex, texUrl));
+                _textureCache.Add(texUrl, tex);
+            }
+
+            for(int i = 0; i < _walls.Length; ++i)
+            {
+                _walls[i].Renderer.material.mainTexture = tex;
+            }
+        }
+
+        [ServerCallback]
+        void Awake()
+        {
+#if UNITY_EDITOR
+            _dataPath = "file:///Assets/";
+#else
+            _dataPath = "file:///Test/";
+#endif
+        }
 
         [ServerCallback]
         void Start()
@@ -39,9 +94,13 @@ namespace RolePlayOverlord
                         {
                             _clients.Add(ent);
                         }
+
+                        ent.Network = this;
                     }
                 }
             }
+
+            _walls = FindObjectsOfType<Wall>();
         }
     }
 }

@@ -16,6 +16,9 @@ namespace RolePlayOverlord
         public bool MoveLeft;
         public bool MoveRight;
 
+        public bool Debug_SetTexture1;
+        public bool Debug_SetTexture2;
+
         public static void ProcessHostKeyboard(ClientEntity ent, PlayerInput input)
         {
             float speed = 0.1f;
@@ -37,6 +40,15 @@ namespace RolePlayOverlord
                 newPos += ent.Cam.transform.right * speed;
             }
             ent.transform.position = newPos;
+
+            if(input.Debug_SetTexture1)
+            {
+                ent.Network.SetTexture("test.png");
+            }
+            if(input.Debug_SetTexture2)
+            {
+                ent.Network.SetTexture("test2.png");
+            }
         }
 
         public static void ProcessHostMouse(ClientEntity ent)
@@ -69,6 +81,8 @@ namespace RolePlayOverlord
 
     public class ClientEntity : NetworkBehaviour
     {
+        public Network Network;
+
         public Camera Cam;
         public float Yaw;
         public float Pitch;
@@ -78,6 +92,8 @@ namespace RolePlayOverlord
         public rotate_camera RotateCamera = PlayerInput.ProcessClientMouse;
 
         ControlMode _controlMode;
+
+        float _delta;
 
         [ClientCallback]
         void Start()
@@ -118,6 +134,15 @@ namespace RolePlayOverlord
                     {
                         input.MoveRight = true;
                     }
+
+                    if(Input.GetKeyDown(KeyCode.Alpha1))
+                    {
+                        input.Debug_SetTexture1 = true;
+                    }
+                    if(Input.GetKeyDown(KeyCode.Alpha2))
+                    {
+                        input.Debug_SetTexture2 = true;
+                    }
                 }
                 else if(_controlMode == ControlMode.Menu)
                 {
@@ -133,10 +158,17 @@ namespace RolePlayOverlord
 
                 RotateCamera(this);
             }
+
+            _delta += (Time.deltaTime - _delta) * 0.1f;
         }
         
         void OnGUI()
         {
+            float fps = 1.0f / _delta;
+
+            Rect fpsRect = new Rect(Screen.width / 2, 20.0f, 250.0f, 30.0f);
+            GUI.Label(fpsRect, fps.ToString("00.00"));
+
             Rect rect = new Rect(Screen.width / 2, 100, 200, 30);
             string text = isServer ? "I'm the server!\n" : "I'm a client!\n";
             GUI.Label(rect, text);
