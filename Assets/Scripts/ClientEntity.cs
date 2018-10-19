@@ -6,51 +6,132 @@ using UnityEngine.Networking;
 
 namespace RolePlayOverlord
 {
+    public delegate void process_keyboard_input(ClientEntity obj, PlayerInput input);
+    public delegate void rotate_camera(ClientEntity obj);
+
+    public struct PlayerInput
+    {
+        public bool MoveForward;
+        public bool MoveBackward;
+        public bool MoveLeft;
+        public bool MoveRight;
+
+        public static void ProcessHostKeyboard(ClientEntity ent, PlayerInput input)
+        {
+            float speed = 0.1f;
+            Vector3 newPos = ent.transform.position;
+            if(input.MoveForward)
+            {
+                newPos += ent.Cam.transform.forward * speed;
+            }
+            if(input.MoveBackward)
+            {
+                newPos -= ent.Cam.transform.forward * speed;
+            }
+            if(input.MoveLeft)
+            {
+                newPos -= ent.Cam.transform.right * speed;
+            }
+            if(input.MoveRight)
+            {
+                newPos += ent.Cam.transform.right * speed;
+            }
+            ent.transform.position = newPos;
+        }
+
+        public static void ProcessHostMouse(ClientEntity ent)
+        {
+            Vector3 rotation = new Vector3(ent.Pitch, ent.Yaw, 0.0f);
+            ent.transform.eulerAngles = rotation;
+        }
+
+        public static void ProcessClientKeyboard(ClientEntity ent, PlayerInput input)
+        {
+
+        }
+
+        public static void ProcessClientMouse(ClientEntity ent)
+        {
+            float rotMin = -30.0f;
+            float rotMax = 30.0f;
+            ent.Yaw = Mathf.Clamp(ent.Yaw, rotMin, rotMax);
+            ent.Pitch = Mathf.Clamp(ent.Pitch, rotMin, rotMax);
+
+            ProcessHostMouse(ent);
+        }
+    }
+
+    public enum ControlMode
+    {
+        Camera,
+        Menu
+    }
+
     public class ClientEntity : NetworkBehaviour
     {
-        float _yaw;
-        float _pitch;
-        public float Sensitivity = 2.0f;
+        public Camera Cam;
+        public float Yaw;
+        public float Pitch;
+        float _sensitivity;
+
+        public process_keyboard_input ProcessKeyboardInput = PlayerInput.ProcessClientKeyboard;
+        public rotate_camera RotateCamera = PlayerInput.ProcessClientMouse;
+
+        ControlMode _controlMode;
 
         [ClientCallback]
         void Start()
         {
-            Cursor.lockState = CursorLockMode.Locked;
+            if(isLocalPlayer)
+            {
+                Cam = GetComponent<Camera>();
+                Cam.enabled = true;
+                Cursor.lockState = CursorLockMode.Locked;
+
+                Yaw = transform.eulerAngles.y;
+                Pitch = transform.eulerAngles.x;
+                _sensitivity = 2.0f;
+            }
         }
 
         [ClientCallback]
         void Update()
         {
-            if(isServer)
+            if(isLocalPlayer)
             {
-                Camera cam = GetComponent<Camera>();
-                float speed = 0.1f;
-                // TODO: Enable diagonal movement
-                if(Input.GetKey(KeyCode.W))
+                PlayerInput input = new PlayerInput();
+                if(_controlMode == ControlMode.Camera)
                 {
-                    transform.position += cam.transform.forward * speed;
+                    if(Input.GetKey(KeyCode.W))
+                    {
+                        input.MoveForward = true;
+                    }
+                    if(Input.GetKey(KeyCode.S))
+                    {
+                        input.MoveBackward = true;
+                    }
+                    if(Input.GetKey(KeyCode.A))
+                    {
+                        input.MoveLeft = true;
+                    }
+                    if(Input.GetKey(KeyCode.D))
+                    {
+                        input.MoveRight = true;
+                    }
                 }
-                else if(Input.GetKey(KeyCode.S))
+                else if(_controlMode == ControlMode.Menu)
                 {
-                    transform.position -= cam.transform.forward * speed;
+
                 }
-                else if(Input.GetKey(KeyCode.A))
-                {
-                    transform.position -= cam.transform.right * speed;
-                }
-                else if(Input.GetKey(KeyCode.D))
-                {
-                    transform.position += cam.transform.right * speed;
-                }
-                
+
+                ProcessKeyboardInput(this, input);
 
                 float inputX = Input.GetAxisRaw("Mouse X");
                 float inputY = Input.GetAxisRaw("Mouse Y");
-                _yaw += inputX * Sensitivity;
-                _pitch -= inputY * Sensitivity;
+                Yaw += inputX * _sensitivity;
+                Pitch -= inputY * _sensitivity;
 
-                Vector3 rotation = new Vector3(_pitch, _yaw, 0.0f);
-                transform.eulerAngles = rotation;
+                RotateCamera(this);
             }
         }
         

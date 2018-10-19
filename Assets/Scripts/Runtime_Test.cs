@@ -41,8 +41,7 @@ namespace RolePlayOverlord
             Type[] components =
             {
                 typeof(Runtime_Test),
-                typeof(Camera),
-                typeof(MouseCamLook)
+                typeof(Camera)
             };
             GameObject go = new GameObject("Runtime_Test", components);
             go.transform.position = new Vector3(0.0f, 7.0f, 0.0f);

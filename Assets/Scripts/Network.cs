@@ -12,6 +12,8 @@ namespace RolePlayOverlord
 
         NetworkLobbyManager _networkManager;
 
+        Wall[] _walls;
+
         [ServerCallback]
         void Start()
         {
@@ -25,22 +27,21 @@ namespace RolePlayOverlord
                 {
                     GameObject go = connections[i].playerControllers[0].gameObject;
                     ClientEntity ent = go.GetComponent<ClientEntity>();
-                    if(ent.isServer)
+                    if(ent != null)
                     {
-                        _host = ent;
-                    }
-                    else
-                    {
-                        _clients.Add(ent);
+                        if(ent.isServer)
+                        {
+                            _host = ent;
+                            ent.ProcessKeyboardInput = PlayerInput.ProcessHostKeyboard;
+                            ent.RotateCamera = PlayerInput.ProcessHostMouse;
+                        }
+                        else
+                        {
+                            _clients.Add(ent);
+                        }
                     }
                 }
             }
-        }
-
-        [ServerCallback]
-        void Update()
-        {
-            
         }
     }
 }
