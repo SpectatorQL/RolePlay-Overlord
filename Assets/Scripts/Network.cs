@@ -55,7 +55,7 @@ namespace RolePlayOverlord
 
             for(int i = 0; i < _walls.Length; ++i)
             {
-                _walls[i].Renderer.material.mainTexture = tex;
+                _walls[i].ChangeWallTexture(tex);
             }
         }
 
