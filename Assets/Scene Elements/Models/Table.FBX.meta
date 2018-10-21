@@ -1,47 +1,35 @@
 fileFormatVersion: 2
-guid: 5140c932e01e50f408eff4b89681c321
+guid: d076ae145225b4a429112b465f538ff9
 ModelImporter:
-  serializedVersion: 22
+  serializedVersion: 23
   fileIDToRecycleName:
-    100000: Leg
-    100002: Sphere
-    100004: Stoll top support
-    100006: Top of stool
-    100008: Truss a
-    100010: truss b
-    100012: //RootNode
-    400000: Leg
-    400002: Sphere
-    400004: Stoll top support
-    400006: Top of stool
-    400008: Truss a
-    400010: truss b
-    400012: //RootNode
-    2100000: Wooden stool texture
-    2300000: Leg
-    2300002: Sphere
-    2300004: Stoll top support
-    2300006: Top of stool
-    2300008: Truss a
-    2300010: truss b
-    3300000: Leg
-    3300002: Sphere
-    3300004: Stoll top support
-    3300006: Top of stool
-    3300008: Truss a
-    3300010: truss b
-    4300000: Truss a
-    4300002: Sphere
-    4300004: truss b
-    4300006: Leg
-    4300008: Stoll top support
-    4300010: Top of stool
+    100000: Gengon002
+    100002: Line011
+    100004: //RootNode
+    100006: Table_counter
+    400000: Gengon002
+    400002: Line011
+    400004: //RootNode
+    400006: Table_counter
+    2100000: Table_counter
+    2100002: Table_Leg_Up_1
+    2100004: 'Material #52'
+    2100006: Table_Leg_Down
+    2300000: Gengon002
+    2300002: Line011
+    2300004: Table_counter
+    3300000: Gengon002
+    3300002: Line011
+    3300004: Table_counter
+    4300000: Table_counter
+    4300002: Gengon002
+    4300004: Line011
   externalObjects: {}
   materials:
     importMaterials: 1
     materialName: 0
     materialSearch: 1
-    materialLocation: 0
+    materialLocation: 1
   animations:
     legacyGenerateAnimations: 4
     bakeSimulation: 0
@@ -87,6 +75,8 @@ ModelImporter:
     secondaryUVHardAngle: 88
     secondaryUVPackMargin: 4
     useFileScale: 1
+    previousCalculatedGlobalScale: 1
+    hasPreviousCalculatedGlobalScale: 0
   tangentSpace:
     normalSmoothAngle: 60
     normalImportMode: 0
