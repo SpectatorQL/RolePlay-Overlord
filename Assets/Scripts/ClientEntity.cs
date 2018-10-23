@@ -43,11 +43,11 @@ namespace RolePlayOverlord
 
             if(input.Debug_SetTexture1)
             {
-                ent.Network.SetTexture("test.png");
+                ent.Network.RpcSetTexture("test.png");
             }
             if(input.Debug_SetTexture2)
             {
-                ent.Network.SetTexture("test2.png");
+                ent.Network.RpcSetTexture("test2.png");
             }
         }
 
@@ -95,7 +95,6 @@ namespace RolePlayOverlord
 
         float _delta;
 
-        [ClientCallback]
         void Start()
         {
             if(isLocalPlayer)
@@ -110,7 +109,6 @@ namespace RolePlayOverlord
             }
         }
 
-        [ClientCallback]
         void Update()
         {
             if(isLocalPlayer)
@@ -165,7 +163,7 @@ namespace RolePlayOverlord
         void OnGUI()
         {
             float fps = 1.0f / _delta;
-
+            
             Rect fpsRect = new Rect(Screen.width / 2, 20.0f, 250.0f, 30.0f);
             GUI.Label(fpsRect, fps.ToString("00.00"));
 

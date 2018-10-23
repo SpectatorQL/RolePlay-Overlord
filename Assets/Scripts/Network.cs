@@ -35,7 +35,8 @@ namespace RolePlayOverlord
             }
         }
 
-        public void SetTexture(string texName)
+        [ClientRpc]
+        public void RpcSetTexture(string texName)
         {
             int textureWidth = 1024;
             int textureHeight = 1024;
@@ -52,14 +53,13 @@ namespace RolePlayOverlord
                 StartCoroutine(LoadTex(tex, texUrl));
                 _textureCache.Add(texUrl, tex);
             }
-
+            
             for(int i = 0; i < _walls.Length; ++i)
             {
                 _walls[i].ChangeWallTexture(tex);
             }
         }
 
-        [ServerCallback]
         void Awake()
         {
 #if UNITY_EDITOR
@@ -67,10 +67,11 @@ namespace RolePlayOverlord
 #else
             _dataPath = "file:///Test/";
 #endif
+            Debug.LogError("==== " + _dataPath + " ====");
         }
 
         [ServerCallback]
-        void Start()
+        void ServerStartup()
         {
             _networkManager = FindObjectOfType<NetworkLobbyManager>();
 
@@ -99,6 +100,11 @@ namespace RolePlayOverlord
                     }
                 }
             }
+        }
+
+        void Start()
+        {
+            ServerStartup();
 
             _walls = FindObjectsOfType<Wall>();
         }

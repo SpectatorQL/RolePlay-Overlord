@@ -600,7 +600,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ee6b64694245b84ca98efa90b8a65c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Renderer: {fileID: 0}
 --- !u!1001 &1422025590
 Prefab:
   m_ObjectHideFlags: 0
@@ -934,7 +933,7 @@ MonoBehaviour:
     i13: 0
     i14: 0
     i15: 0
-  m_ServerOnly: 1
+  m_ServerOnly: 0
   m_LocalPlayerAuthority: 0
 --- !u!4 &2029425271
 Transform:
