@@ -6,29 +6,31 @@ namespace RolePlayOverlord
 {
     public class Wall : MonoBehaviour
     {
-        [HideInInspector]
-        public MeshRenderer Renderer;
+        MeshRenderer _renderer;
+        int _wallMaterialIndex = -1;
 
+        public void ChangeWallTexture(Texture2D tex)
+        {
+            _renderer.materials[_wallMaterialIndex].mainTexture = tex;
+        }
+        
         void Awake()
         {
-            Renderer = GetComponent<MeshRenderer>();
-            AlignUV();
-        }
-
-        // IMPORTANT(SpectatorQL): Only works with Unity's default cube GameObjects.
-        // NOTE(SpectatorQL): Changes the UVs so that the negative-Z-facing side
-        // of the cube is aligned correctly.
-        void AlignUV()
-        {
-            MeshFilter meshFilter = GetComponent<MeshFilter>();
-
-            Vector2[] uvs = meshFilter.sharedMesh.uv;
-            uvs[6] = new Vector2(0, 0);
-            uvs[7] = new Vector2(1, 0);
-            uvs[10] = new Vector2(0, 1);
-            uvs[11] = new Vector2(1, 1);
-
-            meshFilter.sharedMesh.uv = uvs;
+            _renderer = GetComponent<MeshRenderer>();
+            Material[] mats = _renderer.materials;
+            /*
+                NOTE(SpectatorQL): This is... an unusual name.
+                But I really do need to get the right one.
+            */
+            string wallMatName = "WallMaterial (Instance)";
+            for(int i = 0; i < mats.Length; ++i)
+            {
+                if(mats[i].name == wallMatName)
+                {
+                    _wallMaterialIndex = i;
+                }
+            }
+            Utils.Debug.Assert(_wallMaterialIndex != -1);
         }
     }
 }
