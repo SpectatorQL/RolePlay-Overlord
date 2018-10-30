@@ -1,17 +1,15 @@
 Gameplay
 {
-    Poruszanie kamerą
     Rozdzielone sterowanie GM/klienci
     {
         GM
         {
-            Sterowanie kamerą (latanie)
             Sterowanie w panelu zarządzania sesją
             Sterowanie myszką do ustawiania pionków
+            Prosty kalkulator
         }
         Klient
         {
-            Sterowanie kamerą (ograniczone)
             Sterowanie w panelu postaci
         }
         Rzucanie kostką
@@ -20,10 +18,6 @@ Gameplay
 
 Sieć
 {
-    Podstawowe aspekty sieciowe
-    {
-        Customowe lobby dla potrzeb gry
-    }
     Architektura server + GM
     {
         GM wysyła "chęć" zmiany elementów pokoju
@@ -33,6 +27,16 @@ Sieć
     {
         Klienci nie mają możliwości kontroli sesji, poza oglądaniem swoich statystyk i rzucaniem kostkami
     }
+    Customowe lobby dla potrzeb gry
+}
+
+Rozszerzenia edytora
+{
+    Post-build skrypt, przerzucający tymczasowe assety do folderu z buildem
+    {
+        Specjalne foldery na pliki tymczasowe
+    }
+    Skrypt, który włącza grę od sceny Menu jeżeli jesteśmy na scenie MainScene
 }
 
 Mody
@@ -42,9 +46,17 @@ Mody
         Zobaczymy jak to wyjdzie w praniu.
     */
     Ładowanie prostych zasobów (tekstury + audio)
-    Projekt w Unity dla ładowania meshy wraz z animacjami (AssetBundles)
-    Dokumentacja do ww.
-    Customowy format dla plików tekstowych systemu modów (xml? json?)
+    {
+        Tworzenie thumbnaili dla tekstur przed załadowaniem do AssetBundles
+    }
+    // Animacji najprawdopodobniej nie będzie
+    Projekt w Unity dla ładowania meshy (AssetBundles)
+    {
+        Odpowiednia hierarchia folderów
+        TreeView do wyświetlania assetów do załadowania wraz z opcją przypisania ich do odpowiedniej paczki z modem
+        Dokumentacja dla użytkowników
+    }
+    Customowy format dla plików tekstowych modów (xml? json?)
 }
 
 UI
