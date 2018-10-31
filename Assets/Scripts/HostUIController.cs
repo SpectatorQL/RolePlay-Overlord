@@ -10,14 +10,6 @@ namespace RolePlayOverlord
 
         public void OnUIKeyPressed()
         {
-            if(IsHidden)
-            {
-                Show();
-            }
-            else
-            {
-                Hide();
-            }
         }
 
         public void Show()

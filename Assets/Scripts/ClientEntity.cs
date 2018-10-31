@@ -16,6 +16,8 @@ namespace RolePlayOverlord
         public bool MoveLeft;
         public bool MoveRight;
 
+        public bool UIKeyPressed;
+
         public bool Debug_SetTexture1;
         public bool Debug_SetTexture2;
 
@@ -40,6 +42,21 @@ namespace RolePlayOverlord
                 newPos += ent.Cam.transform.right * speed;
             }
             ent.transform.position = newPos;
+
+            if(input.UIKeyPressed)
+            {
+                if(ent.ControlMode == ControlMode.Camera)
+                {
+                    ent.ControlMode = ControlMode.Menu;
+                    Cursor.lockState = CursorLockMode.None;
+                }
+                else
+                {
+                    ent.ControlMode = ControlMode.Camera;
+                    Cursor.lockState = CursorLockMode.Locked;
+                }
+                ent.HostUIController.OnUIKeyPressed();
+            }
 
             if(input.Debug_SetTexture1)
             {
@@ -91,7 +108,7 @@ namespace RolePlayOverlord
         public process_keyboard_input ProcessKeyboardInput = PlayerInput.ProcessClientKeyboard;
         public rotate_camera RotateCamera = PlayerInput.ProcessClientMouse;
 
-        ControlMode _controlMode;
+        public ControlMode ControlMode;
 
         public GameObject UI;
         public HostUIController HostUIController;
@@ -117,7 +134,11 @@ namespace RolePlayOverlord
             if(isLocalPlayer)
             {
                 PlayerInput input = new PlayerInput();
-                if(_controlMode == ControlMode.Camera)
+                float inputX = Input.GetAxisRaw("Mouse X");
+                float inputY = Input.GetAxisRaw("Mouse Y");
+
+                // TODO(SpectatorQL): Refactor this whole thing.
+                if(ControlMode == ControlMode.Camera)
                 {
                     if(Input.GetKey(KeyCode.W))
                     {
@@ -138,7 +159,7 @@ namespace RolePlayOverlord
 
                     if(Input.GetKeyDown(KeyCode.Tab))
                     {
-                        HostUIController.OnUIKeyPressed();
+                        input.UIKeyPressed = true;
                     }
 
                     if(Input.GetKeyDown(KeyCode.Alpha1))
@@ -149,20 +170,21 @@ namespace RolePlayOverlord
                     {
                         input.Debug_SetTexture2 = true;
                     }
-                }
-                else if(_controlMode == ControlMode.Menu)
-                {
 
+                    Yaw += inputX * _sensitivity;
+                    Pitch -= inputY * _sensitivity;
+
+                    RotateCamera(this);
+                }
+                else if(ControlMode == ControlMode.Menu)
+                {
+                    if(Input.GetKeyDown(KeyCode.Tab))
+                    {
+                        input.UIKeyPressed = true;
+                    }
                 }
 
                 ProcessKeyboardInput(this, input);
-
-                float inputX = Input.GetAxisRaw("Mouse X");
-                float inputY = Input.GetAxisRaw("Mouse Y");
-                Yaw += inputX * _sensitivity;
-                Pitch -= inputY * _sensitivity;
-
-                RotateCamera(this);
             }
 
             _delta += (Time.deltaTime - _delta) * 0.1f;
