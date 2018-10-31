@@ -19,6 +19,9 @@ namespace RolePlayOverlord
         static Dictionary<string, Texture2D> _textureCache = new Dictionary<string, Texture2D>();
         Wall[] _walls;
 
+        [SerializeField] private GameObject _hostUI;
+        [SerializeField] private GameObject _playerUI;
+
         string GetAssetFilePath(string file)
         {
             string result = _dataPath + _modPath + file;
@@ -90,6 +93,10 @@ namespace RolePlayOverlord
                             _host = ent;
                             ent.ProcessKeyboardInput = PlayerInput.ProcessHostKeyboard;
                             ent.RotateCamera = PlayerInput.ProcessHostMouse;
+
+                            ent.UI = _hostUI;
+                            ent.HostUIController = _hostUI.GetComponent<HostUIController>();
+                            ent.HostUIController.Setup();
                         }
                         else
                         {

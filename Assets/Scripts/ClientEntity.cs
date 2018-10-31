@@ -93,6 +93,9 @@ namespace RolePlayOverlord
 
         ControlMode _controlMode;
 
+        public GameObject UI;
+        public HostUIController HostUIController;
+
         float _delta;
 
         void Start()
@@ -131,6 +134,11 @@ namespace RolePlayOverlord
                     if(Input.GetKey(KeyCode.D))
                     {
                         input.MoveRight = true;
+                    }
+
+                    if(Input.GetKeyDown(KeyCode.Tab))
+                    {
+                        HostUIController.OnUIKeyPressed();
                     }
 
                     if(Input.GetKeyDown(KeyCode.Alpha1))
