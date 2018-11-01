@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEditor;
+﻿using UnityEditor;
 using RuntimeSceneManager = UnityEngine.SceneManagement.SceneManager;
 using EditorSceneManager = UnityEditor.SceneManagement.EditorSceneManager;
 
@@ -8,6 +7,8 @@ namespace RolePlayOverlord.Editor
     [InitializeOnLoad]
     public static class StartFromMainMenu
     {
+        static string _menuScene = "Menu";
+
         static StartFromMainMenu()
         {
             EditorApplication.playModeStateChanged += StateChange;
@@ -15,22 +16,17 @@ namespace RolePlayOverlord.Editor
 
         static void StateChange(PlayModeStateChange change)
         {
-            var currentScene = EditorSceneManager.GetActiveScene();
+            string currentSceneName = EditorSceneManager.GetActiveScene().name;
             if(EditorApplication.isPlaying)
             {
                 EditorApplication.playModeStateChanged -= StateChange;
 
-                if(currentScene.name[0] != '_')
+                if(currentSceneName[0] != '_')
                 {
-                    if(!EditorApplication.isPlayingOrWillChangePlaymode)
+                    if(currentSceneName != _menuScene)
                     {
-                        //We're in playmode, just about to change playmode to Editor
-                        EditorSceneManager.LoadSceneAsync(1);
-                    }
-                    else
-                    {
-                        //We're in playmode, right after having pressed Play
-                        RuntimeSceneManager.LoadSceneAsync(0);
+                        // NOTE(SpectatorQL): We're in playmode, right after having pressed Play.
+                        RuntimeSceneManager.LoadSceneAsync(_menuScene);
                     }
                 }
             }

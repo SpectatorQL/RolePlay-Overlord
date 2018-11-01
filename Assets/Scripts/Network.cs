@@ -10,13 +10,9 @@ namespace RolePlayOverlord
         List<ClientEntity> _clients;
         ClientEntity _host;
 
-        NetworkLobbyManager _networkManager;
-
         string _dataPath;
         string _modPath;
-        // TODO: This is static for now. Change it once we implement
-        // dynamic asset loading?
-        static Dictionary<string, Texture2D> _textureCache = new Dictionary<string, Texture2D>();
+        Dictionary<string, Texture2D> _textureCache = new Dictionary<string, Texture2D>();
         Wall[] _walls;
 
         [SerializeField] private GameObject _hostUI;
@@ -76,12 +72,12 @@ namespace RolePlayOverlord
         [ServerCallback]
         void ServerStartup()
         {
-            _networkManager = FindObjectOfType<NetworkLobbyManager>();
+            var networkManager = FindObjectOfType<NetworkLobbyManager>();
 
             var connections = NetworkServer.connections;
             if(connections != null)
             {
-                _clients = new List<ClientEntity>(_networkManager.maxPlayers);
+                _clients = new List<ClientEntity>(networkManager.maxPlayers);
                 for(int i = 0; i < connections.Count; ++i)
                 {
                     GameObject go = connections[i].playerControllers[0].gameObject;

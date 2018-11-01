@@ -98,20 +98,20 @@ namespace RolePlayOverlord
 
     public class ClientEntity : NetworkBehaviour
     {
-        public Network Network;
+        [HideInInspector] public Network Network;
 
-        public Camera Cam;
-        public float Yaw;
-        public float Pitch;
+        [HideInInspector] public Camera Cam;
+        [HideInInspector] public float Yaw;
+        [HideInInspector] public float Pitch;
         float _sensitivity;
 
         public process_keyboard_input ProcessKeyboardInput = PlayerInput.ProcessClientKeyboard;
         public rotate_camera RotateCamera = PlayerInput.ProcessClientMouse;
 
-        public ControlMode ControlMode;
+        [HideInInspector] public ControlMode ControlMode;
 
-        public GameObject UI;
-        public HostUIController HostUIController;
+        [HideInInspector] public GameObject UI;
+        [HideInInspector] public HostUIController HostUIController;
 
         float _delta;
 
