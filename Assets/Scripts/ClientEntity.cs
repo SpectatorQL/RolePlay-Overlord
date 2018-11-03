@@ -98,6 +98,9 @@ namespace RolePlayOverlord
 
     public class ClientEntity : NetworkBehaviour
     {
+        [SyncVar] public string ClientName;
+        static int id;
+
         [HideInInspector] public Network Network;
 
         [HideInInspector] public Camera Cam;
@@ -112,8 +115,14 @@ namespace RolePlayOverlord
 
         [HideInInspector] public GameObject UI;
         [HideInInspector] public HostUIController HostUIController;
+        [HideInInspector] public PlayerUIController PlayerUIController;
 
         float _delta;
+
+        void Awake()
+        {
+            ClientName = (isServer) ? "Server" : ("Client " + ++id);
+        }
 
         void Start()
         {

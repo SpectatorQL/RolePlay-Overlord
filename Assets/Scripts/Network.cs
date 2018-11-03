@@ -7,7 +7,7 @@ namespace RolePlayOverlord
 {
     public class Network : NetworkBehaviour
     {
-        List<ClientEntity> _clients;
+        ClientEntity[] _clients;
         ClientEntity _host;
 
         string _dataPath;
@@ -66,37 +66,38 @@ namespace RolePlayOverlord
 #else
             _dataPath = "file:///Test/";
 #endif
-            Debug.LogError("==== " + _dataPath + " ====");
         }
 
         [ServerCallback]
         void ServerStartup()
         {
-            var networkManager = FindObjectOfType<NetworkLobbyManager>();
-
-            var connections = NetworkServer.connections;
-            if(connections != null)
+            var ents = FindObjectsOfType<ClientEntity>();
+            if(ents != null)
             {
-                _clients = new List<ClientEntity>(networkManager.maxPlayers);
-                for(int i = 0; i < connections.Count; ++i)
+                _clients = new ClientEntity[ents.Length];
+                for(int i = 0; i < ents.Length; ++i)
                 {
-                    GameObject go = connections[i].playerControllers[0].gameObject;
-                    ClientEntity ent = go.GetComponent<ClientEntity>();
+                    ClientEntity ent = ents[i];
                     if(ent != null)
                     {
                         if(ent.isServer)
                         {
-                            _host = ent;
                             ent.ProcessKeyboardInput = PlayerInput.ProcessHostKeyboard;
                             ent.RotateCamera = PlayerInput.ProcessHostMouse;
 
                             ent.UI = _hostUI;
                             ent.HostUIController = _hostUI.GetComponent<HostUIController>();
                             ent.HostUIController.Setup();
+
+                            _host = ent;
                         }
                         else
                         {
-                            _clients.Add(ent);
+                            ent.UI = _playerUI;
+                            ent.PlayerUIController = _playerUI.GetComponent<PlayerUIController>();
+                            ent.PlayerUIController.Setup();
+
+                            _clients[i] = ent;
                         }
 
                         ent.Network = this;
