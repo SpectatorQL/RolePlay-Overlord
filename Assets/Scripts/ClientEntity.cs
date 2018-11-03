@@ -126,75 +126,75 @@ namespace RolePlayOverlord
 
         void Start()
         {
-            if(isLocalPlayer)
-            {
-                Cam = GetComponent<Camera>();
-                Cam.enabled = true;
-                Cursor.lockState = CursorLockMode.Locked;
+            if(!isLocalPlayer)
+                return;
 
-                Yaw = transform.eulerAngles.y;
-                Pitch = transform.eulerAngles.x;
-                _sensitivity = 2.0f;
-            }
+            Cam = GetComponent<Camera>();
+            Cam.enabled = true;
+            Cursor.lockState = CursorLockMode.Locked;
+
+            Yaw = transform.eulerAngles.y;
+            Pitch = transform.eulerAngles.x;
+            _sensitivity = 2.0f;
         }
 
         void Update()
         {
-            if(isLocalPlayer)
+            if(!isLocalPlayer)
+                return;
+
+            PlayerInput input = new PlayerInput();
+            float inputX = Input.GetAxisRaw("Mouse X");
+            float inputY = Input.GetAxisRaw("Mouse Y");
+
+            // TODO(SpectatorQL): Refactor this whole thing.
+            if(ControlMode == ControlMode.Camera)
             {
-                PlayerInput input = new PlayerInput();
-                float inputX = Input.GetAxisRaw("Mouse X");
-                float inputY = Input.GetAxisRaw("Mouse Y");
-
-                // TODO(SpectatorQL): Refactor this whole thing.
-                if(ControlMode == ControlMode.Camera)
+                if(Input.GetKey(KeyCode.W))
                 {
-                    if(Input.GetKey(KeyCode.W))
-                    {
-                        input.MoveForward = true;
-                    }
-                    if(Input.GetKey(KeyCode.S))
-                    {
-                        input.MoveBackward = true;
-                    }
-                    if(Input.GetKey(KeyCode.A))
-                    {
-                        input.MoveLeft = true;
-                    }
-                    if(Input.GetKey(KeyCode.D))
-                    {
-                        input.MoveRight = true;
-                    }
-
-                    if(Input.GetKeyDown(KeyCode.Tab))
-                    {
-                        input.UIKeyPressed = true;
-                    }
-
-                    if(Input.GetKeyDown(KeyCode.Alpha1))
-                    {
-                        input.Debug_SetTexture1 = true;
-                    }
-                    if(Input.GetKeyDown(KeyCode.Alpha2))
-                    {
-                        input.Debug_SetTexture2 = true;
-                    }
-
-                    Yaw += inputX * _sensitivity;
-                    Pitch -= inputY * _sensitivity;
-
-                    RotateCamera(this);
+                    input.MoveForward = true;
                 }
-                else if(ControlMode == ControlMode.Menu)
+                if(Input.GetKey(KeyCode.S))
                 {
-                    if(Input.GetKeyDown(KeyCode.Tab))
-                    {
-                        input.UIKeyPressed = true;
-                    }
+                    input.MoveBackward = true;
+                }
+                if(Input.GetKey(KeyCode.A))
+                {
+                    input.MoveLeft = true;
+                }
+                if(Input.GetKey(KeyCode.D))
+                {
+                    input.MoveRight = true;
                 }
 
-                ProcessKeyboardInput(this, input);
+                if(Input.GetKeyDown(KeyCode.Tab))
+                {
+                    input.UIKeyPressed = true;
+                }
+
+                if(Input.GetKeyDown(KeyCode.Alpha1))
+                {
+                    input.Debug_SetTexture1 = true;
+                }
+                if(Input.GetKeyDown(KeyCode.Alpha2))
+                {
+                    input.Debug_SetTexture2 = true;
+                }
+
+                Yaw += inputX * _sensitivity;
+                Pitch -= inputY * _sensitivity;
+
+                RotateCamera(this);
             }
+            else if(ControlMode == ControlMode.Menu)
+            {
+                if(Input.GetKeyDown(KeyCode.Tab))
+                {
+                    input.UIKeyPressed = true;
+                }
+            }
+
+            ProcessKeyboardInput(this, input);
 
             _delta += (Time.deltaTime - _delta) * 0.1f;
         }
@@ -205,10 +205,6 @@ namespace RolePlayOverlord
             
             Rect fpsRect = new Rect(Screen.width / 2, 20.0f, 250.0f, 30.0f);
             GUI.Label(fpsRect, fps.ToString("00.00"));
-
-            Rect rect = new Rect(Screen.width / 2, 100, 200, 30);
-            string text = isServer ? "I'm the server!\n" : "I'm a client!\n";
-            GUI.Label(rect, text);
         }
     }
 }
