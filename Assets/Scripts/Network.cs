@@ -80,6 +80,7 @@ namespace RolePlayOverlord
                     ClientEntity ent = ents[i];
                     if(ent != null)
                     {
+                        // TODO: Make this an RPC call so that everyone gets set up properly.
                         if(ent.isServer)
                         {
                             ent.ProcessKeyboardInput = PlayerInput.ProcessHostKeyboard;
