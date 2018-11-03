@@ -130,6 +130,14 @@ namespace RolePlayOverlord
                 input.MoveRight = true;
             }
 
+            if(Input.GetKeyDown(KeyCode.C))
+            {
+                if(Cursor.lockState == CursorLockMode.Locked)
+                {
+                    Cursor.lockState = CursorLockMode.None;
+                }
+            }
+
             if(Input.GetKeyDown(KeyCode.Alpha1))
             {
                 input.Debug_SetTexture1 = true;
