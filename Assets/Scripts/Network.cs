@@ -7,7 +7,9 @@ namespace RolePlayOverlord
 {
     public class Network : NetworkBehaviour
     {
+        NetworkConnection[] _clientConnections;
         ClientEntity[] _clients;
+        // TODO: Does anything need to talk to the host directly?
         ClientEntity _host;
 
         string _dataPath;
@@ -68,40 +70,50 @@ namespace RolePlayOverlord
 #endif
         }
 
-        [ServerCallback]
+        void ClientStartup(ClientEntity ent)
+        {
+            if(!ent.isLocalPlayer)
+                return;
+
+            if(ent.isServer)
+            {
+                ent.ProcessKeyboardInput = PlayerInput.ProcessHostKeyboard;
+                ent.RotateCamera = PlayerInput.ProcessHostMouse;
+
+                ent.UI = _hostUI;
+                ent.HostUIController = _hostUI.GetComponent<HostUIController>();
+                ent.HostUIController.Setup();
+
+                _host = ent;
+            }
+            else
+            {
+                ent.UI = _playerUI;
+                ent.PlayerUIController = _playerUI.GetComponent<PlayerUIController>();
+                ent.PlayerUIController.Setup();
+            }
+
+            ent.Network = this;
+        }
+        
         void ServerStartup()
         {
             var ents = FindObjectsOfType<ClientEntity>();
             if(ents != null)
             {
                 _clients = new ClientEntity[ents.Length];
+                _clientConnections = new NetworkConnection[ents.Length];
                 for(int i = 0; i < ents.Length; ++i)
                 {
                     ClientEntity ent = ents[i];
                     if(ent != null)
                     {
-                        // TODO: Make this an RPC call so that everyone gets set up properly.
-                        if(ent.isServer)
+                        ClientStartup(ent);
+                        if(isServer)
                         {
-                            ent.ProcessKeyboardInput = PlayerInput.ProcessHostKeyboard;
-                            ent.RotateCamera = PlayerInput.ProcessHostMouse;
-
-                            ent.UI = _hostUI;
-                            ent.HostUIController = _hostUI.GetComponent<HostUIController>();
-                            ent.HostUIController.Setup();
-
-                            _host = ent;
-                        }
-                        else
-                        {
-                            ent.UI = _playerUI;
-                            ent.PlayerUIController = _playerUI.GetComponent<PlayerUIController>();
-                            ent.PlayerUIController.Setup();
-
                             _clients[i] = ent;
+                            _clientConnections[i] = ent.connectionToServer;
                         }
-
-                        ent.Network = this;
                     }
                 }
             }
