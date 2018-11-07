@@ -7,7 +7,7 @@ using UnityEngine.Networking;
 
 namespace RolePlayOverlord
 {
-    public delegate void process_keyboard_input(ClientEntity ent, PlayerController controller);
+    public delegate void process_input(ClientEntity ent, PlayerController controller);
 
     public class PlayerController
     {
@@ -30,6 +30,13 @@ namespace RolePlayOverlord
         public bool D;
 
         public bool Tab;
+
+        public bool Alpha1;
+        public bool Alpha2;
+        public bool Alpha3;
+        public bool Alpha4;
+        public bool Alpha5;
+        public bool Alpha6;
 
         public bool T;
         public bool V;
@@ -91,6 +98,19 @@ namespace RolePlayOverlord
         {
 
         }
+
+        public static void ProcessHostMouse(ClientEntity ent, PlayerController controller)
+        {
+            if(controller.NewInput.RmbDown)
+            {
+                ent.RotateHostCamera(controller.NewInput.MouseX, controller.NewInput.MouseY);
+            }
+        }
+
+        public static void ProcessClientMouse(ClientEntity ent, PlayerController controller)
+        {
+            ent.RotateClientCamera(controller.NewInput.MouseX, controller.NewInput.MouseY);
+        }
     }
 
     public enum ControlMode
@@ -112,7 +132,8 @@ namespace RolePlayOverlord
         float _yaw;
         float _sensitivity;
 
-        public process_keyboard_input ProcessKeyboardInput = PlayerInput.ProcessClientKeyboard;
+        public process_input ProcessKeyboardInput = PlayerInput.ProcessClientKeyboard;
+        public process_input ProcessMouseInput = PlayerInput.ProcessClientMouse;
 
         PlayerController _controller = new PlayerController();
         [HideInInspector] public ControlMode ControlMode;
@@ -123,18 +144,21 @@ namespace RolePlayOverlord
 
         float _delta;
 
-        public void RotateCamera(float yaw, float pitch)
+        public void RotateHostCamera(float yaw, float pitch)
         {
             _yaw += yaw;
             _pitch -= pitch;
 
-            if(!isServer)
-            {
-                float rotMin = -30.0f;
-                float rotMax = 30.0f;
-                Mathf.Clamp(_yaw, rotMin, rotMax);
-                Mathf.Clamp(_pitch, rotMin, rotMax);
-            }
+            Vector3 rotation = new Vector3(_pitch, _yaw, 0.0f);
+            transform.eulerAngles = rotation;
+        }
+
+        public void RotateClientCamera(float yaw, float pitch)
+        {
+            float rotMin = -30.0f;
+            float rotMax = 30.0f;
+            _yaw = Mathf.Clamp(_yaw + yaw, rotMin, rotMax);
+            _pitch = Mathf.Clamp(_pitch - pitch, rotMin, rotMax);
 
             Vector3 rotation = new Vector3(_pitch, _yaw, 0.0f);
             transform.eulerAngles = rotation;
@@ -203,6 +227,32 @@ namespace RolePlayOverlord
                 _controller.NewInput.Tab = true;
             }
 
+            // Turn controls
+            if(Input.GetKey(KeyCode.Alpha1))
+            {
+                _controller.NewInput.Alpha1 = true;
+            }
+            if(Input.GetKey(KeyCode.Alpha2))
+            {
+                _controller.NewInput.Alpha2 = true;
+            }
+            if(Input.GetKey(KeyCode.Alpha3))
+            {
+                _controller.NewInput.Alpha3 = true;
+            }
+            if(Input.GetKey(KeyCode.Alpha4))
+            {
+                _controller.NewInput.Alpha4 = true;
+            }
+            if(Input.GetKey(KeyCode.Alpha5))
+            {
+                _controller.NewInput.Alpha5 = true;
+            }
+            if(Input.GetKey(KeyCode.Alpha6))
+            {
+                _controller.NewInput.Alpha6 = true;
+            }
+
             // Chat controls
             if(Input.GetKey(KeyCode.T))
             {
@@ -246,6 +296,7 @@ namespace RolePlayOverlord
             }
 
             // Debug controls
+            // TODO(SpectatorQL): Change keys.
             if(Input.GetKeyDown(KeyCode.Alpha1))
             {
                 _controller.NewInput.Debug_SetTexture1 = true;
@@ -275,7 +326,7 @@ namespace RolePlayOverlord
             _controller.NewInput.MouseX = inputX;
             _controller.NewInput.MouseY = inputY;
 
-            RotateCamera(inputX, inputY);
+            ProcessMouseInput(this, _controller);
             
 
             _delta += (Time.deltaTime - _delta) * 0.1f;
