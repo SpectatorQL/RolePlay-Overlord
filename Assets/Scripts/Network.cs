@@ -78,7 +78,6 @@ namespace RolePlayOverlord
             if(ent.isServer)
             {
                 ent.ProcessKeyboardInput = PlayerInput.ProcessHostKeyboard;
-                ent.RotateCamera = PlayerInput.ProcessHostMouse;
 
                 ent.UI = _hostUI;
                 ent.HostUIController = _hostUI.GetComponent<HostUIController>();
