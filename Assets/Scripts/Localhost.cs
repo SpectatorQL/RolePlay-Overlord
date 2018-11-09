@@ -24,19 +24,19 @@ namespace RolePlayOverlord
         {
             float speed = 0.1f;
             Vector3 newPos = ent.transform.position;
-            if(input.MoveForward)
+            if(input.W)
             {
                 newPos += ent.Cam.transform.forward * speed;
             }
-            if(input.MoveBackward)
+            if(input.S)
             {
                 newPos -= ent.Cam.transform.forward * speed;
             }
-            if(input.MoveLeft)
+            if(input.A)
             {
                 newPos -= ent.Cam.transform.right * speed;
             }
-            if(input.MoveRight)
+            if(input.D)
             {
                 newPos += ent.Cam.transform.right * speed;
             }
@@ -115,19 +115,27 @@ namespace RolePlayOverlord
             PlayerInput input = new PlayerInput();
             if(Input.GetKey(KeyCode.W))
             {
-                input.MoveForward = true;
+                input.W = true;
             }
             if(Input.GetKey(KeyCode.S))
             {
-                input.MoveBackward = true;
+                input.S = true;
             }
             if(Input.GetKey(KeyCode.A))
             {
-                input.MoveLeft = true;
+                input.A = true;
             }
             if(Input.GetKey(KeyCode.D))
             {
-                input.MoveRight = true;
+                input.D = true;
+            }
+
+            if(Input.GetKeyDown(KeyCode.C))
+            {
+                if(Cursor.lockState == CursorLockMode.Locked)
+                {
+                    Cursor.lockState = CursorLockMode.None;
+                }
             }
 
             if(Input.GetKeyDown(KeyCode.Alpha1))

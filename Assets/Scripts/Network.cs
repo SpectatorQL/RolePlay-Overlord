@@ -7,17 +7,18 @@ namespace RolePlayOverlord
 {
     public class Network : NetworkBehaviour
     {
-        List<ClientEntity> _clients;
+        NetworkConnection[] _clientConnections;
+        ClientEntity[] _clients;
+        // TODO: Does anything need to talk to the host directly?
         ClientEntity _host;
-
-        NetworkLobbyManager _networkManager;
 
         string _dataPath;
         string _modPath;
-        // TODO: This is static for now. Change it once we implement
-        // dynamic asset loading?
-        static Dictionary<string, Texture2D> _textureCache = new Dictionary<string, Texture2D>();
+        Dictionary<string, Texture2D> _textureCache = new Dictionary<string, Texture2D>();
         Wall[] _walls;
+
+        [SerializeField] private GameObject _hostUI;
+        [SerializeField] private GameObject _playerUI;
 
         string GetAssetFilePath(string file)
         {
@@ -67,36 +68,52 @@ namespace RolePlayOverlord
 #else
             _dataPath = "file:///Test/";
 #endif
-            Debug.LogError("==== " + _dataPath + " ====");
         }
 
-        [ServerCallback]
+        void ClientStartup(ClientEntity ent)
+        {
+            if(!ent.isLocalPlayer)
+                return;
+
+            if(ent.isServer)
+            {
+                ent.ProcessKeyboardInput = PlayerInput.ProcessHostKeyboard;
+                ent.ProcessMouseInput = PlayerInput.ProcessHostMouse;
+
+                ent.UI = _hostUI;
+                ent.HostUIController = _hostUI.GetComponent<HostUIController>();
+                ent.HostUIController.Setup();
+
+                _host = ent;
+            }
+            else
+            {
+                ent.UI = _playerUI;
+                ent.PlayerUIController = _playerUI.GetComponent<PlayerUIController>();
+                ent.PlayerUIController.Setup();
+            }
+
+            ent.Network = this;
+        }
+        
         void ServerStartup()
         {
-            _networkManager = FindObjectOfType<NetworkLobbyManager>();
-
-            var connections = NetworkServer.connections;
-            if(connections != null)
+            var ents = FindObjectsOfType<ClientEntity>();
+            if(ents != null)
             {
-                _clients = new List<ClientEntity>(_networkManager.maxPlayers);
-                for(int i = 0; i < connections.Count; ++i)
+                _clients = new ClientEntity[ents.Length];
+                _clientConnections = new NetworkConnection[ents.Length];
+                for(int i = 0; i < ents.Length; ++i)
                 {
-                    GameObject go = connections[i].playerControllers[0].gameObject;
-                    ClientEntity ent = go.GetComponent<ClientEntity>();
+                    ClientEntity ent = ents[i];
                     if(ent != null)
                     {
-                        if(ent.isServer)
+                        ClientStartup(ent);
+                        if(isServer)
                         {
-                            _host = ent;
-                            ent.ProcessKeyboardInput = PlayerInput.ProcessHostKeyboard;
-                            ent.RotateCamera = PlayerInput.ProcessHostMouse;
+                            _clients[i] = ent;
+                            _clientConnections[i] = ent.connectionToServer;
                         }
-                        else
-                        {
-                            _clients.Add(ent);
-                        }
-
-                        ent.Network = this;
                     }
                 }
             }
