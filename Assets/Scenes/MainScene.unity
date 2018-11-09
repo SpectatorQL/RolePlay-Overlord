@@ -370,13 +370,18 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
---- !u!1001 &440921054
+--- !u!1001 &316663538
 Prefab:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 224173924403416856, guid: c85755626db650046bb8b5fdce6c738a,
+        type: 2}
+      propertyPath: m_RootOrder
+      value: 16
+      objectReference: {fileID: 0}
     - target: {fileID: 224173924403416856, guid: c85755626db650046bb8b5fdce6c738a,
         type: 2}
       propertyPath: m_LocalPosition.x
@@ -467,6 +472,10 @@ Prefab:
       propertyPath: m_Pivot.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1487214672241700, guid: c85755626db650046bb8b5fdce6c738a, type: 2}
+      propertyPath: m_Name
+      value: GMInterface
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c85755626db650046bb8b5fdce6c738a, type: 2}
   m_IsPrefabAsset: 0
@@ -537,6 +546,11 @@ Prefab:
     - {fileID: 11400000, guid: 79674db77adfc4d6f9f17fb043493b1e, type: 2}
   m_SourcePrefab: {fileID: 100100000, guid: 79674db77adfc4d6f9f17fb043493b1e, type: 2}
   m_IsPrefabAsset: 0
+--- !u!1 &675907334 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1487214672241700, guid: c85755626db650046bb8b5fdce6c738a,
+    type: 2}
+  m_PrefabInternal: {fileID: 316663538}
 --- !u!4 &749787964 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400004, guid: 66b4f0b6497adb147ad6ec2e445f7626,
@@ -1057,11 +1071,6 @@ Prefab:
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 40ec6b4d088f2ce4b90d2d832d7cfdf5, type: 2}
   m_IsPrefabAsset: 0
---- !u!1 &1439122559 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1487214672241700, guid: c85755626db650046bb8b5fdce6c738a,
-    type: 2}
-  m_PrefabInternal: {fileID: 440921054}
 --- !u!1001 &1492611266
 Prefab:
   m_ObjectHideFlags: 0
@@ -1460,5 +1469,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dfa2478acd136724786327da1aa679c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _hostUI: {fileID: 1439122559}
+  _hostUI: {fileID: 675907334}
   _playerUI: {fileID: 1249583902}
