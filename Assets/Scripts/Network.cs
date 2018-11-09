@@ -88,6 +88,8 @@ namespace RolePlayOverlord
             }
             else
             {
+                Cursor.lockState = CursorLockMode.Locked;
+
                 ent.UI = _playerUI;
                 ent.PlayerUIController = _playerUI.GetComponent<PlayerUIController>();
                 ent.PlayerUIController.Setup();

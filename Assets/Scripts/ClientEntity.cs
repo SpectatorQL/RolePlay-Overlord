@@ -180,7 +180,6 @@ namespace RolePlayOverlord
                 return;
 
             GetComponent<Camera>().enabled = true;
-            Cursor.lockState = CursorLockMode.Locked;
 
             _yaw = transform.eulerAngles.y;
             _pitch = transform.eulerAngles.x;
