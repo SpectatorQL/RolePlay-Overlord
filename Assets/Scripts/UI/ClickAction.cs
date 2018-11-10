@@ -14,5 +14,15 @@ namespace RolePlayOverlord.UI
         {
             _globalController.ShowMultiElement(_element, clientIndex);
         }
+
+        public void HideElement()
+        {
+            _globalController.HideElement(gameObject);
+        }
+
+        public void HideMultiElement()
+        {
+            _globalController.HideMultiElement();
+        }
     }
 }

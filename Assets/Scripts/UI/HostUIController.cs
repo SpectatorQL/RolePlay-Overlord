@@ -8,9 +8,14 @@ namespace RolePlayOverlord.UI
     public class HostUIController : MonoBehaviour
     {
         [SerializeField] GameObject[] _multiElements = new GameObject[3];
-        GameObject _multiActiveElement;
+        GameObject _activeMultiElement;
 
         bool _isHidden;
+
+        public void ShowElement(GameObject elem)
+        {
+            elem.SetActive(true);
+        }
 
         public void ShowMultiElement(GameObject elem, int clientIndex)
         {
@@ -24,9 +29,19 @@ namespace RolePlayOverlord.UI
 
         public void ShowMultiElement(GameObject elem)
         {
-            _multiActiveElement?.SetActive(false);
-            _multiActiveElement = elem;
-            _multiActiveElement.SetActive(true);
+            _activeMultiElement?.SetActive(false);
+            _activeMultiElement = elem;
+            _activeMultiElement.SetActive(true);
+        }
+
+        public void HideElement(GameObject elem)
+        {
+            elem.SetActive(false);
+        }
+
+        public void HideMultiElement()
+        {
+            _activeMultiElement.SetActive(false);
         }
 
         public void Show()
