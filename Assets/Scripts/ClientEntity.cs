@@ -77,12 +77,6 @@ namespace RolePlayOverlord
             }
             ent.MoveCamera(newPos);
 
-            if(controller.NewInput.Tab)
-            {
-                Cursor.lockState = CursorLockMode.None;
-                Cursor.lockState = CursorLockMode.Locked;
-                ent.HostUIController.OnUIKeyPressed();
-            }
 
             if(controller.NewInput.Debug_SetTexture1)
             {

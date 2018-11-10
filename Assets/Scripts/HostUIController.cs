@@ -29,11 +29,6 @@ namespace RolePlayOverlord
             _multiActiveElement.SetActive(true);
         }
 
-        // TODO: GM UI doesn't need this function.
-        public void OnUIKeyPressed()
-        {
-        }
-
         public void Show()
         {
             gameObject.SetActive(true);
