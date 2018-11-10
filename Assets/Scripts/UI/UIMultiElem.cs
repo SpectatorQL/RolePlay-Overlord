@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace RolePlayOverlord
+namespace RolePlayOverlord.UI
 {
     public class UIMultiElem : MonoBehaviour
     {

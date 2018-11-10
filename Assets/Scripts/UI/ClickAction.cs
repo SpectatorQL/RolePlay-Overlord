@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace RolePlayOverlord
+namespace RolePlayOverlord.UI
 {
-    public class Clicked : MonoBehaviour
+    public class ClickAction : MonoBehaviour
     {
         [SerializeField] HostUIController _globalController;
         [SerializeField] GameObject _element;

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace RolePlayOverlord
+namespace RolePlayOverlord.UI
 {
     public class PlayerUIController : MonoBehaviour
     {
