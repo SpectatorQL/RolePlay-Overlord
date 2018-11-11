@@ -28,9 +28,18 @@ namespace RolePlayOverlord.UI
             ShowMultiElement(elem);
 
             var multiElem = elem.GetComponent<UIMultiElem>();
-            multiElem.MainTextSpace.text = _network.GetClientCharacterInfo(clientIndex) + "\nAnd some random gibberish LULZ";
+            multiElem.MainTextSpace.text = _network.GetClientCharacterInfo(clientIndex)
+                + "\nAnd some random gibberish LULZ";
 
             // TODO: Call element-specific functions here.
+        }
+
+        public void ShowMultiElement(GameObject elem, string docName)
+        {
+            ShowMultiElement(elem);
+
+            var multiElem = elem.GetComponent<UIMultiElem>();
+            multiElem.MainTextSpace.text = _network.GetDocument(docName);
         }
 
         public void ShowMultiElement(GameObject elem)

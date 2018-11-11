@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 using UnityEngine.Networking;
 using RolePlayOverlord.UI;
@@ -14,6 +15,7 @@ namespace RolePlayOverlord
         ClientEntity _host;
 
         string[] _characterStats;
+        Dictionary<string, string> _documents;
 
         string _dataPath;
         string _modPath;
@@ -77,6 +79,7 @@ namespace RolePlayOverlord
 
         void Awake()
         {
+            // TODO: Remove file:/// from these, as it's only needed in WWW urls.
 #if UNITY_EDITOR
             _dataPath = "file:///Assets/";
 #else
@@ -135,6 +138,12 @@ namespace RolePlayOverlord
             }
         }
 
+        public string GetDocument(string path)
+        {
+            string result = _documents[path]; 
+            return result;
+        }
+
         void Start()
         {
             ServerStartup();
@@ -148,6 +157,18 @@ namespace RolePlayOverlord
                 "Player 4 info",
                 "Player 5 info",
                 "Player 6 info",
+            };
+
+            // TODO: Documents loading.
+            string testDoc1 = "Assets\\testDoc1.txt";
+            string testDoc2 = "Assets\\testDoc2.txt";
+            FileStream fs1 = new FileStream(testDoc1, FileMode.Open, FileAccess.Read, FileShare.Read);
+            FileStream fs2 = new FileStream(testDoc2, FileMode.Open, FileAccess.Read, FileShare.Read);
+
+            _documents = new Dictionary<string, string>(2)
+            {
+                { testDoc1, new StreamReader(fs1).ReadToEnd() },
+                { testDoc2, new StreamReader(fs2).ReadToEnd() }
             };
 
             _walls = FindObjectsOfType<Wall>();
