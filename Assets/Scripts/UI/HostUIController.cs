@@ -7,6 +7,8 @@ namespace RolePlayOverlord.UI
 {
     public class HostUIController : MonoBehaviour
     {
+        [HideInInspector] public Network Network;
+
         [SerializeField] GameObject[] _multiElements = new GameObject[3];
         GameObject _activeMultiElement;
 
@@ -19,12 +21,14 @@ namespace RolePlayOverlord.UI
             elem.SetActive(true);
         }
 
+        // TODO: Make separate functions for the PlayerSettings window and the Documents window.
+
         public void ShowMultiElement(GameObject elem, int clientIndex)
         {
             ShowMultiElement(elem);
 
             var multiElem = elem.GetComponent<UIMultiElem>();
-            multiElem.MainTextSpace.text = clientIndex + "\nAnd some random giberrish LULZ";
+            multiElem.MainTextSpace.text = Network.GetClientCharacterInfo(clientIndex) + "\nAnd some random gibberish LULZ";
 
             // TODO: Call element-specific functions here.
         }

@@ -13,6 +13,8 @@ namespace RolePlayOverlord
         // TODO: Does anything need to talk to the host directly?
         ClientEntity _host;
 
+        string[] _characterStats;
+
         string _dataPath;
         string _modPath;
         Dictionary<string, Texture2D> _textureCache = new Dictionary<string, Texture2D>();
@@ -20,6 +22,17 @@ namespace RolePlayOverlord
 
         [SerializeField] private GameObject _hostUI;
         [SerializeField] private GameObject _playerUI;
+
+        public string GetClientCharacterInfo(int clientIndex)
+        {
+            string result = "Invalid client index";
+            if((clientIndex >= 0) && (clientIndex < _characterStats.Length))
+            {
+                result = _characterStats[clientIndex];
+            }
+
+            return result;
+        }
 
         string GetAssetFilePath(string file)
         {
@@ -97,6 +110,7 @@ namespace RolePlayOverlord
             }
 
             ent.Network = this;
+            ent.HostUIController.Network = this;
         }
         
         void ServerStartup()
@@ -125,6 +139,17 @@ namespace RolePlayOverlord
         void Start()
         {
             ServerStartup();
+            
+            // TODO: Character data loading.
+            _characterStats = new string[]
+            {
+                "Player 1 info",
+                "Player 2 info",
+                "Player 3 info",
+                "Player 4 info",
+                "Player 5 info",
+                "Player 6 info",
+            };
 
             _walls = FindObjectsOfType<Wall>();
         }
