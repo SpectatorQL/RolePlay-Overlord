@@ -7,7 +7,7 @@ namespace RolePlayOverlord.UI
 {
     public class HostUIController : MonoBehaviour
     {
-        [HideInInspector] public Network Network;
+        Network _network;
 
         [SerializeField] GameObject[] _multiElements = new GameObject[3];
         GameObject _activeMultiElement;
@@ -28,7 +28,7 @@ namespace RolePlayOverlord.UI
             ShowMultiElement(elem);
 
             var multiElem = elem.GetComponent<UIMultiElem>();
-            multiElem.MainTextSpace.text = Network.GetClientCharacterInfo(clientIndex) + "\nAnd some random gibberish LULZ";
+            multiElem.MainTextSpace.text = _network.GetClientCharacterInfo(clientIndex) + "\nAnd some random gibberish LULZ";
 
             // TODO: Call element-specific functions here.
         }
@@ -72,8 +72,10 @@ namespace RolePlayOverlord.UI
             _isHidden = true;
         }
 
-        public void Setup()
+        public void Setup(Network network)
         {
+            _network = network;
+
             // TODO: Delete this guy once the UI is complete.
             foreach(var e in _multiElements)
             {

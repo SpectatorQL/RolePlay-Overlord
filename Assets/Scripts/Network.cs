@@ -96,7 +96,7 @@ namespace RolePlayOverlord
 
                 ent.UI = _hostUI;
                 ent.HostUIController = _hostUI.GetComponent<HostUIController>();
-                ent.HostUIController.Setup();
+                ent.HostUIController.Setup(this);
 
                 _host = ent;
             }
@@ -110,7 +110,6 @@ namespace RolePlayOverlord
             }
 
             ent.Network = this;
-            ent.HostUIController.Network = this;
         }
         
         void ServerStartup()
