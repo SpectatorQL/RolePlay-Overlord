@@ -10,6 +10,8 @@ namespace RolePlayOverlord.UI
         [SerializeField] GameObject[] _multiElements = new GameObject[3];
         GameObject _activeMultiElement;
 
+        [SerializeField] GameObject _voiceIcon;
+
         bool _isHidden;
 
         public void ShowElement(GameObject elem)
@@ -42,6 +44,16 @@ namespace RolePlayOverlord.UI
         public void HideMultiElement()
         {
             _activeMultiElement.SetActive(false);
+        }
+
+        public void ShowVoiceIcon()
+        {
+            _voiceIcon.SetActive(true);
+        }
+
+        public void HideVoiceIcon()
+        {
+            _voiceIcon.SetActive(false);
         }
 
         public void Show()

@@ -79,6 +79,16 @@ namespace RolePlayOverlord
             ent.MoveCamera(newPos);
 
 
+            if(controller.NewInput.V)
+            {
+                ent.HostUIController.ShowVoiceIcon();
+            }
+            else
+            {
+                ent.HostUIController.HideVoiceIcon();
+            }
+
+
             if(controller.NewInput.Debug_SetTexture1)
             {
                 ent.Network.RpcSetTexture("test.png");

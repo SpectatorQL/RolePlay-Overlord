@@ -8895,6 +8895,7 @@ MonoBehaviour:
   - {fileID: 1456853057409884}
   - {fileID: 1103853732525176}
   - {fileID: 1806338083620550}
+  _voiceIcon: {fileID: 1332003572057292}
 --- !u!114 &114722436663121756
 MonoBehaviour:
   m_ObjectHideFlags: 1
