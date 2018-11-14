@@ -10,43 +10,37 @@ namespace RolePlayOverlord.UI
         Network _network;
 
         [SerializeField] GameObject[] _multiElements = new GameObject[3];
-        GameObject _activeMultiElement;
+        GameObject _mainElement;
 
         [SerializeField] GameObject _voiceIcon;
-
-        bool _isHidden;
 
         public void ShowElement(GameObject elem)
         {
             elem.SetActive(true);
         }
 
-        // TODO: Make separate functions for the PlayerSettings window and the Documents window.
-
-        public void ShowMultiElement(GameObject elem, int clientIndex)
+        public void ShowPlayerInfo(GameObject elem, int clientIndex)
         {
-            ShowMultiElement(elem);
-
+            ShowMainElement(elem);
+            // TODO: Get the relevant component.
             var multiElem = elem.GetComponent<UIMultiElem>();
             multiElem.MainTextSpace.text = _network.GetClientCharacterInfo(clientIndex)
                 + "\nAnd some random gibberish LULZ";
-
-            // TODO: Call element-specific functions here.
         }
 
-        public void ShowMultiElement(GameObject elem, string docName)
+        public void ShowDocument(GameObject elem, string docName)
         {
-            ShowMultiElement(elem);
-
+            ShowMainElement(elem);
+            // TODO: Get the relevant component.
             var multiElem = elem.GetComponent<UIMultiElem>();
             multiElem.MainTextSpace.text = _network.GetDocument(docName);
         }
 
-        public void ShowMultiElement(GameObject elem)
+        public void ShowMainElement(GameObject elem)
         {
-            _activeMultiElement?.SetActive(false);
-            _activeMultiElement = elem;
-            _activeMultiElement.SetActive(true);
+            _mainElement?.SetActive(false);
+            _mainElement = elem;
+            _mainElement.SetActive(true);
         }
 
         public void HideElement(GameObject elem)
@@ -54,9 +48,9 @@ namespace RolePlayOverlord.UI
             elem.SetActive(false);
         }
 
-        public void HideMultiElement()
+        public void HideMainElement()
         {
-            _activeMultiElement.SetActive(false);
+            _mainElement.SetActive(false);
         }
 
         public void ShowVoiceIcon()
@@ -69,16 +63,14 @@ namespace RolePlayOverlord.UI
             _voiceIcon.SetActive(false);
         }
 
-        public void Show()
+        public void ShowUI()
         {
             gameObject.SetActive(true);
-            _isHidden = false;
         }
 
-        public void Hide()
+        public void HideUI()
         {
             gameObject.SetActive(false);
-            _isHidden = true;
         }
 
         public void Setup(Network network)
@@ -91,7 +83,7 @@ namespace RolePlayOverlord.UI
                 e.SetActive(false);
             }
 
-            Show();
+            ShowUI();
         }
     }
 }

@@ -14,16 +14,15 @@ namespace RolePlayOverlord.UI
     {
         [SerializeField] HostUIController _globalController;
         [SerializeField] GameObject _element;
-
-        // TODO: Give these guys more appropriate names.
-        public void ShowElement(int clientIndex)
+        
+        public void ShowPlayerInfo(int clientIndex)
         {
-            _globalController.ShowMultiElement(_element, clientIndex);
+            _globalController.ShowPlayerInfo(_element, clientIndex);
         }
 
-        public void ShowElement(string docPath)
+        public void ShowDocument(string docPath)
         {
-            _globalController.ShowMultiElement(_element, docPath);
+            _globalController.ShowDocument(_element, docPath);
         }
 
         public void HideElement()
@@ -31,9 +30,9 @@ namespace RolePlayOverlord.UI
             _globalController.HideElement(gameObject);
         }
 
-        public void HideMultiElement()
+        public void HideMainElement()
         {
-            _globalController.HideMultiElement();
+            _globalController.HideMainElement();
         }
     }
 }

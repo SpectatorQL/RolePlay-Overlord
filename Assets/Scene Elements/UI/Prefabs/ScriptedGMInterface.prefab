@@ -3503,7 +3503,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 114087553358598318}
-        m_MethodName: ShowElement
+        m_MethodName: ShowPlayerInfo
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3925,7 +3925,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 114310473844547240}
-        m_MethodName: ShowElement
+        m_MethodName: ShowPlayerInfo
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -6779,7 +6779,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 114157824666972832}
-        m_MethodName: ShowElement
+        m_MethodName: ShowDocument
         m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -9272,8 +9272,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 114310473844547240}
-        m_MethodName: ShowElement
+      - m_Target: {fileID: 114536131648602264}
+        m_MethodName: ShowPlayerInfo
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -9730,8 +9730,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 114310473844547240}
-        m_MethodName: ShowElement
+      - m_Target: {fileID: 114688708919321500}
+        m_MethodName: ShowPlayerInfo
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -10380,8 +10380,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 114310473844547240}
-        m_MethodName: ShowElement
+      - m_Target: {fileID: 114189481908991144}
+        m_MethodName: ShowPlayerInfo
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -10668,7 +10668,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 114634504235693102}
-        m_MethodName: HideMultiElement
+        m_MethodName: HideMainElement
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -10720,7 +10720,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 114587549680304750}
-        m_MethodName: HideMultiElement
+        m_MethodName: HideMainElement
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -10968,8 +10968,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 114310473844547240}
-        m_MethodName: ShowElement
+      - m_Target: {fileID: 114605189056401360}
+        m_MethodName: ShowPlayerInfo
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
