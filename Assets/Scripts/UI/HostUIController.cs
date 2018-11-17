@@ -9,7 +9,7 @@ namespace RolePlayOverlord.UI
     {
         Network _network;
 
-        [SerializeField] GameObject[] _multiElements = new GameObject[3];
+        [SerializeField] GameObject[] _multiElements = new GameObject[4];
         GameObject _mainElement;
 
         [SerializeField] GameObject _voiceIcon;
