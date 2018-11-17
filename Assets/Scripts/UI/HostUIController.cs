@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace RolePlayOverlord.UI
 {
@@ -93,10 +94,15 @@ namespace RolePlayOverlord.UI
         {
             _network = network;
 
-            List<string> docList = _network.Docs;
-            for(int i = 0; i < docList.Count; ++i)
+            List<string> docs = _network.Docs;
+            for(int i = 0; i < docs.Count; ++i)
             {
-                _docList.CreateNewDocButton(docList[i]);
+                var docListButton = Instantiate(_docList.DocButtonPrefab, _docList.transform)
+                    .GetComponent<DocListButton>();
+                docListButton.DocList = _docList;
+                docListButton.TextField.text = docs[i];
+
+                _docList.DocButtons.Add(docListButton);
             }
 
             // TODO: Delete this guy once the UI is complete.

@@ -7,16 +7,8 @@ namespace RolePlayOverlord.UI
 {
     public class DocList : MonoBehaviour
     {
-        [SerializeField] GameObject _docButtonPrefab;
-        List<Button> _docButtons = new List<Button>(16);
-        Button _activeButton;
-
-        public void CreateNewDocButton(string docName)
-        {
-            Button button = Instantiate(_docButtonPrefab, transform).GetComponent<Button>();
-            button.GetComponentInChildren<Text>().text = docName;
-
-            _docButtons.Add(button);
-        }
+        public GameObject DocButtonPrefab;
+        [HideInInspector] public List<DocListButton> DocButtons = new List<DocListButton>(16);
+        [HideInInspector] public DocListButton ActiveDocButton;
     }
 }

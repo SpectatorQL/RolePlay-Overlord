@@ -285,7 +285,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1085405409850938
 GameObject:
   m_ObjectHideFlags: 1
@@ -2217,7 +2217,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1598632171541584
 GameObject:
   m_ObjectHideFlags: 0
@@ -3225,7 +3225,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1933823739050538
 GameObject:
   m_ObjectHideFlags: 1
@@ -3957,6 +3957,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _elements:
+  - {fileID: 1586012767672868}
   - {fileID: 1604706701360056}
 --- !u!114 &114051589289246018
 MonoBehaviour:
@@ -5203,8 +5204,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e9f04f7cc04c7c45bce1efda34c5175, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _docButtonPrefab: {fileID: 1606922906918998, guid: 3313ddc2c5099a645b4f9f37e819feab,
+  DocButtonPrefab: {fileID: 1606922906918998, guid: 3313ddc2c5099a645b4f9f37e819feab,
     type: 2}
+  DocButtons: []
+  ActiveDocButton: {fileID: 0}
 --- !u!114 &114202880310685158
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -6047,6 +6050,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _elements:
+  - {fileID: 1082645755094674}
   - {fileID: 1436212446346032}
   - {fileID: 1404754768356824}
 --- !u!114 &114331702242378614
@@ -7823,6 +7827,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _elements:
+  - {fileID: 1927498967992654}
   - {fileID: 1962676562488354}
   - {fileID: 1440841769602586}
   - {fileID: 1457600944161630}
