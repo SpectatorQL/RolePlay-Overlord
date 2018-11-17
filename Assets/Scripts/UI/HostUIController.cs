@@ -14,6 +14,8 @@ namespace RolePlayOverlord.UI
 
         [SerializeField] DocList _docList;
 
+        UIElementGroup _activeElementGroup;
+
         [SerializeField] GameObject _voiceIcon;
 
         public void ShowElement(GameObject elem)
@@ -45,6 +47,13 @@ namespace RolePlayOverlord.UI
             _mainElement.SetActive(true);
         }
 
+        public void ShowElementGroup(UIElementGroup elemGroup)
+        {
+            HideElementGroup();
+            _activeElementGroup = elemGroup;
+            _activeElementGroup.Show();
+        }
+
         public void HideElement(GameObject elem)
         {
             elem.SetActive(false);
@@ -53,6 +62,11 @@ namespace RolePlayOverlord.UI
         public void HideMainElement()
         {
             _mainElement.SetActive(false);
+        }
+
+        public void HideElementGroup()
+        {
+            _activeElementGroup?.Hide();
         }
 
         public void ShowVoiceIcon()

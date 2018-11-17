@@ -14,6 +14,7 @@ namespace RolePlayOverlord.UI
     {
         [SerializeField] HostUIController _globalController;
         [SerializeField] GameObject _element;
+        [SerializeField] UIElementGroup _elementGroup;
         
         public void ShowPlayerInfo(int clientIndex)
         {
@@ -23,6 +24,11 @@ namespace RolePlayOverlord.UI
         public void ShowDocument(string docPath)
         {
             _globalController.ShowDocument(_element, docPath);
+        }
+
+        public void ShowElementGroup()
+        {
+            _globalController.ShowElementGroup(_elementGroup);
         }
 
         public void HideElement()

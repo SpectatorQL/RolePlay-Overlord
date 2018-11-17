@@ -107,6 +107,8 @@ GameObject:
   - component: {fileID: 222191776621429946}
   - component: {fileID: 114431697447430756}
   - component: {fileID: 114862742172760278}
+  - component: {fileID: 114940105079749584}
+  - component: {fileID: 114523590417151522}
   m_Layer: 5
   m_Name: DicesButton
   m_TagString: Untagged
@@ -1633,7 +1635,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1448865743489280
 GameObject:
   m_ObjectHideFlags: 1
@@ -1670,7 +1672,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1459679044672344
 GameObject:
   m_ObjectHideFlags: 1
@@ -2660,6 +2662,8 @@ GameObject:
   - component: {fileID: 222243048205739620}
   - component: {fileID: 114469478747898560}
   - component: {fileID: 114312414193298676}
+  - component: {fileID: 114565566996783562}
+  - component: {fileID: 114317776290526304}
   m_Layer: 5
   m_Name: FiguresButton
   m_TagString: Untagged
@@ -3081,6 +3085,8 @@ GameObject:
   - component: {fileID: 222228481742055244}
   - component: {fileID: 114190153695567298}
   - component: {fileID: 114609350834335578}
+  - component: {fileID: 114761461571878034}
+  - component: {fileID: 114051073873950294}
   m_Layer: 5
   m_Name: DocumentsButton
   m_TagString: Untagged
@@ -3327,7 +3333,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1969672309958520
 GameObject:
   m_ObjectHideFlags: 1
@@ -3907,6 +3913,19 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
+--- !u!114 &114051073873950294
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1894982898740370}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0c5a970019dd314498d020bffd53dd2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _elements:
+  - {fileID: 1604706701360056}
 --- !u!114 &114051589289246018
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4069,6 +4088,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _globalController: {fileID: 114411629316456472}
   _element: {fileID: 1949346695270412}
+  _elementGroup: {fileID: 0}
 --- !u!114 &114074904275337178
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4776,6 +4796,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _globalController: {fileID: 114411629316456472}
   _element: {fileID: 0}
+  _elementGroup: {fileID: 0}
 --- !u!114 &114156293216680238
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -5416,6 +5437,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _globalController: {fileID: 114411629316456472}
   _element: {fileID: 1949346695270412}
+  _elementGroup: {fileID: 0}
 --- !u!114 &114237684029188782
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -5967,9 +5989,34 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 114469478747898560}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 114565566996783562}
+        m_MethodName: ShowElementGroup
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 1
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
+--- !u!114 &114317776290526304
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1732869165550830}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0c5a970019dd314498d020bffd53dd2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _elements:
+  - {fileID: 1436212446346032}
+  - {fileID: 1404754768356824}
 --- !u!114 &114331702242378614
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -6037,6 +6084,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _globalController: {fileID: 114411629316456472}
   _element: {fileID: 1949346695270412}
+  _elementGroup: {fileID: 0}
 --- !u!114 &114337345574386278
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -6832,6 +6880,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _globalController: {fileID: 114411629316456472}
   _element: {fileID: 0}
+  _elementGroup: {fileID: 0}
 --- !u!114 &114417482586174272
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -7150,6 +7199,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _globalController: {fileID: 114411629316456472}
   _element: {fileID: 0}
+  _elementGroup: {fileID: 0}
 --- !u!114 &114461037446931464
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -7345,6 +7395,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _globalController: {fileID: 114411629316456472}
   _element: {fileID: 1949346695270412}
+  _elementGroup: {fileID: 0}
 --- !u!114 &114486936887407816
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -7706,6 +7757,21 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
+--- !u!114 &114523590417151522
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1043447276304096}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0c5a970019dd314498d020bffd53dd2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _elements:
+  - {fileID: 1962676562488354}
+  - {fileID: 1440841769602586}
+  - {fileID: 1457600944161630}
 --- !u!114 &114535205017475956
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -8047,6 +8113,20 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
+--- !u!114 &114565566996783562
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1732869165550830}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c155ee37448b5b349b6aa53a8472cb58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _globalController: {fileID: 114411629316456472}
+  _element: {fileID: 0}
+  _elementGroup: {fileID: 114317776290526304}
 --- !u!114 &114567024938431588
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -8255,7 +8335,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 114190153695567298}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 114761461571878034}
+        m_MethodName: ShowElementGroup
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 1
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &114609625241294500
@@ -8298,6 +8389,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _globalController: {fileID: 114411629316456472}
   _element: {fileID: 0}
+  _elementGroup: {fileID: 0}
 --- !u!114 &114618513755833420
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -8344,6 +8436,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _globalController: {fileID: 114411629316456472}
   _element: {fileID: 1949346695270412}
+  _elementGroup: {fileID: 0}
 --- !u!114 &114621200866508626
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -8357,6 +8450,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _globalController: {fileID: 114411629316456472}
   _element: {fileID: 1949346695270412}
+  _elementGroup: {fileID: 0}
 --- !u!114 &114623408687969996
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -9907,6 +10001,20 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.Scrollbar+ScrollEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
+--- !u!114 &114761461571878034
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1894982898740370}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c155ee37448b5b349b6aa53a8472cb58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _globalController: {fileID: 114411629316456472}
+  _element: {fileID: 0}
+  _elementGroup: {fileID: 114051073873950294}
 --- !u!114 &114763633986118518
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -10795,7 +10903,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 114431697447430756}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 114940105079749584}
+        m_MethodName: ShowElementGroup
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 1
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &114864350611445688
@@ -11566,6 +11685,20 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
+--- !u!114 &114940105079749584
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1043447276304096}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c155ee37448b5b349b6aa53a8472cb58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _globalController: {fileID: 114411629316456472}
+  _element: {fileID: 0}
+  _elementGroup: {fileID: 114523590417151522}
 --- !u!114 &114941123946757272
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -15396,7 +15529,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 43.8, y: -55.3}
+  m_AnchoredPosition: {x: 43.80005, y: -55.3}
   m_SizeDelta: {x: 34.899994, y: 34.1}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224488784057483340
