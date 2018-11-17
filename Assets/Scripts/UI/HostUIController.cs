@@ -38,6 +38,9 @@ namespace RolePlayOverlord.UI
 
         public void ShowDocument()
         {
+            if(_docList.ActiveDocButton == null)
+                return;
+
             ShowMainElement(_documentanion);
             // TODO: Get the relevant component.
             var multiElem = _documentanion.GetComponent<UIMultiElem>();
