@@ -53,16 +53,22 @@ namespace RolePlayOverlord.Editor
             CreateTestDirectory(testDir);
 
             DirectoryInfo projectDirInfo = new DirectoryInfo(Application.dataPath);
-            
             // TODO(SpectatorQL): Change this to look in specific directories in the project.
-            FileInfo[] testTextures = projectDirInfo.GetFiles("*.png");
+            string[] testExtensions = { ".png", ".txt" };
+            var testFiles = projectDirInfo.GetFiles()
+                .Where(file =>
+                {
+                    return testExtensions.Contains(file.Extension);
+                })
+                .ToArray();
+
             for(int i = 0;
-                i < testTextures.Length;
+                i < testFiles.Length;
                 ++i)
             {
-                string assetFileName = testTextures[i].Name;
+                string assetFileName = testFiles[i].Name;
                 string destFileName = testDir + assetFileName;
-                File.Copy(testTextures[i].FullName, destFileName, true);
+                File.Copy(testFiles[i].FullName, destFileName, true);
             }
         }
     }

@@ -160,8 +160,13 @@ namespace RolePlayOverlord
             };
 
             // TODO: Documents loading.
-            string testDoc1 = "Assets\\testDoc1.txt";
-            string testDoc2 = "Assets\\testDoc2.txt";
+#if UNITY_EDITOR
+            string win32TestAssetsPath = "Assets\\";
+#else
+            string win32TestAssetsPath = "Test\\";
+#endif
+            string testDoc1 = win32TestAssetsPath + "testDoc1.txt";
+            string testDoc2 = win32TestAssetsPath + "testDoc2.txt";
             FileStream fs1 = new FileStream(testDoc1, FileMode.Open, FileAccess.Read, FileShare.Read);
             FileStream fs2 = new FileStream(testDoc2, FileMode.Open, FileAccess.Read, FileShare.Read);
 
