@@ -9,8 +9,11 @@ namespace RolePlayOverlord.UI
     public class HostUIController : MonoBehaviour
     {
         Network _network;
-
-        [SerializeField] GameObject[] _multiElements = new GameObject[4];
+        
+        [SerializeField] GameObject _playerInfo;
+        [SerializeField] GameObject _gameSettings;
+        [SerializeField] GameObject _documentanion;
+        [SerializeField] GameObject _placingElement;
         GameObject _mainElement;
 
         [SerializeField] DocList _docList;
@@ -24,28 +27,21 @@ namespace RolePlayOverlord.UI
             elem.SetActive(true);
         }
 
-        public void ShowPlayerInfo(GameObject elem, int clientIndex)
+        public void ShowPlayerInfo(int clientIndex)
         {
-            ShowMainElement(elem);
+            ShowMainElement(_playerInfo);
             // TODO: Get the relevant component.
-            var multiElem = elem.GetComponent<UIMultiElem>();
+            var multiElem = _playerInfo.GetComponent<UIMultiElem>();
             multiElem.MainTextSpace.text = _network.GetClientCharacterInfo(clientIndex)
                 + "\nAnd some random gibberish LULZ";
         }
 
         public void ShowDocument()
         {
-            ShowMainElement(_multiElements[2]);
-            var multiElem = _multiElements[2].GetComponent<UIMultiElem>();
-            string docName = _docList.ActiveDocButton.DocName;
-            multiElem.MainTextSpace.text = _network.GetDocument(docName);
-        }
-
-        public void ShowDocument(GameObject elem, string docName)
-        {
-            ShowMainElement(elem);
+            ShowMainElement(_documentanion);
             // TODO: Get the relevant component.
-            var multiElem = elem.GetComponent<UIMultiElem>();
+            var multiElem = _documentanion.GetComponent<UIMultiElem>();
+            string docName = _docList.ActiveDocButton.DocName;
             multiElem.MainTextSpace.text = _network.GetDocument(docName);
         }
 
@@ -112,12 +108,6 @@ namespace RolePlayOverlord.UI
                 docListButton.DocName = docs[i];
 
                 _docList.DocButtons.Add(docListButton);
-            }
-
-            // TODO: Delete this guy once the UI is complete.
-            foreach(var e in _multiElements)
-            {
-                e.SetActive(false);
             }
 
             ShowUI();

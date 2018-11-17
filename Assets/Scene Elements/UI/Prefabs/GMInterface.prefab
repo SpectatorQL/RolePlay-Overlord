@@ -4121,7 +4121,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _globalController: {fileID: 114411629316456472}
-  _element: {fileID: 1949346695270412}
   _elementGroup: {fileID: 0}
 --- !u!114 &114074904275337178
 MonoBehaviour:
@@ -4829,7 +4828,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _globalController: {fileID: 114411629316456472}
-  _element: {fileID: 0}
   _elementGroup: {fileID: 0}
 --- !u!114 &114156293216680238
 MonoBehaviour:
@@ -5472,7 +5470,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _globalController: {fileID: 114411629316456472}
-  _element: {fileID: 1949346695270412}
   _elementGroup: {fileID: 0}
 --- !u!114 &114237684029188782
 MonoBehaviour:
@@ -6120,7 +6117,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _globalController: {fileID: 114411629316456472}
-  _element: {fileID: 1949346695270412}
   _elementGroup: {fileID: 0}
 --- !u!114 &114337345574386278
 MonoBehaviour:
@@ -6829,11 +6825,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d28363638057aa4889a22bfd03962e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _multiElements:
-  - {fileID: 1949346695270412}
-  - {fileID: 1383813322350230}
-  - {fileID: 1256168106567462}
-  - {fileID: 1395529844165768}
+  _playerInfo: {fileID: 1949346695270412}
+  _gameSettings: {fileID: 1383813322350230}
+  _documentanion: {fileID: 1256168106567462}
+  _placingElement: {fileID: 1395529844165768}
   _docList: {fileID: 114200478722055530}
   _voiceIcon: {fileID: 1167995483934214}
 --- !u!114 &114412632274045628
@@ -6916,7 +6911,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _globalController: {fileID: 114411629316456472}
-  _element: {fileID: 0}
   _elementGroup: {fileID: 0}
 --- !u!114 &114417482586174272
 MonoBehaviour:
@@ -7235,7 +7229,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _globalController: {fileID: 114411629316456472}
-  _element: {fileID: 0}
   _elementGroup: {fileID: 0}
 --- !u!114 &114461037446931464
 MonoBehaviour:
@@ -7431,7 +7424,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _globalController: {fileID: 114411629316456472}
-  _element: {fileID: 1949346695270412}
   _elementGroup: {fileID: 0}
 --- !u!114 &114486936887407816
 MonoBehaviour:
@@ -8208,7 +8200,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _globalController: {fileID: 114411629316456472}
-  _element: {fileID: 0}
   _elementGroup: {fileID: 114317776290526304}
 --- !u!114 &114567024938431588
 MonoBehaviour:
@@ -8471,7 +8462,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _globalController: {fileID: 114411629316456472}
-  _element: {fileID: 0}
   _elementGroup: {fileID: 0}
 --- !u!114 &114618513755833420
 MonoBehaviour:
@@ -8518,7 +8508,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _globalController: {fileID: 114411629316456472}
-  _element: {fileID: 1949346695270412}
   _elementGroup: {fileID: 0}
 --- !u!114 &114621200866508626
 MonoBehaviour:
@@ -8532,7 +8521,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _globalController: {fileID: 114411629316456472}
-  _element: {fileID: 1949346695270412}
   _elementGroup: {fileID: 0}
 --- !u!114 &114623408687969996
 MonoBehaviour:
@@ -10096,7 +10084,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _globalController: {fileID: 114411629316456472}
-  _element: {fileID: 0}
   _elementGroup: {fileID: 114051073873950294}
 --- !u!114 &114763633986118518
 MonoBehaviour:
@@ -11802,7 +11789,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _globalController: {fileID: 114411629316456472}
-  _element: {fileID: 0}
   _elementGroup: {fileID: 114523590417151522}
 --- !u!114 &114941123946757272
 MonoBehaviour:

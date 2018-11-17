@@ -13,17 +13,11 @@ namespace RolePlayOverlord.UI
     public class ClickAction : MonoBehaviour
     {
         [SerializeField] HostUIController _globalController;
-        [SerializeField] GameObject _element;
         [SerializeField] UIElementGroup _elementGroup;
         
         public void ShowPlayerInfo(int clientIndex)
         {
-            _globalController.ShowPlayerInfo(_element, clientIndex);
-        }
-
-        public void ShowDocument(string docPath)
-        {
-            _globalController.ShowDocument(_element, docPath);
+            _globalController.ShowPlayerInfo(clientIndex);
         }
 
         public void ShowElementGroup()
