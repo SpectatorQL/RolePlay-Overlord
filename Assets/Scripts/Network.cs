@@ -15,6 +15,7 @@ namespace RolePlayOverlord
         ClientEntity _host;
 
         string[] _characterStats;
+        public List<string> Docs = new List<string>();
         Dictionary<string, string> _documents;
 
         string _dataPath;
@@ -146,8 +147,6 @@ namespace RolePlayOverlord
 
         void Start()
         {
-            ServerStartup();
-            
             // TODO: Character data loading.
             _characterStats = new string[]
             {
@@ -169,12 +168,17 @@ namespace RolePlayOverlord
             string testDoc2 = win32TestAssetsPath + "testDoc2.txt";
             FileStream fs1 = new FileStream(testDoc1, FileMode.Open, FileAccess.Read, FileShare.Read);
             FileStream fs2 = new FileStream(testDoc2, FileMode.Open, FileAccess.Read, FileShare.Read);
+            
+            Docs.Add(testDoc1);
+            Docs.Add(testDoc2);
 
-            _documents = new Dictionary<string, string>(2)
+            _documents = new Dictionary<string, string>(Docs.Count)
             {
                 { testDoc1, new StreamReader(fs1).ReadToEnd() },
                 { testDoc2, new StreamReader(fs2).ReadToEnd() }
             };
+
+            ServerStartup();
 
             _walls = FindObjectsOfType<Wall>();
         }

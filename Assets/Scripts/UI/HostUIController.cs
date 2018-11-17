@@ -12,6 +12,8 @@ namespace RolePlayOverlord.UI
         [SerializeField] GameObject[] _multiElements = new GameObject[4];
         GameObject _mainElement;
 
+        [SerializeField] DocList _docList;
+
         [SerializeField] GameObject _voiceIcon;
 
         public void ShowElement(GameObject elem)
@@ -76,6 +78,12 @@ namespace RolePlayOverlord.UI
         public void Setup(Network network)
         {
             _network = network;
+
+            List<string> docList = _network.Docs;
+            for(int i = 0; i < docList.Count; ++i)
+            {
+                _docList.CreateNewDocButton(docList[i]);
+            }
 
             // TODO: Delete this guy once the UI is complete.
             foreach(var e in _multiElements)
