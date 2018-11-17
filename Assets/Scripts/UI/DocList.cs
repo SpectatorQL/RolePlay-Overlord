@@ -9,6 +9,7 @@ namespace RolePlayOverlord.UI
     {
         public GameObject DocButtonPrefab;
         [HideInInspector] public List<DocListButton> DocButtons = new List<DocListButton>(16);
+        // TODO: Make this just a plain int?
         [HideInInspector] public DocListButton ActiveDocButton;
     }
 }

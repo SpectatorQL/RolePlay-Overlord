@@ -33,6 +33,14 @@ namespace RolePlayOverlord.UI
                 + "\nAnd some random gibberish LULZ";
         }
 
+        public void ShowDocument()
+        {
+            ShowMainElement(_multiElements[2]);
+            var multiElem = _multiElements[2].GetComponent<UIMultiElem>();
+            string docName = _docList.ActiveDocButton.DocName;
+            multiElem.MainTextSpace.text = _network.GetDocument(docName);
+        }
+
         public void ShowDocument(GameObject elem, string docName)
         {
             ShowMainElement(elem);
@@ -101,6 +109,7 @@ namespace RolePlayOverlord.UI
                     .GetComponent<DocListButton>();
                 docListButton.DocList = _docList;
                 docListButton.TextField.text = docs[i];
+                docListButton.DocName = docs[i];
 
                 _docList.DocButtons.Add(docListButton);
             }

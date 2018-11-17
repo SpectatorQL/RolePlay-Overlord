@@ -8,8 +8,9 @@ namespace RolePlayOverlord.UI
 {
     public class DocListButton : MonoBehaviour, IPointerDownHandler
     {
-        public DocList DocList;
+        [HideInInspector] public DocList DocList;
         public Text TextField;
+        [HideInInspector] public string DocName;
 
         public void OnPointerDown(PointerEventData eventData)
         {
