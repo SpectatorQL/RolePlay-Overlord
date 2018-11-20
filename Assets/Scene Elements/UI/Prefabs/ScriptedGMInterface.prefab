@@ -2519,23 +2519,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!1 &1700079422149644
-GameObject:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 224912046107579652}
-  - component: {fileID: 222713887248249690}
-  - component: {fileID: 114199095226153258}
-  m_Layer: 5
-  m_Name: MainTextSpace
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
 --- !u!1 &1703581786423002
 GameObject:
   m_ObjectHideFlags: 1
@@ -2912,7 +2895,7 @@ GameObject:
   - component: {fileID: 224975470544753860}
   - component: {fileID: 222441681463799812}
   - component: {fileID: 114357883585886706}
-  - component: {fileID: 114229691931701160}
+  - component: {fileID: 114228628777952432}
   m_Layer: 5
   m_Name: Documentation
   m_TagString: Untagged
@@ -4879,7 +4862,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ddf3c2cd0687854c858ecccf5c015db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MainTextSpace: {fileID: 114199095226153258}
+  MainTextSpace: {fileID: 0}
 --- !u!114 &114151294651292640
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -5328,50 +5311,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _globalController: {fileID: 114721260853466970}
   _elementGroup: {fileID: 0}
---- !u!114 &114199095226153258
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1700079422149644}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 708705254, guid: f70555f144d8491a825f0804e09c671c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_FontData:
-    m_Font: {fileID: 12800000, guid: e4474795cc5f253449dd6392c02a6656, type: 3}
-    m_FontSize: 9
-    m_FontStyle: 0
-    m_BestFit: 0
-    m_MinSize: 7
-    m_MaxSize: 40
-    m_Alignment: 0
-    m_AlignByGeometry: 0
-    m_RichText: 1
-    m_HorizontalOverflow: 0
-    m_VerticalOverflow: 0
-    m_LineSpacing: 0.8
-  m_Text: "Class: Assassin\r\nOrigin: Sumerian\r\nTrue name: Nyx\r\nTitle: God Hunter\r\nHeight/weight:
-    176/61 kg\r\nAlignment: Neutral Evil\r\nPersonality:  Cold, Analytical, Calm,
-    Quiet\r\nWish: Wishes to have his former life given back to him\r\nLikes: Gilgamesh,
-    silence, darkness\r\nDislikes: Gods(Especially Ishtar and Ereshkigal)\r\n\r\nStats\r\nStrength:
-    B\r\nEndurance: C\r\nAgility: A+\r\nMagical Energy: D\r\nLuck: C\r\nNoble Phantasm
-    1: C++\r\nNoble Phantasm 2: B\r\n\r\nblah blah blah, lorem ipsum\ndolores something...
-    i don't remember\njust random stuff for testing\nblah blah blah, lorem ipsum\ndolores
-    something... i don't remember\njust random stuff for testing\nblah blah blah,
-    lorem ipsum\ndolores something... i don't remember\njust random stuff for testing\nblah
-    blah blah, lorem ipsum\ndolores something... i don't remember\njust random stuff
-    for testing\nblah blah blah, lorem ipsum\ndolores something... i don't remember\njust
-    random stuff for testing"
 --- !u!114 &114199590099195110
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -5746,7 +5685,7 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
---- !u!114 &114229691931701160
+--- !u!114 &114228628777952432
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -5754,10 +5693,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1806338083620550}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6ddf3c2cd0687854c858ecccf5c015db, type: 3}
+  m_Script: {fileID: 11500000, guid: f457d797b2f24ff4faa2de759690bed8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MainTextSpace: {fileID: 114940118951856394}
+  InputField: {fileID: 114831555440974588}
 --- !u!114 &114239659125107396
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -7011,7 +6950,7 @@ MonoBehaviour:
   m_InputType: 0
   m_AsteriskChar: 42
   m_KeyboardType: 0
-  m_LineType: 0
+  m_LineType: 2
   m_HideMobileInput: 0
   m_CharacterValidation: 0
   m_CharacterLimit: 0
@@ -9189,7 +9128,7 @@ MonoBehaviour:
     m_Alignment: 0
     m_AlignByGeometry: 0
     m_RichText: 0
-    m_HorizontalOverflow: 1
+    m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 0.8
   m_Text: 
@@ -10946,7 +10885,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _playerInfo: {fileID: 1456853057409884}
   _gameSettings: {fileID: 1103853732525176}
-  _documentanion: {fileID: 1806338083620550}
+  _documentation: {fileID: 1806338083620550}
   _placingElement: {fileID: 1880910735359708}
   _docList: {fileID: 114488200052042798}
   _voiceIcon: {fileID: 1332003572057292}
@@ -11896,7 +11835,7 @@ MonoBehaviour:
   m_InputType: 0
   m_AsteriskChar: 42
   m_KeyboardType: 0
-  m_LineType: 0
+  m_LineType: 2
   m_HideMobileInput: 0
   m_CharacterValidation: 0
   m_CharacterLimit: 0
@@ -12644,7 +12583,7 @@ MonoBehaviour:
     m_Alignment: 0
     m_AlignByGeometry: 0
     m_RichText: 0
-    m_HorizontalOverflow: 1
+    m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 0.8
   m_Text: 
@@ -13801,13 +13740,6 @@ CanvasRenderer:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1496611071426062}
-  m_CullTransparentMesh: 0
---- !u!222 &222713887248249690
-CanvasRenderer:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1700079422149644}
   m_CullTransparentMesh: 0
 --- !u!222 &222730076667089866
 CanvasRenderer:
@@ -15728,7 +15660,6 @@ RectTransform:
   - {fileID: 224490992667821634}
   - {fileID: 224981094377485860}
   - {fileID: 224396231053875502}
-  - {fileID: 224912046107579652}
   - {fileID: 224669737563634072}
   m_Father: {fileID: 224211666657079398}
   m_RootOrder: 0
@@ -16971,7 +16902,7 @@ RectTransform:
   m_Children:
   - {fileID: 224576835673171854}
   m_Father: {fileID: 224345398687490770}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
@@ -17927,24 +17858,6 @@ RectTransform:
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!224 &224912046107579652
-RectTransform:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1700079422149644}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.0282775, y: 1.0282775, z: 1.0282775}
-  m_Children: []
-  m_Father: {fileID: 224345398687490770}
-  m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 117.84, y: -407.93}
-  m_SizeDelta: {x: 199.5, y: 238.98}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224917869000734646
 RectTransform:

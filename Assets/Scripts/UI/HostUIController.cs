@@ -12,7 +12,7 @@ namespace RolePlayOverlord.UI
         
         [SerializeField] GameObject _playerInfo;
         [SerializeField] GameObject _gameSettings;
-        [SerializeField] GameObject _documentanion;
+        [SerializeField] GameObject _documentation;
         [SerializeField] GameObject _placingElement;
         GameObject _mainElement;
 
@@ -38,14 +38,16 @@ namespace RolePlayOverlord.UI
 
         public void ShowDocument()
         {
-            if(_docList.ActiveDocButton == null)
-                return;
+            DocListButton activeDocButton = _docList.ActiveDocButton;
+            if(activeDocButton != null)
+            {
+                ShowMainElement(_documentation);
 
-            ShowMainElement(_documentanion);
-            // TODO: Get the relevant component.
-            var multiElem = _documentanion.GetComponent<UIMultiElem>();
-            string docName = _docList.ActiveDocButton.DocName;
-            multiElem.MainTextSpace.text = _network.GetDocument(docName);
+                string docName = activeDocButton.DocName;
+                var docInputField = _documentation.GetComponent<UIDocument>()
+                    .InputField;
+                docInputField.text = _network.GetDocument(docName);
+            }
         }
 
         public void ShowMainElement(GameObject elem)
