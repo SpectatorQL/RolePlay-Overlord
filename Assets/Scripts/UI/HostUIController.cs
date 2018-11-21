@@ -38,7 +38,7 @@ namespace RolePlayOverlord.UI
 
         public void ShowDocument()
         {
-            DocListButton activeDocButton = _docList.ActiveDocButton;
+            DocListButton activeDocButton = _docList.GetActiveButton();
             if(activeDocButton != null)
             {
                 ShowMainElement(_documentation);
@@ -112,8 +112,9 @@ namespace RolePlayOverlord.UI
                 docListButton.TextField.text = docs[i];
                 docListButton.DocName = docs[i];
 
-                _docList.DocButtons.Add(docListButton);
+                _docList.AddDocButton(docListButton);
             }
+            _docList.AssignButtonIds();
 
             ShowUI();
         }
