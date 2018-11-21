@@ -4862,7 +4862,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ddf3c2cd0687854c858ecccf5c015db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MainTextSpace: {fileID: 0}
+  PlayerNameField: {fileID: 114036600698822814}
+  MainText: {fileID: 114360352873648216}
 --- !u!114 &114151294651292640
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -8617,8 +8618,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   DocButtonPrefab: {fileID: 1606922906918998, guid: 3313ddc2c5099a645b4f9f37e819feab,
     type: 2}
-  DocButtons: []
-  ActiveDocButton: {fileID: 0}
 --- !u!114 &114490522204099184
 MonoBehaviour:
   m_ObjectHideFlags: 1

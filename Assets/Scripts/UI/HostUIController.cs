@@ -30,10 +30,9 @@ namespace RolePlayOverlord.UI
         public void ShowPlayerInfo(int clientIndex)
         {
             ShowMainElement(_playerInfo);
-            // TODO: Get the relevant component.
-            var multiElem = _playerInfo.GetComponent<UIMultiElem>();
-            multiElem.MainTextSpace.text = _network.GetClientCharacterInfo(clientIndex)
-                + "\nAnd some random gibberish LULZ";
+
+            var playerInfo = _playerInfo.GetComponent<UIPlayerInfo>();
+            playerInfo.MainText.text = _network.GetClientCharacterInfo(clientIndex);
         }
 
         public void ShowDocument()
