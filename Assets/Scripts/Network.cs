@@ -7,6 +7,10 @@ using RolePlayOverlord.UI;
 
 namespace RolePlayOverlord
 {
+    /*
+        TODO: Rework all of the I/O functions once the structure of mods' directories is agreed upon.
+        TODO: Make the game code work with forward slashes only when reading and manipulating paths, even on Windows.
+    */
     public class Network : NetworkBehaviour
     {
         NetworkConnection[] _clientConnections;
@@ -15,8 +19,8 @@ namespace RolePlayOverlord
         ClientEntity _host;
 
         string[] _characterStats;
-        public List<string> Docs = new List<string>();
-        Dictionary<string, string> _documents;
+        public List<string> DocNames = new List<string>();
+        Dictionary<string, string> _docsData;
 
         string _dataPath;
         string _modPath;
@@ -141,8 +145,17 @@ namespace RolePlayOverlord
 
         public string GetDocument(string path)
         {
-            string result = _documents[path]; 
+            string result = _docsData[path]; 
             return result;
+        }
+
+        public void UpdateDocument(string path, string data)
+        {
+            using(var fs = new FileStream(path, FileMode.Truncate, FileAccess.Write, FileShare.Read))
+            using(var sw = new StreamWriter(fs))
+            {
+                sw.Write(data);
+            }
         }
 
         void Start()
@@ -169,15 +182,19 @@ namespace RolePlayOverlord
             FileStream fs1 = new FileStream(testDoc1, FileMode.Open, FileAccess.Read, FileShare.Read);
             FileStream fs2 = new FileStream(testDoc2, FileMode.Open, FileAccess.Read, FileShare.Read);
             
-            Docs.Add(testDoc1);
-            Docs.Add(testDoc2);
+            DocNames.Add(testDoc1);
+            DocNames.Add(testDoc2);
 
-            _documents = new Dictionary<string, string>(Docs.Count)
+            _docsData = new Dictionary<string, string>(DocNames.Count)
             {
                 { testDoc1, new StreamReader(fs1).ReadToEnd() },
                 { testDoc2, new StreamReader(fs2).ReadToEnd() }
             };
 
+            /*
+                TODO: Put the mod data loading code inside ServerStartup and
+                make absolutely sure it's only going to be called on the server.
+            */
             ServerStartup();
 
             _walls = FindObjectsOfType<Wall>();

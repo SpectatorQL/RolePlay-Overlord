@@ -43,10 +43,20 @@ namespace RolePlayOverlord.UI
                 ShowMainElement(_documentation);
 
                 string docName = activeDocButton.DocName;
-                var docInputField = _documentation.GetComponent<UIDocument>()
-                    .InputField;
-                docInputField.text = _network.GetDocument(docName);
+                var document = _documentation.GetComponent<UIDocument>();
+                document.ActiveDocument = docName;
+                document.InputField.text = _network.GetDocument(docName);
             }
+        }
+
+        public void UpdateDocument()
+        {
+            var document = _documentation.GetComponent<UIDocument>();
+            string docName = document.ActiveDocument;
+            // TODO: Make sure that copying is the correct approach here.
+            // TODO: Consult the .NET Reference on the behaviour of StreamWriter when string is passed to Write().
+            string text = string.Copy(document.InputField.text);
+            _network.UpdateDocument(docName, text);
         }
 
         public void ShowMainElement(GameObject elem)
@@ -102,7 +112,7 @@ namespace RolePlayOverlord.UI
         {
             _network = network;
 
-            List<string> docs = _network.Docs;
+            List<string> docs = _network.DocNames;
             for(int i = 0; i < docs.Count; ++i)
             {
                 var docListButton = Instantiate(_docList.DocButtonPrefab, _docList.transform)
