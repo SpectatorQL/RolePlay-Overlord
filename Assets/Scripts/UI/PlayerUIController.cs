@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace RolePlayOverlord
+namespace RolePlayOverlord.UI
 {
-    public class HostUIController : MonoBehaviour
+    public class PlayerUIController : MonoBehaviour
     {
         public bool IsHidden;
 

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using UnityEngine;
 using UnityEngine.Networking;
+using RolePlayOverlord.UI;
 
 namespace RolePlayOverlord
 {
@@ -77,12 +78,16 @@ namespace RolePlayOverlord
             }
             ent.MoveCamera(newPos);
 
-            if(controller.NewInput.Tab)
+
+            if(controller.NewInput.V)
             {
-                Cursor.lockState = CursorLockMode.None;
-                Cursor.lockState = CursorLockMode.Locked;
-                ent.HostUIController.OnUIKeyPressed();
+                ent.HostUIController.ShowVoiceIcon();
             }
+            else
+            {
+                ent.HostUIController.HideVoiceIcon();
+            }
+
 
             if(controller.NewInput.Debug_SetTexture1)
             {
@@ -180,7 +185,6 @@ namespace RolePlayOverlord
                 return;
 
             GetComponent<Camera>().enabled = true;
-            Cursor.lockState = CursorLockMode.Locked;
 
             _yaw = transform.eulerAngles.y;
             _pitch = transform.eulerAngles.x;
