@@ -10,6 +10,7 @@ namespace RolePlayOverlord
     /*
         TODO: Rework all of the I/O functions once the structure of mods' directories is agreed upon.
         TODO: Make the game code work with forward slashes only when reading and manipulating paths, even on Windows.
+        TODO: Delete the cache dictionaries as we don't want to store assets in memory all the time.
     */
     public class Network : NetworkBehaviour
     {
@@ -43,13 +44,13 @@ namespace RolePlayOverlord
 
         string GetAssetFilePath(string file)
         {
-            string result = _dataPath + _modPath + file;
+            string result = IO.DATA_PATH + IO.ModPath + file;
             return result;
         }
-
-        // TODO: Turn this into something more reasonable.
-        IEnumerator LoadTex(Texture2D tex, string url)
+        
+        IEnumerator LoadTex(Texture2D tex, string path)
         {
+            string url = "file:///" + path;
             using(WWW www = new WWW(url))
             {
                 yield return www;
@@ -62,34 +63,24 @@ namespace RolePlayOverlord
         {
             int textureWidth = 1024;
             int textureHeight = 1024;
-            string texUrl = GetAssetFilePath(texName);
+            string texPath = GetAssetFilePath(texName);
 
             Texture2D tex;
-            if(_textureCache.ContainsKey(texUrl))
+            if(_textureCache.ContainsKey(texPath))
             {
-                tex = _textureCache[texUrl];
+                tex = _textureCache[texPath];
             }
             else
             {
                 tex = new Texture2D(textureWidth, textureHeight);
-                StartCoroutine(LoadTex(tex, texUrl));
-                _textureCache.Add(texUrl, tex);
+                StartCoroutine(LoadTex(tex, texPath));
+                _textureCache.Add(texPath, tex);
             }
             
             for(int i = 0; i < _walls.Length; ++i)
             {
                 _walls[i].ChangeWallTexture(tex);
             }
-        }
-
-        void Awake()
-        {
-            // TODO: Remove file:/// from these, as it's only needed in WWW urls.
-#if UNITY_EDITOR
-            _dataPath = "file:///Assets/";
-#else
-            _dataPath = "file:///Test/";
-#endif
         }
 
         void ClientStartup(ClientEntity ent)
@@ -145,6 +136,7 @@ namespace RolePlayOverlord
 
         public string GetDocument(string path)
         {
+            // TODO: Call an IO function here.
             string result = _docsData[path]; 
             return result;
         }
@@ -160,6 +152,8 @@ namespace RolePlayOverlord
 
         void Start()
         {
+            IO.ModPath = "Test/";
+
             // TODO: Character data loading.
             _characterStats = new string[]
             {
@@ -173,9 +167,9 @@ namespace RolePlayOverlord
 
             // TODO: Documents loading.
 #if UNITY_EDITOR
-            string win32TestAssetsPath = "Assets\\";
+            string win32TestAssetsPath = "Assets\\Test\\";
 #else
-            string win32TestAssetsPath = "Test\\";
+            string win32TestAssetsPath = "Mods\\Test\\";
 #endif
             string testDoc1 = win32TestAssetsPath + "testDoc1.txt";
             string testDoc2 = win32TestAssetsPath + "testDoc2.txt";
