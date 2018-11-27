@@ -6,23 +6,40 @@ namespace RolePlayOverlord
 {
     public static class IO
     {
-        public static readonly string DATA_PATH;
-        public static string ModPath;
+        public static readonly string DEFAULT_ASSETS_PATH;
 
+        public static readonly string DATA_PATH;
+        // TODO: Clean this up after most of the game is finished.
+        public static string ModPath = "Default/";
+
+        // NOTE(SpectatorQL): Key=path, Value=filename
         static Dictionary<string, string> _modDict;
 
         static IO()
         {
 #if UNITY_EDITOR
+            DEFAULT_ASSETS_PATH = "Assets/Mods/Default/";
             DATA_PATH = "Assets/";
 #else
+            DEFAULT_ASSETS_PATH = "Mods/Default/";
             DATA_PATH = "Mods/";
 #endif
         }
 
-        public static int OnePastLastSlash(string src)
+        /*
+            TODO: At some point this will have become obsolete, as
+            we will be relying on dictionaries providing us with
+            filenames using the files' paths in the finished game.
+        */
+        public static string GetAssetFilePath(string file)
         {
-            int result = src.LastIndexOf('/') + 1;
+            string result = DEFAULT_ASSETS_PATH + file;
+            return result;
+        }
+
+        public static int OnePastLastSlash(string str)
+        {
+            int result = str.LastIndexOf('/') + 1;
             return result;
         }
 
@@ -37,9 +54,10 @@ namespace RolePlayOverlord
                 if(c == '/')
                 {
                     c = '\\';
+                    arr[i] = c;
                 }
             }
-            result = arr.ToString();
+            result = new string(arr);
 
             return result;
         }

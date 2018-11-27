@@ -11,12 +11,6 @@ namespace RolePlayOverlord.Editor
 {
     public class PostBuildEvents : MonoBehaviour
     {
-        public static int OnePastLastSlash(string src)
-        {
-            int result = src.LastIndexOf('/') + 1;
-            return result;
-        }
-
         static void CreateTestDirectory(string dir)
         {
             if(!Directory.Exists(dir))
@@ -36,7 +30,7 @@ namespace RolePlayOverlord.Editor
         {
             StringBuilder buildDir = new StringBuilder();
             for(int i = 0;
-                i < OnePastLastSlash(pathToBuiltProject);
+                i < IO.OnePastLastSlash(pathToBuiltProject);
                 ++i)
             {
                 if(pathToBuiltProject[i] == '/')

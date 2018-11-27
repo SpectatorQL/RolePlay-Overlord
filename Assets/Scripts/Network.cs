@@ -4,6 +4,7 @@ using System.IO;
 using UnityEngine;
 using UnityEngine.Networking;
 using RolePlayOverlord.UI;
+using static RolePlayOverlord.IO;
 
 namespace RolePlayOverlord
 {
@@ -39,12 +40,6 @@ namespace RolePlayOverlord
                 result = _characterStats[clientIndex];
             }
 
-            return result;
-        }
-
-        string GetAssetFilePath(string file)
-        {
-            string result = IO.DATA_PATH + IO.ModPath + file;
             return result;
         }
         
@@ -132,6 +127,8 @@ namespace RolePlayOverlord
                     }
                 }
             }
+
+            // TODO: Load GM's documents or player's diary.
         }
 
         public string GetDocument(string path)
@@ -152,8 +149,6 @@ namespace RolePlayOverlord
 
         void Start()
         {
-            IO.ModPath = "Test/";
-
             // TODO: Character data loading.
             _characterStats = new string[]
             {
@@ -165,16 +160,10 @@ namespace RolePlayOverlord
                 "Player 6 info",
             };
 
-            // TODO: Documents loading.
-#if UNITY_EDITOR
-            string win32TestAssetsPath = "Assets\\Test\\";
-#else
-            string win32TestAssetsPath = "Mods\\Test\\";
-#endif
-            string testDoc1 = win32TestAssetsPath + "testDoc1.txt";
-            string testDoc2 = win32TestAssetsPath + "testDoc2.txt";
-            FileStream fs1 = new FileStream(testDoc1, FileMode.Open, FileAccess.Read, FileShare.Read);
-            FileStream fs2 = new FileStream(testDoc2, FileMode.Open, FileAccess.Read, FileShare.Read);
+            string testDoc1 = GetAssetFilePath("testDoc1.txt");
+            string testDoc2 = GetAssetFilePath("testDoc2.txt");
+            FileStream fs1 = new FileStream(PATH(testDoc1), FileMode.Open, FileAccess.Read, FileShare.Read);
+            FileStream fs2 = new FileStream(PATH(testDoc2), FileMode.Open, FileAccess.Read, FileShare.Read);
             
             DocNames.Add(testDoc1);
             DocNames.Add(testDoc2);
@@ -185,10 +174,6 @@ namespace RolePlayOverlord
                 { testDoc2, new StreamReader(fs2).ReadToEnd() }
             };
 
-            /*
-                TODO: Put the mod data loading code inside ServerStartup and
-                make absolutely sure it's only going to be called on the server.
-            */
             ServerStartup();
 
             _walls = FindObjectsOfType<Wall>();
