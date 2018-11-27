@@ -6,12 +6,13 @@ using System.Text;
 using UnityEngine;
 using UnityEditor;
 using UnityEditor.Callbacks;
+using static RolePlayOverlord.IO;
 
 namespace RolePlayOverlord.Editor
 {
     public class PostBuildEvents : MonoBehaviour
     {
-        static void CreateTestDirectory(string dir)
+        static void CreateDefaultDirectory(string dir)
         {
             if(!Directory.Exists(dir))
             {
@@ -28,41 +29,33 @@ namespace RolePlayOverlord.Editor
         [PostProcessBuild(0)]
         static void BuildTestAssets(BuildTarget target, string pathToBuiltProject)
         {
-            StringBuilder buildDir = new StringBuilder();
-            for(int i = 0;
-                i < IO.OnePastLastSlash(pathToBuiltProject);
-                ++i)
-            {
-                if(pathToBuiltProject[i] == '/')
-                {
-                    buildDir.Append('\\');
-                }
-                else
-                {
-                    buildDir.Append(pathToBuiltProject[i]);
-                }
-            }
+            // NOTE(SpectatorQL): Removes the built executable from the path.
+            int onePastLastSlash = OnePastLastSlash(pathToBuiltProject);
+            string buildDir = pathToBuiltProject.Remove(onePastLastSlash, pathToBuiltProject.Length - onePastLastSlash);
 
-            string testDir = buildDir + "Test\\";
-            CreateTestDirectory(testDir);
+            string defaultDataDir = "Mods/Default/";
+            string defaultDataDirPath = PATH(buildDir + defaultDataDir);
+            CreateDefaultDirectory(defaultDataDirPath);
 
-            DirectoryInfo projectDirInfo = new DirectoryInfo(Application.dataPath);
-            // TODO(SpectatorQL): Change this to look in specific directories in the project.
-            string[] testExtensions = { ".png", ".txt" };
-            var testFiles = projectDirInfo.GetFiles()
+            string defaultAssetsPath = PATH(Application.dataPath + "/" + defaultDataDir);
+            DirectoryInfo projectDirInfo = new DirectoryInfo(defaultAssetsPath);
+
+            string[] defaultAssetExtensions = { ".png", ".ogg", ".txt" };
+            var defaultFiles = projectDirInfo.GetFiles()
                 .Where(file =>
                 {
-                    return testExtensions.Contains(file.Extension);
+                    return defaultAssetExtensions.Contains(file.Extension);
                 })
                 .ToArray();
 
             for(int i = 0;
-                i < testFiles.Length;
+                i < defaultFiles.Length;
                 ++i)
             {
-                string assetFileName = testFiles[i].Name;
-                string destFileName = testDir + assetFileName;
-                File.Copy(testFiles[i].FullName, destFileName, true);
+                string assetFileName = defaultFiles[i].Name;
+                string destFileName = defaultDataDirPath + assetFileName;
+                File.Copy(defaultFiles[i].FullName, destFileName, true);
+                Debug.Assert(File.Exists(destFileName));
             }
         }
     }

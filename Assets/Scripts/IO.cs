@@ -37,6 +37,7 @@ namespace RolePlayOverlord
             return result;
         }
 
+        // TODO: Make this an extension method.
         public static int OnePastLastSlash(string str)
         {
             int result = str.LastIndexOf('/') + 1;
