@@ -10,7 +10,6 @@ namespace RolePlayOverlord
 {
     /*
         TODO: Rework all of the I/O functions once the structure of mods' directories is agreed upon.
-        TODO: Make the game code work with forward slashes only when reading and manipulating paths, even on Windows.
         TODO: Delete the cache dictionaries as we don't want to store assets in memory all the time.
     */
     public class Network : NetworkBehaviour
@@ -160,8 +159,8 @@ namespace RolePlayOverlord
                 "Player 6 info",
             };
 
-            string testDoc1 = GetAssetFilePath("testDoc1.txt");
-            string testDoc2 = GetAssetFilePath("testDoc2.txt");
+            string testDoc1 = DEFAULT_ASSETS_PATH + "testDoc1.txt";
+            string testDoc2 = DEFAULT_ASSETS_PATH + "testDoc2.txt";
             FileStream fs1 = new FileStream(PATH(testDoc1), FileMode.Open, FileAccess.Read, FileShare.Read);
             FileStream fs2 = new FileStream(PATH(testDoc2), FileMode.Open, FileAccess.Read, FileShare.Read);
             

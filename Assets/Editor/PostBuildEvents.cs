@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
 using UnityEngine;
 using UnityEditor;
 using UnityEditor.Callbacks;
@@ -12,11 +11,32 @@ namespace RolePlayOverlord.Editor
 {
     public class PostBuildEvents : MonoBehaviour
     {
-        static void CreateDefaultDirectory(string dir)
+        static void CreateDefaultDataDirectory(string dir)
         {
-            if(!Directory.Exists(dir))
+            Directory.CreateDirectory(dir);
+
+            string[] dataDirs =
             {
-                Directory.CreateDirectory(dir);
+                "Textures/Walls/",
+                "Textures/Ceiling/",
+                "Textures/Floor/",
+                "Textures/Skybox/",
+
+                "Models/Classes/",
+                "Models/Figures/",
+
+                "Audio/",
+
+                "Documents/",
+
+                "Saves/",
+            };
+
+            foreach(var d in dataDirs)
+            {
+                string path = PATH(dir + d);
+                Directory.CreateDirectory(path);
+                Debug.Assert(Directory.Exists(path));
             }
         }
 
@@ -35,7 +55,7 @@ namespace RolePlayOverlord.Editor
 
             string defaultDataDir = "Mods/Default/";
             string defaultDataDirPath = PATH(buildDir + defaultDataDir);
-            CreateDefaultDirectory(defaultDataDirPath);
+            CreateDefaultDataDirectory(defaultDataDirPath);
 
             string defaultAssetsPath = PATH(Application.dataPath + "/" + defaultDataDir);
             DirectoryInfo projectDirInfo = new DirectoryInfo(defaultAssetsPath);

@@ -28,7 +28,7 @@ namespace RolePlayOverlord
 
         /*
             TODO: At some point this will have become obsolete, as
-            we will be relying on dictionaries providing us with
+            we will be relying on data structures providing us with
             filenames using the files' paths in the finished game.
         */
         public static string GetAssetFilePath(string file)
