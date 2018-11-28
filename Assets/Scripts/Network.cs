@@ -20,8 +20,7 @@ namespace RolePlayOverlord
         ClientEntity _host;
 
         string[] _characterStats;
-        public List<string> DocNames = new List<string>();
-        Dictionary<string, string> _docsData;
+        public List<string> Documents = new List<string>();
 
         string _dataPath;
         string _modPath;
@@ -132,8 +131,14 @@ namespace RolePlayOverlord
 
         public string GetDocument(string path)
         {
-            // TODO: Call an IO function here.
-            string result = _docsData[path]; 
+            string result = "";
+
+            using(FileStream fs = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.Read))
+            using(StreamReader sr = new StreamReader(fs))
+            {
+                result = sr.ReadToEnd();
+            }
+
             return result;
         }
 
@@ -161,17 +166,8 @@ namespace RolePlayOverlord
 
             string testDoc1 = DEFAULT_ASSETS_PATH + "testDoc1.txt";
             string testDoc2 = DEFAULT_ASSETS_PATH + "testDoc2.txt";
-            FileStream fs1 = new FileStream(PATH(testDoc1), FileMode.Open, FileAccess.Read, FileShare.Read);
-            FileStream fs2 = new FileStream(PATH(testDoc2), FileMode.Open, FileAccess.Read, FileShare.Read);
-            
-            DocNames.Add(testDoc1);
-            DocNames.Add(testDoc2);
-
-            _docsData = new Dictionary<string, string>(DocNames.Count)
-            {
-                { testDoc1, new StreamReader(fs1).ReadToEnd() },
-                { testDoc2, new StreamReader(fs2).ReadToEnd() }
-            };
+            Documents.Add(testDoc1);
+            Documents.Add(testDoc2);
 
             ServerStartup();
 

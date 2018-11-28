@@ -42,7 +42,7 @@ namespace RolePlayOverlord.UI
             {
                 ShowMainElement(_documentation);
 
-                string docName = activeDocButton.DocName;
+                string docName = activeDocButton.DocPath;
                 var document = _documentation.GetComponent<UIDocument>();
                 document.ActiveDocument = docName;
                 document.InputField.text = _network.GetDocument(docName);
@@ -53,9 +53,7 @@ namespace RolePlayOverlord.UI
         {
             var document = _documentation.GetComponent<UIDocument>();
             string docName = document.ActiveDocument;
-            // TODO: Make sure that copying is the correct approach here.
-            // TODO: Consult the .NET Reference on the behaviour of StreamWriter when string is passed to Write().
-            string text = string.Copy(document.InputField.text);
+            string text = document.InputField.text;
             _network.UpdateDocument(docName, text);
         }
 
@@ -112,14 +110,14 @@ namespace RolePlayOverlord.UI
         {
             _network = network;
 
-            List<string> docs = _network.DocNames;
+            List<string> docs = _network.Documents;
             for(int i = 0; i < docs.Count; ++i)
             {
                 var docListButton = Instantiate(_docList.DocButtonPrefab, _docList.transform)
                     .GetComponent<DocListButton>();
                 docListButton.DocList = _docList;
-                docListButton.TextField.text = docs[i];
-                docListButton.DocName = docs[i];
+                docListButton.TextField.text = IO.FILENAME(docs[i]);
+                docListButton.DocPath = docs[i];
 
                 _docList.AddDocButton(docListButton);
             }

@@ -13,9 +13,6 @@ namespace RolePlayOverlord
         // TODO: Clean this up after most of the game is finished.
         public static string ModPath = "Default/";
 
-        // NOTE(SpectatorQL): Key=path, Value=filename
-        static Dictionary<string, string> _modDict;
-
         static IO()
         {
 #if UNITY_EDITOR
