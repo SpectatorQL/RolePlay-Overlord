@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using RolePlayOverlord.Utils;
 
 namespace RolePlayOverlord
 {
@@ -34,13 +35,6 @@ namespace RolePlayOverlord
         public static string GetAssetFilePath(string file)
         {
             string result = DEFAULT_ASSETS_PATH + file;
-            return result;
-        }
-
-        // TODO: Make this an extension method.
-        public static int OnePastLastSlash(string str)
-        {
-            int result = str.LastIndexOf('/') + 1;
             return result;
         }
 
@@ -80,12 +74,12 @@ namespace RolePlayOverlord
         {
             string result;
 
-            int onePastLastSlash = OnePastLastSlash(path);
+            int onePastLastSlash = path.OnePastLastSlash();
             int dot = path.LastIndexOf('.');
             int len = dot - onePastLastSlash;
 
             result = path.Substring(onePastLastSlash, len);
-            Debug.Assert(!result.Contains("."));
+            UnityEngine.Debug.Assert(!result.Contains("."));
 
             return result;
         }

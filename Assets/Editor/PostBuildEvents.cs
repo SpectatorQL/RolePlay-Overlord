@@ -5,6 +5,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEditor;
 using UnityEditor.Callbacks;
+using RolePlayOverlord.Utils;
 using static RolePlayOverlord.IO;
 
 namespace RolePlayOverlord.Editor
@@ -36,7 +37,7 @@ namespace RolePlayOverlord.Editor
             {
                 string path = PATH(dir + d);
                 Directory.CreateDirectory(path);
-                Debug.Assert(Directory.Exists(path));
+                UnityEngine.Debug.Assert(Directory.Exists(path));
             }
         }
 
@@ -50,7 +51,7 @@ namespace RolePlayOverlord.Editor
         static void BuildTestAssets(BuildTarget target, string pathToBuiltProject)
         {
             // NOTE(SpectatorQL): Removes the built executable from the path.
-            int onePastLastSlash = OnePastLastSlash(pathToBuiltProject);
+            int onePastLastSlash = pathToBuiltProject.OnePastLastSlash();
             string buildDir = pathToBuiltProject.Remove(onePastLastSlash, pathToBuiltProject.Length - onePastLastSlash);
 
             string defaultDataDir = "Mods/Default/";
@@ -60,6 +61,7 @@ namespace RolePlayOverlord.Editor
             string defaultAssetsPath = PATH(Application.dataPath + "/" + defaultDataDir);
             DirectoryInfo projectDirInfo = new DirectoryInfo(defaultAssetsPath);
 
+            // TODO: Copy the entire Assets/Mods/Default into target.
             string[] defaultAssetExtensions = { ".png", ".ogg", ".txt" };
             var defaultFiles = projectDirInfo.GetFiles()
                 .Where(file =>
@@ -75,7 +77,7 @@ namespace RolePlayOverlord.Editor
                 string assetFileName = defaultFiles[i].Name;
                 string destFileName = defaultDataDirPath + assetFileName;
                 File.Copy(defaultFiles[i].FullName, destFileName, true);
-                Debug.Assert(File.Exists(destFileName));
+                UnityEngine.Debug.Assert(File.Exists(destFileName));
             }
         }
     }
