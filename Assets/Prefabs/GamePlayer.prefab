@@ -23,6 +23,8 @@ GameObject:
   - component: {fileID: 114632825839718034}
   - component: {fileID: 20198652346538434}
   - component: {fileID: 114557467098633344}
+  - component: {fileID: 33752592142441290}
+  - component: {fileID: 23894508085558966}
   m_Layer: 0
   m_Name: GamePlayer
   m_TagString: Untagged
@@ -83,6 +85,48 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
+--- !u!23 &23894508085558966
+MeshRenderer:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1357625842586434}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RenderingLayerMask: 4294967295
+  m_Materials:
+  - {fileID: 2100000, guid: 228e842cbe744494290fbf04df8d3b7f, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 0
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+--- !u!33 &33752592142441290
+MeshFilter:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1357625842586434}
+  m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!114 &114449751802109432
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -126,7 +170,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 71ebe8e68aa50be4fb071626c0a0a49e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Sensitivity: 2
+  ClientName: 
+  Network: {fileID: 0}
+  ControlMode: 0
+  UI: {fileID: 0}
+  HostUIController: {fileID: 0}
+  PlayerUIController: {fileID: 0}
 --- !u!114 &114632825839718034
 MonoBehaviour:
   m_ObjectHideFlags: 1

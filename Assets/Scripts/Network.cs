@@ -18,6 +18,7 @@ namespace RolePlayOverlord
         ClientEntity[] _clients;
         // TODO: Does anything need to talk to the host directly?
         ClientEntity _host;
+        int _localClient = -666;
 
         string[] _characterStats;
         public List<string> Documents = new List<string>();
@@ -76,7 +77,7 @@ namespace RolePlayOverlord
             }
         }
 
-        void ClientStartup(ClientEntity ent)
+        void ClientStartup(ClientEntity ent, int clientIndex)
         {
             if(!ent.isLocalPlayer)
                 return;
@@ -102,6 +103,7 @@ namespace RolePlayOverlord
             }
 
             ent.Network = this;
+            _localClient = clientIndex;
         }
         
         void ServerStartup()
@@ -116,12 +118,17 @@ namespace RolePlayOverlord
                     ClientEntity ent = ents[i];
                     if(ent != null)
                     {
-                        ClientStartup(ent);
+                        _clients[i] = ent;
+
                         if(isServer)
                         {
-                            _clients[i] = ent;
-                            _clientConnections[i] = ent.connectionToServer;
+                            _clientConnections[i] = ent.connectionToClient;
+                            Debug.LogError("connectionToClient.connectionId: " + ent.connectionToClient.connectionId + " ");
                         }
+                        
+                        ClientStartup(ent, i);
+                        Debug.LogError("i: " + i + " "
+                            + "_localClient: " + _localClient + " ");
                     }
                 }
             }
