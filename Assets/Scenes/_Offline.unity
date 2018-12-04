@@ -1456,6 +1456,11 @@ Prefab:
       propertyPath: m_AnchoredPosition.y
       value: 0.00004577208
       objectReference: {fileID: 0}
+    - target: {fileID: 224465081473840026, guid: e3817480bb6ceff48bb3a699f413bfbd,
+        type: 2}
+      propertyPath: m_AnchoredPosition.y
+      value: 0.0000384896
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e3817480bb6ceff48bb3a699f413bfbd, type: 2}
   m_IsPrefabAsset: 0
@@ -1532,7 +1537,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dfa2478acd136724786327da1aa679c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DocNames: []
+  Documents: []
   _hostUI: {fileID: 0}
   _playerUI: {fileID: 0}
 --- !u!1 &2109752453
