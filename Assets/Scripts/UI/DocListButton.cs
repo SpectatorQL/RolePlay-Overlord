@@ -9,7 +9,7 @@ namespace RolePlayOverlord.UI
     public class DocListButton : MonoBehaviour, IPointerDownHandler
     {
         [HideInInspector] public int Id;
-        [HideInInspector] public string DocName;
+        [HideInInspector] public string DocPath;
         public Text TextField;
 
         [HideInInspector] public DocList DocList;

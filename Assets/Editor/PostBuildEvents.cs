@@ -2,26 +2,42 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
 using UnityEngine;
 using UnityEditor;
 using UnityEditor.Callbacks;
+using RolePlayOverlord.Utils;
+using static RolePlayOverlord.IO;
 
 namespace RolePlayOverlord.Editor
 {
     public class PostBuildEvents : MonoBehaviour
     {
-        public static int OnePastLastSlash(string src)
+        static void CreateDefaultDataDirectory(string dir)
         {
-            int result = src.LastIndexOf('/') + 1;
-            return result;
-        }
+            Directory.CreateDirectory(dir);
 
-        static void CreateTestDirectory(string dir)
-        {
-            if(!Directory.Exists(dir))
+            string[] dataDirs =
             {
-                Directory.CreateDirectory(dir);
+                "Textures/Walls/",
+                "Textures/Ceiling/",
+                "Textures/Floor/",
+                "Textures/Skybox/",
+
+                "Models/Classes/",
+                "Models/Figures/",
+
+                "Audio/",
+
+                "Documents/",
+
+                "Saves/",
+            };
+
+            foreach(var d in dataDirs)
+            {
+                string path = PATH(dir + d);
+                Directory.CreateDirectory(path);
+                UnityEngine.Debug.Assert(Directory.Exists(path));
             }
         }
 
@@ -34,41 +50,34 @@ namespace RolePlayOverlord.Editor
         [PostProcessBuild(0)]
         static void BuildTestAssets(BuildTarget target, string pathToBuiltProject)
         {
-            StringBuilder buildDir = new StringBuilder();
-            for(int i = 0;
-                i < OnePastLastSlash(pathToBuiltProject);
-                ++i)
-            {
-                if(pathToBuiltProject[i] == '/')
-                {
-                    buildDir.Append('\\');
-                }
-                else
-                {
-                    buildDir.Append(pathToBuiltProject[i]);
-                }
-            }
+            // NOTE(SpectatorQL): Removes the built executable from the path.
+            int onePastLastSlash = pathToBuiltProject.OnePastLastSlash();
+            string buildDir = pathToBuiltProject.Remove(onePastLastSlash, pathToBuiltProject.Length - onePastLastSlash);
 
-            string testDir = buildDir + "Test\\";
-            CreateTestDirectory(testDir);
+            string defaultDataDir = "Mods/Default/";
+            string defaultDataDirPath = PATH(buildDir + defaultDataDir);
+            CreateDefaultDataDirectory(defaultDataDirPath);
 
-            DirectoryInfo projectDirInfo = new DirectoryInfo(Application.dataPath);
-            // TODO(SpectatorQL): Change this to look in specific directories in the project.
-            string[] testExtensions = { ".png", ".txt" };
-            var testFiles = projectDirInfo.GetFiles()
+            string defaultAssetsPath = PATH(Application.dataPath + "/" + defaultDataDir);
+            DirectoryInfo projectDirInfo = new DirectoryInfo(defaultAssetsPath);
+
+            // TODO: Copy the entire Assets/Mods/Default into target.
+            string[] defaultAssetExtensions = { ".png", ".ogg", ".txt" };
+            var defaultFiles = projectDirInfo.GetFiles()
                 .Where(file =>
                 {
-                    return testExtensions.Contains(file.Extension);
+                    return defaultAssetExtensions.Contains(file.Extension);
                 })
                 .ToArray();
 
             for(int i = 0;
-                i < testFiles.Length;
+                i < defaultFiles.Length;
                 ++i)
             {
-                string assetFileName = testFiles[i].Name;
-                string destFileName = testDir + assetFileName;
-                File.Copy(testFiles[i].FullName, destFileName, true);
+                string assetFileName = defaultFiles[i].Name;
+                string destFileName = defaultDataDirPath + assetFileName;
+                File.Copy(defaultFiles[i].FullName, destFileName, true);
+                UnityEngine.Debug.Assert(File.Exists(destFileName));
             }
         }
     }

@@ -4,12 +4,13 @@ using System.IO;
 using UnityEngine;
 using UnityEngine.Networking;
 using RolePlayOverlord.UI;
+using static RolePlayOverlord.IO;
 
 namespace RolePlayOverlord
 {
     /*
         TODO: Rework all of the I/O functions once the structure of mods' directories is agreed upon.
-        TODO: Make the game code work with forward slashes only when reading and manipulating paths, even on Windows.
+        TODO: Delete the cache dictionaries as we don't want to store assets in memory all the time.
     */
     public class Network : NetworkBehaviour
     {
@@ -19,8 +20,7 @@ namespace RolePlayOverlord
         ClientEntity _host;
 
         string[] _characterStats;
-        public List<string> DocNames = new List<string>();
-        Dictionary<string, string> _docsData;
+        public List<string> Documents = new List<string>();
 
         string _dataPath;
         string _modPath;
@@ -40,16 +40,10 @@ namespace RolePlayOverlord
 
             return result;
         }
-
-        string GetAssetFilePath(string file)
+        
+        IEnumerator LoadTex(Texture2D tex, string path)
         {
-            string result = _dataPath + _modPath + file;
-            return result;
-        }
-
-        // TODO: Turn this into something more reasonable.
-        IEnumerator LoadTex(Texture2D tex, string url)
-        {
+            string url = "file:///" + path;
             using(WWW www = new WWW(url))
             {
                 yield return www;
@@ -62,34 +56,24 @@ namespace RolePlayOverlord
         {
             int textureWidth = 1024;
             int textureHeight = 1024;
-            string texUrl = GetAssetFilePath(texName);
+            string texPath = GetAssetFilePath(texName);
 
             Texture2D tex;
-            if(_textureCache.ContainsKey(texUrl))
+            if(_textureCache.ContainsKey(texPath))
             {
-                tex = _textureCache[texUrl];
+                tex = _textureCache[texPath];
             }
             else
             {
                 tex = new Texture2D(textureWidth, textureHeight);
-                StartCoroutine(LoadTex(tex, texUrl));
-                _textureCache.Add(texUrl, tex);
+                StartCoroutine(LoadTex(tex, texPath));
+                _textureCache.Add(texPath, tex);
             }
             
             for(int i = 0; i < _walls.Length; ++i)
             {
                 _walls[i].ChangeWallTexture(tex);
             }
-        }
-
-        void Awake()
-        {
-            // TODO: Remove file:/// from these, as it's only needed in WWW urls.
-#if UNITY_EDITOR
-            _dataPath = "file:///Assets/";
-#else
-            _dataPath = "file:///Test/";
-#endif
         }
 
         void ClientStartup(ClientEntity ent)
@@ -141,11 +125,20 @@ namespace RolePlayOverlord
                     }
                 }
             }
+
+            // TODO: Load GM's documents or player's diary.
         }
 
         public string GetDocument(string path)
         {
-            string result = _docsData[path]; 
+            string result = "";
+
+            using(FileStream fs = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.Read))
+            using(StreamReader sr = new StreamReader(fs))
+            {
+                result = sr.ReadToEnd();
+            }
+
             return result;
         }
 
@@ -171,30 +164,11 @@ namespace RolePlayOverlord
                 "Player 6 info",
             };
 
-            // TODO: Documents loading.
-#if UNITY_EDITOR
-            string win32TestAssetsPath = "Assets\\";
-#else
-            string win32TestAssetsPath = "Test\\";
-#endif
-            string testDoc1 = win32TestAssetsPath + "testDoc1.txt";
-            string testDoc2 = win32TestAssetsPath + "testDoc2.txt";
-            FileStream fs1 = new FileStream(testDoc1, FileMode.Open, FileAccess.Read, FileShare.Read);
-            FileStream fs2 = new FileStream(testDoc2, FileMode.Open, FileAccess.Read, FileShare.Read);
-            
-            DocNames.Add(testDoc1);
-            DocNames.Add(testDoc2);
+            string testDoc1 = DEFAULT_ASSETS_PATH + "testDoc1.txt";
+            string testDoc2 = DEFAULT_ASSETS_PATH + "testDoc2.txt";
+            Documents.Add(testDoc1);
+            Documents.Add(testDoc2);
 
-            _docsData = new Dictionary<string, string>(DocNames.Count)
-            {
-                { testDoc1, new StreamReader(fs1).ReadToEnd() },
-                { testDoc2, new StreamReader(fs2).ReadToEnd() }
-            };
-
-            /*
-                TODO: Put the mod data loading code inside ServerStartup and
-                make absolutely sure it's only going to be called on the server.
-            */
             ServerStartup();
 
             _walls = FindObjectsOfType<Wall>();
