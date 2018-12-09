@@ -8,6 +8,7 @@ namespace RolePlayOverlord.UI
 {
     public class UIDocument : MonoBehaviour
     {
+        public Text DocumentTitle;
         public TMP_InputField InputField;
         [HideInInspector] public string ActiveDocument;
 

@@ -160,7 +160,6 @@ GameObject:
   - component: {fileID: 114402177247166298}
   - component: {fileID: 114999104186645834}
   - component: {fileID: 95479887116256386}
-  - component: {fileID: 114605189056401360}
   m_Layer: 5
   m_Name: Player2
   m_TagString: Untagged
@@ -311,7 +310,6 @@ GameObject:
   - component: {fileID: 222489743105657026}
   - component: {fileID: 114565165169589840}
   - component: {fileID: 114441180366846900}
-  - component: {fileID: 114621214917704400}
   m_Layer: 5
   m_Name: Exit
   m_TagString: Untagged
@@ -1063,7 +1061,6 @@ GameObject:
   - component: {fileID: 222858795806409214}
   - component: {fileID: 114276080227683980}
   - component: {fileID: 114119890282907820}
-  - component: {fileID: 114487506612696960}
   m_Layer: 5
   m_Name: Exit
   m_TagString: Untagged
@@ -1202,7 +1199,6 @@ GameObject:
   - component: {fileID: 114012725107184270}
   - component: {fileID: 114912811086735180}
   - component: {fileID: 95297827747129272}
-  - component: {fileID: 114189481908991144}
   m_Layer: 5
   m_Name: Player3
   m_TagString: Untagged
@@ -1340,7 +1336,6 @@ GameObject:
   - component: {fileID: 114021555130141346}
   - component: {fileID: 114115848269724808}
   - component: {fileID: 95827330655047548}
-  - component: {fileID: 114310473844547240}
   m_Layer: 5
   m_Name: Player4
   m_TagString: Untagged
@@ -1704,7 +1699,6 @@ GameObject:
   - component: {fileID: 222743685456909912}
   - component: {fileID: 114177280297087486}
   - component: {fileID: 114474772681254130}
-  - component: {fileID: 114658955179218692}
   m_Layer: 5
   m_Name: Exit
   m_TagString: Untagged
@@ -2254,7 +2248,6 @@ GameObject:
   - component: {fileID: 114334345151374082}
   - component: {fileID: 114742583091281386}
   - component: {fileID: 95884176831539446}
-  - component: {fileID: 114536131648602264}
   m_Layer: 5
   m_Name: Player6
   m_TagString: Untagged
@@ -3125,7 +3118,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1807161390519466
 GameObject:
   m_ObjectHideFlags: 1
@@ -3189,7 +3182,6 @@ GameObject:
   - component: {fileID: 114401811731203228}
   - component: {fileID: 114040052596929094}
   - component: {fileID: 95190676473365360}
-  - component: {fileID: 114087553358598318}
   m_Layer: 5
   m_Name: Player1
   m_TagString: Untagged
@@ -3376,7 +3368,6 @@ GameObject:
   - component: {fileID: 222983595745401998}
   - component: {fileID: 114431954476851356}
   - component: {fileID: 114319890015522820}
-  - component: {fileID: 114716749030647734}
   m_Layer: 5
   m_Name: Exit
   m_TagString: Untagged
@@ -3429,7 +3420,6 @@ GameObject:
   - component: {fileID: 114365120375032244}
   - component: {fileID: 114791013548596140}
   - component: {fileID: 95896357862286046}
-  - component: {fileID: 114688708919321500}
   m_Layer: 5
   m_Name: Player5
   m_TagString: Untagged
@@ -4398,7 +4388,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 114087553358598318}
+      - m_Target: {fileID: 114721260853466970}
         m_MethodName: ShowPlayerInfo
         m_Mode: 3
         m_Arguments:
@@ -4754,19 +4744,6 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
---- !u!114 &114087553358598318
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1809520635663594}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c155ee37448b5b349b6aa53a8472cb58, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _globalController: {fileID: 114721260853466970}
-  _elementGroup: {fileID: 0}
 --- !u!114 &114089138177810480
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -5048,7 +5025,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 114310473844547240}
+      - m_Target: {fileID: 114721260853466970}
         m_MethodName: ShowPlayerInfo
         m_Mode: 3
         m_Arguments:
@@ -5100,7 +5077,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 114487506612696960}
+      - m_Target: {fileID: 114721260853466970}
         m_MethodName: HideMainElement
         m_Mode: 1
         m_Arguments:
@@ -5354,7 +5331,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PlayerNameField: {fileID: 114036600698822814}
-  MainText: {fileID: 0}
+  MainText: {fileID: 114680525086050024}
 --- !u!114 &114153355797152096
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -5870,19 +5847,6 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
---- !u!114 &114189481908991144
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1337764019225014}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c155ee37448b5b349b6aa53a8472cb58, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _globalController: {fileID: 114721260853466970}
-  _elementGroup: {fileID: 0}
 --- !u!114 &114199590099195110
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -6290,6 +6254,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f457d797b2f24ff4faa2de759690bed8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  DocumentTitle: {fileID: 114046561883651530}
   InputField: {fileID: 114604425575284998}
   ActiveDocument: 
 --- !u!114 &114239781192478412
@@ -6857,19 +6822,6 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
---- !u!114 &114310473844547240
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1377839556478094}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c155ee37448b5b349b6aa53a8472cb58, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _globalController: {fileID: 114721260853466970}
-  _elementGroup: {fileID: 0}
 --- !u!114 &114319890015522820
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -6909,7 +6861,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 114716749030647734}
+      - m_Target: {fileID: 114721260853466970}
         m_MethodName: HideMainElement
         m_Mode: 1
         m_Arguments:
@@ -8737,7 +8689,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 114621214917704400}
+      - m_Target: {fileID: 114721260853466970}
         m_MethodName: HideMainElement
         m_Mode: 1
         m_Arguments:
@@ -9037,7 +8989,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 114658955179218692}
+      - m_Target: {fileID: 114721260853466970}
         m_MethodName: HideMainElement
         m_Mode: 1
         m_Arguments:
@@ -9271,19 +9223,6 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
---- !u!114 &114487506612696960
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1295476489208376}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c155ee37448b5b349b6aa53a8472cb58, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _globalController: {fileID: 114721260853466970}
-  _elementGroup: {fileID: 0}
 --- !u!114 &114488200052042798
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -9703,19 +9642,6 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
---- !u!114 &114536131648602264
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1579671243386392}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c155ee37448b5b349b6aa53a8472cb58, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _globalController: {fileID: 114721260853466970}
-  _elementGroup: {fileID: 0}
 --- !u!114 &114538028934205750
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -10731,19 +10657,6 @@ MonoBehaviour:
   m_RestoreOriginalTextOnEscape: 1
   m_isRichTextEditingAllowed: 1
   m_InputValidator: {fileID: 0}
---- !u!114 &114605189056401360
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1037922241316130}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c155ee37448b5b349b6aa53a8472cb58, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _globalController: {fileID: 114721260853466970}
-  _elementGroup: {fileID: 0}
 --- !u!114 &114605596880546698
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -10932,19 +10845,6 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
---- !u!114 &114621214917704400
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1093233182697400}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c155ee37448b5b349b6aa53a8472cb58, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _globalController: {fileID: 114721260853466970}
-  _elementGroup: {fileID: 0}
 --- !u!114 &114623256886729512
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -11292,19 +11192,6 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
---- !u!114 &114658955179218692
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1484405747200584}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c155ee37448b5b349b6aa53a8472cb58, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _globalController: {fileID: 114721260853466970}
-  _elementGroup: {fileID: 0}
 --- !u!114 &114660741761383462
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -11702,19 +11589,6 @@ MonoBehaviour:
   m_RestoreOriginalTextOnEscape: 1
   m_isRichTextEditingAllowed: 1
   m_InputValidator: {fileID: 0}
---- !u!114 &114688708919321500
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1857879628512562}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c155ee37448b5b349b6aa53a8472cb58, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _globalController: {fileID: 114721260853466970}
-  _elementGroup: {fileID: 0}
 --- !u!114 &114689540094703880
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -12162,19 +12036,6 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
---- !u!114 &114716749030647734
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1849846309155970}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c155ee37448b5b349b6aa53a8472cb58, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _globalController: {fileID: 114721260853466970}
-  _elementGroup: {fileID: 0}
 --- !u!114 &114718077154210464
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -12536,7 +12397,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 114536131648602264}
+      - m_Target: {fileID: 114721260853466970}
         m_MethodName: ShowPlayerInfo
         m_Mode: 3
         m_Arguments:
@@ -13324,7 +13185,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 114688708919321500}
+      - m_Target: {fileID: 114721260853466970}
         m_MethodName: ShowPlayerInfo
         m_Mode: 3
         m_Arguments:
@@ -14106,7 +13967,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 114189481908991144}
+      - m_Target: {fileID: 114721260853466970}
         m_MethodName: ShowPlayerInfo
         m_Mode: 3
         m_Arguments:
@@ -14655,7 +14516,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 114605189056401360}
+      - m_Target: {fileID: 114721260853466970}
         m_MethodName: ShowPlayerInfo
         m_Mode: 3
         m_Arguments:

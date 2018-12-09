@@ -42,10 +42,11 @@ namespace RolePlayOverlord.UI
             {
                 ShowMainElement(_documentation);
 
-                string docName = activeDocButton.DocPath;
+                string docPath = activeDocButton.DocPath;
                 var document = _documentation.GetComponent<UIDocument>();
-                document.ActiveDocument = docName;
-                document.InputField.text = _network.GetDocument(docName);
+                document.ActiveDocument = docPath;
+                document.DocumentTitle.text = IO.FILENAME(docPath);
+                document.InputField.text = _network.GetDocument(docPath);
             }
         }
 
