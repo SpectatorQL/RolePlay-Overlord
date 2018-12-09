@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine;
 using UnityEditor;
 using UnityEditor.Callbacks;
@@ -52,6 +53,8 @@ namespace RolePlayOverlord.Editor
                     })
                     .ToArray();
 
+                defaultMod.Resources[i] = new string[files.Length];
+
                 for(int j = 0;
                     j < files.Length;
                     ++j)
@@ -62,7 +65,16 @@ namespace RolePlayOverlord.Editor
 
                     File.Copy(PATH(srcFile), PATH(destFile), true);
                     UnityEngine.Debug.Assert(File.Exists(PATH(destFile)));
+
+                     defaultMod.Resources[i][j] = _defaultDataDirectories[i] + assetFile;
                 }
+            }
+
+            string defaultModManifest = "build/Mods/Default/Default.rmm";
+            using(var fs = new FileStream(PATH(defaultModManifest), FileMode.Create, FileAccess.Write, FileShare.None))
+            {
+                var formatter = new BinaryFormatter();
+                formatter.Serialize(fs, defaultMod);
             }
         }
     }
