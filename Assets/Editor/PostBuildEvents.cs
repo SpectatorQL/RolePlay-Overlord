@@ -12,30 +12,11 @@ namespace RolePlayOverlord.Editor
 {
     public class PostBuildEvents : MonoBehaviour
     {
-        static void CreateDefaultDataDirectory(string dir)
+        static void CreateDefaultDataDirectory()
         {
-            Directory.CreateDirectory(dir);
-
-            string[] dataDirs =
+            foreach(var d in _defaultDataDirectories)
             {
-                "Textures/Walls/",
-                "Textures/Ceiling/",
-                "Textures/Floor/",
-                "Textures/Skybox/",
-
-                "Models/Classes/",
-                "Models/Figures/",
-
-                "Audio/",
-
-                "Documents/",
-
-                "Saves/",
-            };
-
-            foreach(var d in dataDirs)
-            {
-                string path = PATH(dir + d);
+                string path = PATH(d);
                 Directory.CreateDirectory(path);
                 UnityEngine.Debug.Assert(Directory.Exists(path));
             }
@@ -53,31 +34,32 @@ namespace RolePlayOverlord.Editor
             // NOTE(SpectatorQL): Removes the built executable from the path.
             int onePastLastSlash = pathToBuiltProject.OnePastLastSlash();
             string buildDir = pathToBuiltProject.Remove(onePastLastSlash, pathToBuiltProject.Length - onePastLastSlash);
-
-            string defaultDataDir = "Mods/Default/";
-            string defaultDataDirPath = PATH(buildDir + defaultDataDir);
-            CreateDefaultDataDirectory(defaultDataDirPath);
-
-            string defaultAssetsPath = PATH(Application.dataPath + "/" + defaultDataDir);
-            DirectoryInfo projectDirInfo = new DirectoryInfo(defaultAssetsPath);
-
-            // TODO: Copy the entire Assets/Mods/Default into target.
-            string[] defaultAssetExtensions = { ".png", ".ogg", ".txt" };
-            var defaultFiles = projectDirInfo.GetFiles()
-                .Where(file =>
-                {
-                    return defaultAssetExtensions.Contains(file.Extension);
-                })
-                .ToArray();
-
+            
+            CreateDefaultDataDirectory();
+            
             for(int i = 0;
-                i < defaultFiles.Length;
+                i < _defaultDataDirectories.Length;
                 ++i)
             {
-                string assetFileName = defaultFiles[i].Name;
-                string destFileName = defaultDataDirPath + assetFileName;
-                File.Copy(defaultFiles[i].FullName, destFileName, true);
-                UnityEngine.Debug.Assert(File.Exists(destFileName));
+                string dir = "Assets/" + _defaultDataDirectories[i];
+                string[] files = Directory.GetFiles(PATH(dir))
+                    .Where(file =>
+                    {
+                        return EXTENSION(file) != ".meta";
+                    })
+                    .ToArray();
+
+                for(int j = 0;
+                    j < files.Length;
+                    ++j)
+                {
+                    string assetFile = Path.GetFileName(files[j]);
+                    string srcFile = dir + assetFile;
+                    string destFile = buildDir + _defaultDataDirectories[i] + assetFile;
+
+                    File.Copy(PATH(srcFile), PATH(destFile), true);
+                    UnityEngine.Debug.Assert(File.Exists(PATH(destFile)));
+                }
             }
         }
     }

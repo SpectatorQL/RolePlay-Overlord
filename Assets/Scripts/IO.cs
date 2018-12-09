@@ -7,6 +7,23 @@ namespace RolePlayOverlord
 {
     public static class IO
     {
+        public static string[] _defaultDataDirectories =
+        {
+            "Mods/Default/Textures/Walls/",
+            "Mods/Default/Textures/Ceiling/",
+            "Mods/Default/Textures/Floor/",
+            "Mods/Default/Textures/Skybox/",
+
+            "Mods/Default/Models/Classes/",
+            "Mods/Default/Models/Figures/",
+
+            "Mods/Default/Audio/",
+
+            "Mods/Default/Documents/",
+
+            "Mods/Default/Saves/",
+        };
+
         public static readonly string DEFAULT_ASSETS_PATH;
 
         public static readonly string DATA_PATH;
@@ -77,6 +94,16 @@ namespace RolePlayOverlord
 
             result = path.Substring(onePastLastSlash, len);
             UnityEngine.Debug.Assert(!result.Contains("."));
+
+            return result;
+        }
+
+        public static string EXTENSION(string file)
+        {
+            string result;
+
+            int dot = file.LastIndexOf(".");
+            result = file.Substring(dot);
 
             return result;
         }
