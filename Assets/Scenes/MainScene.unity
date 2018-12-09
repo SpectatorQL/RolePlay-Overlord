@@ -605,50 +605,6 @@ Prefab:
       propertyPath: m_Pivot.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 114162991812266402, guid: 20c3464d6ea5ef54d8a749a0ba731269,
-        type: 2}
-      propertyPath: m_havePropertiesChanged
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114162991812266402, guid: 20c3464d6ea5ef54d8a749a0ba731269,
-        type: 2}
-      propertyPath: m_isInputParsingRequired
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114842877773023984, guid: 20c3464d6ea5ef54d8a749a0ba731269,
-        type: 2}
-      propertyPath: m_havePropertiesChanged
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114842877773023984, guid: 20c3464d6ea5ef54d8a749a0ba731269,
-        type: 2}
-      propertyPath: m_isInputParsingRequired
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114710629094335752, guid: 20c3464d6ea5ef54d8a749a0ba731269,
-        type: 2}
-      propertyPath: m_havePropertiesChanged
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114710629094335752, guid: 20c3464d6ea5ef54d8a749a0ba731269,
-        type: 2}
-      propertyPath: m_isInputParsingRequired
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 224099121979037470, guid: 20c3464d6ea5ef54d8a749a0ba731269,
-        type: 2}
-      propertyPath: m_AnchorMin.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 224115975760209490, guid: 20c3464d6ea5ef54d8a749a0ba731269,
-        type: 2}
-      propertyPath: m_AnchoredPosition.y
-      value: 0.00006474481
-      objectReference: {fileID: 0}
-    - target: {fileID: 1729887851274860, guid: 20c3464d6ea5ef54d8a749a0ba731269, type: 2}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 20c3464d6ea5ef54d8a749a0ba731269, type: 2}
   m_IsPrefabAsset: 0

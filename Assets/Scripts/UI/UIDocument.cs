@@ -2,12 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 namespace RolePlayOverlord.UI
 {
     public class UIDocument : MonoBehaviour
     {
-        public InputField InputField;
+        public TMP_InputField InputField;
         [HideInInspector] public string ActiveDocument;
 
         public void BeginEditing()
