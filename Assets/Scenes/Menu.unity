@@ -197,7 +197,7 @@ MonoBehaviour:
   m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 800, y: 600}
+  m_ReferenceResolution: {x: 800, y: 450}
   m_ScreenMatchMode: 1
   m_MatchWidthOrHeight: 0
   m_PhysicalUnit: 3
@@ -220,7 +220,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
-  m_AdditionalShaderChannelsFlag: 0
+  m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
@@ -387,7 +387,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
---- !u!1001 &1349397739
+--- !u!1001 &1092752181
 Prefab:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -437,22 +437,22 @@ Prefab:
     - target: {fileID: 224847386194487718, guid: 930bc436d77434d4489b567473efb4a1,
         type: 2}
       propertyPath: m_AnchoredPosition.x
-      value: -0.00054932
+      value: 0.000015259
       objectReference: {fileID: 0}
     - target: {fileID: 224847386194487718, guid: 930bc436d77434d4489b567473efb4a1,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: -0.000038147
+      value: -0.0011024
       objectReference: {fileID: 0}
     - target: {fileID: 224847386194487718, guid: 930bc436d77434d4489b567473efb4a1,
         type: 2}
       propertyPath: m_SizeDelta.x
-      value: 1065.7
+      value: 800
       objectReference: {fileID: 0}
     - target: {fileID: 224847386194487718, guid: 930bc436d77434d4489b567473efb4a1,
         type: 2}
       propertyPath: m_SizeDelta.y
-      value: 600
+      value: 450.4
       objectReference: {fileID: 0}
     - target: {fileID: 224847386194487718, guid: 930bc436d77434d4489b567473efb4a1,
         type: 2}
@@ -488,14 +488,15 @@ Prefab:
       propertyPath: m_Name
       value: Lobby
       objectReference: {fileID: 0}
-    - target: {fileID: 1609154960229286, guid: 930bc436d77434d4489b567473efb4a1, type: 2}
-      propertyPath: m_IsActive
+    - target: {fileID: 114960827168066374, guid: 930bc436d77434d4489b567473efb4a1,
+        type: 2}
+      propertyPath: m_havePropertiesChanged
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 114538264035191632, guid: 930bc436d77434d4489b567473efb4a1,
+    - target: {fileID: 114960827168066374, guid: 930bc436d77434d4489b567473efb4a1,
         type: 2}
-      propertyPath: m_Color.a
-      value: 0.78431374
+      propertyPath: m_isInputParsingRequired
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 930bc436d77434d4489b567473efb4a1, type: 2}
@@ -504,7 +505,7 @@ Prefab:
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 224847386194487718, guid: 930bc436d77434d4489b567473efb4a1,
     type: 2}
-  m_PrefabInternal: {fileID: 1349397739}
+  m_PrefabInternal: {fileID: 1092752181}
 --- !u!1001 &1472385907
 Prefab:
   m_ObjectHideFlags: 0
@@ -601,10 +602,6 @@ Prefab:
         type: 2}
       propertyPath: m_Pivot.y
       value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 1587922269823994, guid: 079cacde33b6c0945bf96fe0dee520d0, type: 2}
-      propertyPath: m_IsActive
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 079cacde33b6c0945bf96fe0dee520d0, type: 2}
