@@ -1,10 +1,41 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using RolePlayOverlord.Utils;
 
 namespace RolePlayOverlord
 {
+    [Serializable]
+    public class Mod
+    {
+        [NonSerialized] const int WTEX = 0;
+        [NonSerialized] const int CTEX = 1;
+        [NonSerialized] const int FTEX = 2;
+        [NonSerialized] const int STEX = 3;
+        [NonSerialized] const int CLASSMOD = 4;
+        [NonSerialized] const int FIGUREMOD = 5;
+        [NonSerialized] const int AUDIO = 6;
+        [NonSerialized] const int TEXT = 7;
+        [NonSerialized] const int SAVE = 8;
+
+        [NonSerialized] const int RANK = 9;
+
+        public string Name;
+        public string[][] Resources;
+
+        public static Mod Create()
+        {
+            var mod = new Mod()
+            {
+                Resources = new string[RANK][]
+            };
+            return mod;
+        }
+
+        private Mod() { }
+    }
+
     public static class IO
     {
         public static string[] _defaultDataDirectories =

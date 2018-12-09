@@ -36,7 +36,10 @@ namespace RolePlayOverlord.Editor
             string buildDir = pathToBuiltProject.Remove(onePastLastSlash, pathToBuiltProject.Length - onePastLastSlash);
             
             CreateDefaultDataDirectory();
-            
+
+            var defaultMod = Mod.Create();
+            defaultMod.Name = "Default";
+
             for(int i = 0;
                 i < _defaultDataDirectories.Length;
                 ++i)
