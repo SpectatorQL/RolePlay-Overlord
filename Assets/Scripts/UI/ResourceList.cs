@@ -26,6 +26,9 @@ namespace RolePlayOverlord.UI
 
         void DisableActiveButtons()
         {
+            if(_activeResourceType == -1)
+                return;
+
             for(int i = 0;
                 i < Buttons[_activeResourceType].Length;
                 ++i)
