@@ -9,15 +9,15 @@ namespace RolePlayOverlord
     [Serializable]
     public class Mod
     {
-        [NonSerialized] const int WTEX = 0;
-        [NonSerialized] const int CTEX = 1;
-        [NonSerialized] const int FTEX = 2;
-        [NonSerialized] const int STEX = 3;
-        [NonSerialized] const int CLASSMOD = 4;
-        [NonSerialized] const int FIGUREMOD = 5;
-        [NonSerialized] const int AUDIO = 6;
-        [NonSerialized] const int TEXT = 7;
-        [NonSerialized] const int SAVE = 8;
+        [NonSerialized] public const int WTEX = 0;
+        [NonSerialized] public const int CTEX = 1;
+        [NonSerialized] public const int FTEX = 2;
+        [NonSerialized] public const int STEX = 3;
+        [NonSerialized] public const int CLASSMOD = 4;
+        [NonSerialized] public const int FIGUREMOD = 5;
+        [NonSerialized] public const int AUDIO = 6;
+        [NonSerialized] public const int TEXT = 7;
+        [NonSerialized] public const int SAVE = 8;
 
         [NonSerialized] const int RANK = 9;
 

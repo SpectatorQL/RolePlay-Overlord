@@ -9,7 +9,6 @@ using static RolePlayOverlord.IO;
 namespace RolePlayOverlord
 {
     /*
-        TODO: Rework all of the I/O functions once the structure of mods' directories is agreed upon.
         TODO: Delete the cache dictionaries as we don't want to store assets in memory all the time.
     */
     public class Network : NetworkBehaviour
@@ -164,10 +163,14 @@ namespace RolePlayOverlord
                 "Player 6 info",
             };
 
-            string testDoc1 = DEFAULT_ASSETS_PATH + "testDoc1.txt";
-            string testDoc2 = DEFAULT_ASSETS_PATH + "testDoc2.txt";
-            Documents.Add(testDoc1);
-            Documents.Add(testDoc2);
+            Mod defaultMod;
+            string defaultModManifest = DEFAULT_ASSETS_PATH + "Default.rmm";
+
+            using(var modStream = new FileStream(PATH(defaultModManifest), FileMode.Open, FileAccess.Read, FileShare.Read))
+            {
+                var formatter = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
+                defaultMod = (Mod)formatter.Deserialize(modStream);
+            }
 
             ServerStartup();
 
