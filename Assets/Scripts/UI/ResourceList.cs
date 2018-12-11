@@ -11,10 +11,33 @@ namespace RolePlayOverlord.UI
         [HideInInspector] public ResourceButton[][] Buttons;
         int _activeResourceType;
 
+        public void ShowButtons(int resourceType)
+        {
+            DisableActiveButtons();
+
+            for(int i = 0;
+                i < Buttons[resourceType].Length;
+                ++i)
+            {
+                Buttons[resourceType][i].gameObject.SetActive(true);
+            }
+            _activeResourceType = resourceType;
+        }
+
+        void DisableActiveButtons()
+        {
+            for(int i = 0;
+                i < Buttons[_activeResourceType].Length;
+                ++i)
+            {
+                Buttons[_activeResourceType][i].gameObject.SetActive(false);
+            }
+        }
+
         public void Initialize()
         {
             for(int i = 0;
-                i < Buttons.Rank;
+                i < Buttons.Length;
                 ++i)
             {
                 for(int j = 0;

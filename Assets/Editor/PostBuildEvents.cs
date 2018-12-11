@@ -13,11 +13,17 @@ namespace RolePlayOverlord.Editor
 {
     public class PostBuildEvents : MonoBehaviour
     {
-        static void CreateDefaultDataDirectory()
+        static void CreateDefaultDataDirectory(string buildDir)
         {
+            string modsDir = buildDir + "Mods/";
+            if(Directory.Exists(PATH(modsDir)))
+            {
+                Directory.Delete(PATH(modsDir), true);
+            }
+
             foreach(var d in _defaultDataDirectories)
             {
-                string path = PATH(d);
+                string path = PATH(buildDir + d);
                 Directory.CreateDirectory(path);
                 UnityEngine.Debug.Assert(Directory.Exists(path));
             }
@@ -36,7 +42,7 @@ namespace RolePlayOverlord.Editor
             int onePastLastSlash = pathToBuiltProject.OnePastLastSlash();
             string buildDir = pathToBuiltProject.Remove(onePastLastSlash, pathToBuiltProject.Length - onePastLastSlash);
             
-            CreateDefaultDataDirectory();
+            CreateDefaultDataDirectory(buildDir);
 
             var defaultMod = Mod.Create();
             defaultMod.Name = "Default";

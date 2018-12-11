@@ -116,7 +116,7 @@ namespace RolePlayOverlord.UI
             int rank = Mod.CLASSMOD;
             ResourceButton[][] buttons = new ResourceButton[rank][];
             for(int i = 0;
-                i < Mod.CLASSMOD;
+                i < rank;
                 ++i)
             {
                 int len = modData[i].Length;
@@ -125,11 +125,13 @@ namespace RolePlayOverlord.UI
                     j < len;
                     ++j)
                 {
-                    var resButton = buttons[i][j];
-                    resButton = Instantiate(_resourceList.ResourceButtonPrefab, _resourceList.transform)
+                    var resButton = Instantiate(_resourceList.ResourceButtonPrefab, _resourceList.transform)
                         .GetComponent<ResourceButton>();
                     resButton.ResourceType = i;
                     resButton.ResourcePath = modData[i][j];
+                    resButton.TextField.text = IO.FILENAME(modData[i][j]);
+
+                    buttons[i][j] = resButton;
                 }
             }
             _resourceList.Buttons = buttons;
