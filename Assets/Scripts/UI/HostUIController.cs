@@ -107,18 +107,19 @@ namespace RolePlayOverlord.UI
             gameObject.SetActive(false);
         }
 
-        public void Setup(Network network)
+        public void Setup(Network network, string[][] modData)
         {
             _network = network;
-
-            List<string> docs = _network.Documents;
-            for(int i = 0; i < docs.Count; ++i)
+            
+            for(int i = 0;
+                i < modData[Mod.TEXT].Length;
+                ++i)
             {
                 var docListButton = Instantiate(_docList.DocButtonPrefab, _docList.transform)
                     .GetComponent<DocListButton>();
                 docListButton.DocList = _docList;
-                docListButton.TextField.text = IO.FILENAME(docs[i]);
-                docListButton.DocPath = docs[i];
+                docListButton.TextField.text = IO.FILENAME(modData[Mod.TEXT][i]);
+                docListButton.DocPath = modData[Mod.TEXT][i];
 
                 _docList.AddDocButton(docListButton);
             }

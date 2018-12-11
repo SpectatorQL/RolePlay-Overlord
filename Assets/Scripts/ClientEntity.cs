@@ -81,11 +81,9 @@ namespace RolePlayOverlord
 
             if(controller.NewInput.V)
             {
-                ent.HostUIController.ShowVoiceIcon();
             }
             else
             {
-                ent.HostUIController.HideVoiceIcon();
             }
 
 

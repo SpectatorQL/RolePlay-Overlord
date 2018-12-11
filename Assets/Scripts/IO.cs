@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 using RolePlayOverlord.Utils;
 
@@ -81,6 +82,28 @@ namespace RolePlayOverlord
         {
             string result = DEFAULT_ASSETS_PATH + file;
             return result;
+        }
+
+        public static string LoadDocument(string path)
+        {
+            string result = "";
+
+            using(var stream = new FileStream(PATH(path), FileMode.Open, FileAccess.Read, FileShare.None))
+            using(var reader = new StreamReader(stream))
+            {
+                result = reader.ReadToEnd();
+            }
+
+            return result;
+        }
+
+        public static void SaveDocument(string path, string data)
+        {
+            using(var stream = new FileStream(PATH(path), FileMode.Truncate, FileAccess.Write, FileShare.Read))
+            using(var writer = new StreamWriter(stream))
+            {
+                writer.Write(data);
+            }
         }
 
         static string ConvertToWin32Path(string str)
