@@ -17,6 +17,7 @@ namespace RolePlayOverlord.UI
         GameObject _mainElement;
 
         [SerializeField] DocList _docList;
+        [SerializeField] ResourceList _resourceList;
 
         UIElementGroup _activeElementGroup;
 
@@ -110,7 +111,31 @@ namespace RolePlayOverlord.UI
         public void Setup(Network network, string[][] modData)
         {
             _network = network;
+
+            // NOTE(SpectatorQL): Scene resources come directly before session resources, that's why.
+            int rank = Mod.CLASSMOD;
+            ResourceButton[][] buttons = new ResourceButton[rank][];
+            for(int i = 0;
+                i < Mod.CLASSMOD;
+                ++i)
+            {
+                int len = modData[i].Length;
+                buttons[i] = new ResourceButton[len];
+                for(int j = 0;
+                    j < len;
+                    ++j)
+                {
+                    var resButton = buttons[i][j];
+                    resButton = Instantiate(_resourceList.ResourceButtonPrefab, _resourceList.transform)
+                        .GetComponent<ResourceButton>();
+                    resButton.ResourceType = i;
+                    resButton.ResourcePath = modData[i][j];
+                }
+            }
+            _resourceList.Buttons = buttons;
+            _resourceList.Initialize();
             
+
             for(int i = 0;
                 i < modData[Mod.TEXT].Length;
                 ++i)
@@ -124,6 +149,7 @@ namespace RolePlayOverlord.UI
                 _docList.AddDocButton(docListButton);
             }
             _docList.AssignButtonIds();
+
 
             ShowUI();
         }

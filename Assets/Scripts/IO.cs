@@ -10,13 +10,18 @@ namespace RolePlayOverlord
     [Serializable]
     public class Mod
     {
+        // Scene resources
         [NonSerialized] public const int WTEX = 0;
-        [NonSerialized] public const int CTEX = 1;
-        [NonSerialized] public const int FTEX = 2;
+        [NonSerialized] public const int FTEX = 1;
+        [NonSerialized] public const int CTEX = 2;
         [NonSerialized] public const int STEX = 3;
-        [NonSerialized] public const int CLASSMOD = 4;
-        [NonSerialized] public const int FIGUREMOD = 5;
-        [NonSerialized] public const int AUDIO = 6;
+        [NonSerialized] public const int AUDIO = 4;
+
+        // Session resources
+        [NonSerialized] public const int CLASSMOD = 5;
+        [NonSerialized] public const int FIGUREMOD = 6;
+
+        // Local resources
         [NonSerialized] public const int TEXT = 7;
         [NonSerialized] public const int SAVE = 8;
 
@@ -42,14 +47,14 @@ namespace RolePlayOverlord
         public static string[] _defaultDataDirectories =
         {
             "Mods/Default/Textures/Walls/",
-            "Mods/Default/Textures/Ceiling/",
             "Mods/Default/Textures/Floor/",
+            "Mods/Default/Textures/Ceiling/",
             "Mods/Default/Textures/Skybox/",
+
+            "Mods/Default/Audio/",
 
             "Mods/Default/Models/Classes/",
             "Mods/Default/Models/Figures/",
-
-            "Mods/Default/Audio/",
 
             "Mods/Default/Documents/",
 

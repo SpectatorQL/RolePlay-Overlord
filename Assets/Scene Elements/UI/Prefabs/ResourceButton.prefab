@@ -39,6 +39,7 @@ GameObject:
   - component: {fileID: 222936387684488090}
   - component: {fileID: 114562816655841246}
   - component: {fileID: 114005399041458910}
+  - component: {fileID: 114816138788544510}
   m_Layer: 5
   m_Name: ResourceButton
   m_TagString: Untagged
@@ -147,6 +148,20 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
+--- !u!114 &114816138788544510
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1947344335883456}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6d2fe48f4ecb60a4dae400fa68b0f690, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ResourceId: 0
+  ResourcePath: 
+  TextField: {fileID: 114126400322594832}
 --- !u!222 &222076087666881396
 CanvasRenderer:
   m_ObjectHideFlags: 1
