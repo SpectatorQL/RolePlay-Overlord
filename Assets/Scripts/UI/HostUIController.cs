@@ -125,13 +125,12 @@ namespace RolePlayOverlord.UI
                     j < len;
                     ++j)
                 {
-                    var resButton = Instantiate(_resourceList.ResourceButtonPrefab, _resourceList.transform)
+                    buttons[i][j] = Instantiate(_resourceList.ResourceButtonPrefab, _resourceList.transform)
                         .GetComponent<ResourceButton>();
-                    resButton.ResourceType = i;
-                    resButton.ResourcePath = modData[i][j];
-                    resButton.TextField.text = IO.FILENAME(modData[i][j]);
-
-                    buttons[i][j] = resButton;
+                    buttons[i][j].ResourceType = i;
+                    buttons[i][j].ResourcePath = modData[i][j];
+                    buttons[i][j].TextField.text = IO.FILENAME(modData[i][j]);
+                    buttons[i][j].Cmd = _network.CmdOnResourceButtonClick;
                 }
             }
             _resourceList.Buttons = buttons;

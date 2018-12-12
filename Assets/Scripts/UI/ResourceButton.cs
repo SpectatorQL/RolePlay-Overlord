@@ -12,9 +12,11 @@ namespace RolePlayOverlord.UI
         [HideInInspector] public string ResourcePath;
         public Text TextField;
 
+        [HideInInspector] public System.Action<int, string> Cmd;
+
         public void OnPointerDown(PointerEventData eventData)
         {
-            // TODO: Call the function associated with this resource.
+            Cmd(ResourceType, ResourcePath);
         }
     }
 }

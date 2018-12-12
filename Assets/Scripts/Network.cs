@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
@@ -23,7 +24,7 @@ namespace RolePlayOverlord
         string[] _characterStats;
         
         Dictionary<string, Texture2D> _textureCache = new Dictionary<string, Texture2D>();
-
+        
         Wall[] _walls;
 
         [SerializeField] private GameObject _hostUI;
@@ -47,6 +48,45 @@ namespace RolePlayOverlord
             {
                 yield return www;
                 www.LoadImageIntoTexture(tex);
+            }
+        }
+
+        [Command]
+        public void CmdOnResourceButtonClick(int resourceType, string resource)
+        {
+            switch(resourceType)
+            {
+                case Mod.WTEX:
+                {
+                    Debug.Log("Resource type: " + resourceType + " Resource: " + resource);
+                    break;
+                }
+                case Mod.FTEX:
+                {
+                    Debug.Log("Resource type: " + resourceType + " Resource: " + resource);
+                    break;
+                }
+                case Mod.CTEX:
+                {
+                    Debug.Log("Resource type: " + resourceType + " Resource: " + resource);
+                    break;
+                }
+                case Mod.STEX:
+                {
+                    Debug.Log("Resource type: " + resourceType + " Resource: " + resource);
+                    break;
+                }
+                case Mod.AUDIO:
+                {
+                    Debug.Log("Resource type: " + resourceType + " Resource: " + resource);
+                    break;
+                }
+
+                default:
+                {
+                    Debug.LogError("Invalid resource assigned to a ResourceButton!");
+                    break;
+                }
             }
         }
 
