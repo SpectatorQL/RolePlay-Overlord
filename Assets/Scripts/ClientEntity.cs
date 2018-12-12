@@ -89,11 +89,11 @@ namespace RolePlayOverlord
 
             if(controller.NewInput.Debug_SetTexture1)
             {
-                ent.Network.RpcSetTexture("test.png");
+                ent.Network.RpcDebug_SetTexture("test.png");
             }
             if(controller.NewInput.Debug_SetTexture2)
             {
-                ent.Network.RpcSetTexture("test2.png");
+                ent.Network.RpcDebug_SetTexture("test2.png");
             }
         }
 

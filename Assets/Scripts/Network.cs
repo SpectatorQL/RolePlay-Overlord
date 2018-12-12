@@ -58,27 +58,27 @@ namespace RolePlayOverlord
             {
                 case Mod.WTEX:
                 {
-                    Debug.Log("Resource type: " + resourceType + " Resource: " + resource);
+                    RpcSetWallTexture(resource);
                     break;
                 }
                 case Mod.FTEX:
                 {
-                    Debug.Log("Resource type: " + resourceType + " Resource: " + resource);
+                    Debug.LogError("Resource type: " + resourceType + " Resource: " + resource);
                     break;
                 }
                 case Mod.CTEX:
                 {
-                    Debug.Log("Resource type: " + resourceType + " Resource: " + resource);
+                    Debug.LogError("Resource type: " + resourceType + " Resource: " + resource);
                     break;
                 }
                 case Mod.STEX:
                 {
-                    Debug.Log("Resource type: " + resourceType + " Resource: " + resource);
+                    Debug.LogError("Resource type: " + resourceType + " Resource: " + resource);
                     break;
                 }
                 case Mod.AUDIO:
                 {
-                    Debug.Log("Resource type: " + resourceType + " Resource: " + resource);
+                    Debug.LogError("Resource type: " + resourceType + " Resource: " + resource);
                     break;
                 }
 
@@ -91,7 +91,31 @@ namespace RolePlayOverlord
         }
 
         [ClientRpc]
-        public void RpcSetTexture(string texName)
+        public void RpcSetWallTexture(string texPath)
+        {
+            int textureWidth = 1024;
+            int textureHeight = 1024;
+
+            Texture2D tex;
+            if(_textureCache.ContainsKey(texPath))
+            {
+                tex = _textureCache[texPath];
+            }
+            else
+            {
+                tex = new Texture2D(textureWidth, textureHeight);
+                StartCoroutine(LoadTex(tex, texPath));
+                _textureCache.Add(texPath, tex);
+            }
+
+            for(int i = 0; i < _walls.Length; ++i)
+            {
+                _walls[i].ChangeWallTexture(tex);
+            }
+        }
+
+        [ClientRpc]
+        public void RpcDebug_SetTexture(string texName)
         {
             int textureWidth = 1024;
             int textureHeight = 1024;

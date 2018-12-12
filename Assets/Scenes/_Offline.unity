@@ -1061,7 +1061,17 @@ Prefab:
     - target: {fileID: 224081284682959780, guid: c85755626db650046bb8b5fdce6c738a,
         type: 2}
       propertyPath: m_AnchoredPosition.x
-      value: -0.000019323772
+      value: -0.000026728727
+      objectReference: {fileID: 0}
+    - target: {fileID: 224007630655533152, guid: c85755626db650046bb8b5fdce6c738a,
+        type: 2}
+      propertyPath: m_AnchorMin.y
+      value: 0.09212941
+      objectReference: {fileID: 0}
+    - target: {fileID: 224703440839205262, guid: c85755626db650046bb8b5fdce6c738a,
+        type: 2}
+      propertyPath: m_AnchorMin.x
+      value: 0.07891516
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c85755626db650046bb8b5fdce6c738a, type: 2}
@@ -1566,7 +1576,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dfa2478acd136724786327da1aa679c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Documents: []
   _hostUI: {fileID: 0}
   _playerUI: {fileID: 0}
 --- !u!1 &2109752453
