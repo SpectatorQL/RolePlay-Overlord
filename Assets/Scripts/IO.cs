@@ -78,17 +78,6 @@ namespace RolePlayOverlord
 #endif
         }
 
-        /*
-            TODO: At some point this will have become obsolete, as
-            we will be relying on data structures providing us with
-            filenames using the files' paths in the finished game.
-        */
-        public static string GetAssetFilePath(string file)
-        {
-            string result = DEFAULT_ASSETS_PATH + file;
-            return result;
-        }
-
         public static string LoadDocument(string path)
         {
             string result = "";

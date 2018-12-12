@@ -93,6 +93,7 @@ namespace RolePlayOverlord
         [ClientRpc]
         public void RpcSetWallTexture(string texPath)
         {
+            // NOTE(SpectatorQL): Do these two even matter?
             int textureWidth = 1024;
             int textureHeight = 1024;
 
@@ -108,31 +109,6 @@ namespace RolePlayOverlord
                 _textureCache.Add(texPath, tex);
             }
 
-            for(int i = 0; i < _walls.Length; ++i)
-            {
-                _walls[i].ChangeWallTexture(tex);
-            }
-        }
-
-        [ClientRpc]
-        public void RpcDebug_SetTexture(string texName)
-        {
-            int textureWidth = 1024;
-            int textureHeight = 1024;
-            string texPath = GetAssetFilePath(texName);
-
-            Texture2D tex;
-            if(_textureCache.ContainsKey(texPath))
-            {
-                tex = _textureCache[texPath];
-            }
-            else
-            {
-                tex = new Texture2D(textureWidth, textureHeight);
-                StartCoroutine(LoadTex(tex, texPath));
-                _textureCache.Add(texPath, tex);
-            }
-            
             for(int i = 0; i < _walls.Length; ++i)
             {
                 _walls[i].ChangeWallTexture(tex);
