@@ -2,80 +2,134 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
+using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine;
 using RolePlayOverlord.Utils;
 
 namespace RolePlayOverlord
 {
+    public enum ResourceType
+    {
+        WallTexture,
+        FloorTexture,
+        CeilingTexture,
+        SkyboxTexture,
+        Audio,
+
+        CharacterModel,
+        FigureModel,
+    }
+
     [Serializable]
     public class Mod
     {
-        // Scene resources
-        [NonSerialized] public const int WTEX = 0;
-        [NonSerialized] public const int FTEX = 1;
-        [NonSerialized] public const int CTEX = 2;
-        [NonSerialized] public const int STEX = 3;
-        [NonSerialized] public const int AUDIO = 4;
-
-        // Session resources
-        [NonSerialized] public const int CLASSMOD = 5;
-        [NonSerialized] public const int FIGUREMOD = 6;
-
-        // Local resources
-        [NonSerialized] public const int TEXT = 7;
-        [NonSerialized] public const int SAVE = 8;
-
-        [NonSerialized] const int RANK = 9;
-
         public string Name;
-        public string[][] Resources;
 
-        public static Mod Create()
+        public string[] WallTextures;
+        public string[] FloorTextures;
+        public string[] CeilingTextures;
+        public string[] SkyboxTextures;
+        public string[] Audio;
+
+        public string[] CharacterModels;
+        public string[] FigureModels;
+
+        [NonSerialized] public LocalData LocalData; 
+
+        public string[][] GetSceneResources()
         {
-            var mod = new Mod()
+            string[][] sceneRes =
             {
-                Resources = new string[RANK][]
+                WallTextures,
+                FloorTextures,
+                CeilingTextures,
+                SkyboxTextures,
+                Audio
             };
-            return mod;
+
+            return sceneRes;
         }
 
-        private Mod() { }
+        public string[][] GetResources()
+        {
+            string[][] sceneRes =
+            {
+                WallTextures,
+                FloorTextures,
+                CeilingTextures,
+                SkyboxTextures,
+                Audio,
+
+                CharacterModels,
+                FigureModels
+            };
+
+            return sceneRes;
+        }
+    }
+
+    public class LocalData
+    {
+        public string[] Documents;
+        public string[] Saves;
     }
 
     public static class IO
     {
-        public static string[] _defaultDataDirectories =
-        {
-            "Mods/Default/Textures/Walls/",
-            "Mods/Default/Textures/Floor/",
-            "Mods/Default/Textures/Ceiling/",
-            "Mods/Default/Textures/Skybox/",
-
-            "Mods/Default/Audio/",
-
-            "Mods/Default/Models/Classes/",
-            "Mods/Default/Models/Figures/",
-
-            "Mods/Default/Documents/",
-
-            "Mods/Default/Saves/",
-        };
-
         public static readonly string DEFAULT_ASSETS_PATH;
 
-        public static readonly string DATA_PATH;
+        public static readonly string DATA_PATH = "Mods/";
         // TODO: Clean this up after most of the game is finished.
         public static string ModPath = "Default/";
+
+        static BinaryFormatter bFormatter = new BinaryFormatter();
 
         static IO()
         {
 #if UNITY_EDITOR
             DEFAULT_ASSETS_PATH = "Assets/Mods/Default/";
-            DATA_PATH = "Assets/";
 #else
             DEFAULT_ASSETS_PATH = "Mods/Default/";
-            DATA_PATH = "Mods/";
 #endif
+        }
+
+        public static void LoadCurrentMod(ref Mod mod, string manifestFile)
+        {
+            using(var modStream = new FileStream(PATH(manifestFile), FileMode.Open, FileAccess.Read, FileShare.Read))
+            {
+                mod = (Mod)bFormatter.Deserialize(modStream);
+            }
+        }
+
+        public static void LoadLocalData(ref LocalData localData)
+        {
+            string docsPath = DATA_PATH + ModPath + "Documents/";
+            string[] docs = Directory.GetFiles(PATH(docsPath));
+
+#if UNITY_STANDALONE_WIN
+            for(int i = 0;
+                i < docs.Length;
+                ++i)
+            {
+                docs[i] = ConvertToUnixPath(docs[i]);
+            }
+#endif
+            localData.Documents = docs;
+
+
+            string savesPath = DATA_PATH + ModPath + "Saves/";
+            string[] saves = Directory.GetFiles(PATH(savesPath));
+
+#if UNITY_STANDALONE_WIN
+            for(int i = 0;
+                i < saves.Length;
+                ++i)
+            {
+                saves[i] = ConvertToUnixPath(saves[i]);
+            }
+#endif
+            localData.Saves = saves;
         }
 
         public static string LoadDocument(string path)
@@ -111,6 +165,25 @@ namespace RolePlayOverlord
                 if(c == '/')
                 {
                     c = '\\';
+                    arr[i] = c;
+                }
+            }
+            result = new string(arr);
+
+            return result;
+        }
+
+        static string ConvertToUnixPath(string str)
+        {
+            string result;
+
+            char[] arr = str.ToCharArray();
+            for(int i = 0; i < arr.Length; ++i)
+            {
+                char c = arr[i];
+                if(c == '\\')
+                {
+                    c = '/';
                     arr[i] = c;
                 }
             }

@@ -52,31 +52,31 @@ namespace RolePlayOverlord
         }
 
         [Command]
-        public void CmdOnResourceButtonClick(int resourceType, string resource)
+        public void CmdOnResourceButtonClick(ResourceType resourceType, string resource)
         {
             switch(resourceType)
             {
-                case Mod.WTEX:
+                case ResourceType.WallTexture:
                 {
                     RpcSetWallTexture(resource);
                     break;
                 }
-                case Mod.FTEX:
+                case ResourceType.FloorTexture:
                 {
                     Debug.LogError("Resource type: " + resourceType + " Resource: " + resource);
                     break;
                 }
-                case Mod.CTEX:
+                case ResourceType.CeilingTexture:
                 {
                     Debug.LogError("Resource type: " + resourceType + " Resource: " + resource);
                     break;
                 }
-                case Mod.STEX:
+                case ResourceType.SkyboxTexture:
                 {
                     Debug.LogError("Resource type: " + resourceType + " Resource: " + resource);
                     break;
                 }
-                case Mod.AUDIO:
+                case ResourceType.Audio:
                 {
                     Debug.LogError("Resource type: " + resourceType + " Resource: " + resource);
                     break;
@@ -84,7 +84,7 @@ namespace RolePlayOverlord
 
                 default:
                 {
-                    Debug.LogError("Invalid resource assigned to a ResourceButton!");
+                    Debug.LogError("Invalid resource " + resourceType + " assigned to a ResourceButton!");
                     break;
                 }
             }
@@ -159,7 +159,7 @@ namespace RolePlayOverlord
 
             if(isServer)
             {
-                _hostUI.GetComponent<HostUIController>().Setup(this, _mod.Resources);
+                _hostUI.GetComponent<HostUIController>().Setup(this, _mod);
             }
             else
             {
@@ -192,11 +192,11 @@ namespace RolePlayOverlord
             };
             
             string defaultModManifest = DEFAULT_ASSETS_PATH + "Default.rmm";
-            using(var modStream = new FileStream(PATH(defaultModManifest), FileMode.Open, FileAccess.Read, FileShare.Read))
-            {
-                var formatter = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
-                _mod = (Mod)formatter.Deserialize(modStream);
-            }
+            _mod = new Mod();
+            LoadCurrentMod(ref _mod, defaultModManifest);
+
+            _mod.LocalData = new LocalData();
+            LoadLocalData(ref _mod.LocalData);
 
             ServerStartup();
 

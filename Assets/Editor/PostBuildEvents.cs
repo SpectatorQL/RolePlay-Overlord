@@ -13,22 +13,6 @@ namespace RolePlayOverlord.Editor
 {
     public class PostBuildEvents : MonoBehaviour
     {
-        static void CreateDefaultDataDirectory(string buildDir)
-        {
-            string modsDir = buildDir + "Mods/";
-            if(Directory.Exists(PATH(modsDir)))
-            {
-                Directory.Delete(PATH(modsDir), true);
-            }
-
-            foreach(var d in _defaultDataDirectories)
-            {
-                string path = PATH(buildDir + d);
-                Directory.CreateDirectory(path);
-                UnityEngine.Debug.Assert(Directory.Exists(path));
-            }
-        }
-
         /* 
             NOTE(SpectatorQL): This guy may need to be changed frequently.
             Keep this in mind, and don't freak out if some weird errors
@@ -38,49 +22,107 @@ namespace RolePlayOverlord.Editor
         [PostProcessBuild(0)]
         static void BuildTestAssets(BuildTarget target, string pathToBuiltProject)
         {
+            string[] defaultDataDirs =
+            {
+                "Mods/Default/Textures/Walls/",
+                "Mods/Default/Textures/Floor/",
+                "Mods/Default/Textures/Ceiling/",
+                "Mods/Default/Textures/Skybox/",
+
+                "Mods/Default/Audio/",
+
+                "Mods/Default/Models/Classes/",
+                "Mods/Default/Models/Figures/",
+
+                "Mods/Default/Documents/",
+
+                "Mods/Default/Saves/",
+            };
+
             // NOTE(SpectatorQL): Removes the built executable from the path.
             int onePastLastSlash = pathToBuiltProject.OnePastLastSlash();
             string buildDir = pathToBuiltProject.Remove(onePastLastSlash, pathToBuiltProject.Length - onePastLastSlash);
-            
-            CreateDefaultDataDirectory(buildDir);
+            string modsDir = buildDir + "Mods/";
 
-            var defaultMod = Mod.Create();
-            defaultMod.Name = "Default";
-
-            for(int i = 0;
-                i < _defaultDataDirectories.Length;
-                ++i)
+            if(Directory.Exists(PATH(modsDir)))
             {
-                string dir = "Assets/" + _defaultDataDirectories[i];
-                string[] files = Directory.GetFiles(PATH(dir))
-                    .Where(file =>
-                    {
-                        return EXTENSION(file) != ".meta";
-                    })
-                    .ToArray();
-
-                defaultMod.Resources[i] = new string[files.Length];
-
-                for(int j = 0;
-                    j < files.Length;
-                    ++j)
-                {
-                    string assetFile = Path.GetFileName(files[j]);
-                    string srcFile = dir + assetFile;
-                    string destFile = buildDir + _defaultDataDirectories[i] + assetFile;
-
-                    File.Copy(PATH(srcFile), PATH(destFile), true);
-                    UnityEngine.Debug.Assert(File.Exists(PATH(destFile)));
-
-                     defaultMod.Resources[i][j] = _defaultDataDirectories[i] + assetFile;
-                }
+                Directory.Delete(PATH(modsDir), true);
             }
+            foreach(var d in defaultDataDirs)
+            {
+                string path = PATH(buildDir + d);
+                Directory.CreateDirectory(path);
+                UnityEngine.Debug.Assert(Directory.Exists(path));
+            }
+
+
+            var defaultMod = new Mod();
+            defaultMod.Name = "Default";
+            WriteResources(ref defaultMod.WallTextures, defaultDataDirs[0],buildDir);
+            WriteResources(ref defaultMod.FloorTextures, defaultDataDirs[1], buildDir);
+            WriteResources(ref defaultMod.CeilingTextures, defaultDataDirs[2], buildDir);
+            WriteResources(ref defaultMod.SkyboxTextures, defaultDataDirs[3], buildDir);
+            WriteResources(ref defaultMod.Audio, defaultDataDirs[4], buildDir);
+            WriteResources(ref defaultMod.CharacterModels, defaultDataDirs[5], buildDir);
+            WriteResources(ref defaultMod.FigureModels, defaultDataDirs[6], buildDir);
+            CopyResources(defaultDataDirs[7], buildDir);
+            CopyResources(defaultDataDirs[8], buildDir);
 
             string defaultModManifest = "build/Mods/Default/Default.rmm";
             using(var fs = new FileStream(PATH(defaultModManifest), FileMode.Create, FileAccess.Write, FileShare.None))
             {
                 var formatter = new BinaryFormatter();
                 formatter.Serialize(fs, defaultMod);
+            }
+        }
+
+        static void WriteResources(ref string[] arr, string resTypeDir, string buildDir)
+        {
+            string dir = "Assets/" + resTypeDir;
+            string[] files = Directory.GetFiles(PATH(dir))
+                .Where(file =>
+                {
+                    return EXTENSION(file) != ".meta";
+                })
+                .ToArray();
+
+            arr = new string[files.Length];
+
+            for(int i = 0;
+                i < files.Length;
+                ++i)
+            {
+                string assetFile = Path.GetFileName(files[i]);
+                string srcFile = dir + assetFile;
+                string destFile = buildDir + resTypeDir + assetFile;
+
+                File.Copy(PATH(srcFile), PATH(destFile), true);
+                UnityEngine.Debug.Assert(File.Exists(PATH(destFile)));
+
+                arr[i] = resTypeDir + assetFile;
+            }
+        }
+
+        static void CopyResources(string resTypeDir, string buildDir)
+        {
+            string dir = "Assets/" + resTypeDir;
+            string[] files = Directory.GetFiles(PATH(dir))
+                .Where(file =>
+                {
+                    return EXTENSION(file) != ".meta";
+                })
+                .ToArray();
+
+            for(int i = 0;
+                i < files.Length;
+                ++i)
+            {
+                string assetFile = Path.GetFileName(files[i]);
+                string srcFile = dir + assetFile;
+                string destFile = buildDir + resTypeDir + assetFile;
+
+                File.Copy(PATH(srcFile), PATH(destFile), true);
+                UnityEngine.Debug.Assert(File.Exists(PATH(destFile)));
             }
         }
     }

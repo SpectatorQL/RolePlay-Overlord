@@ -108,18 +108,21 @@ namespace RolePlayOverlord.UI
             gameObject.SetActive(false);
         }
 
-        public void Setup(Network network, string[][] modData)
+        public void Setup(Network network, Mod modData)
         {
             _network = network;
+            
+            string[][] sceneResources = modData.GetSceneResources();
+            int sceneResCount = sceneResources.Length;
 
-            // NOTE(SpectatorQL): Scene resources come directly before session resources, that's why.
-            int rank = Mod.CLASSMOD;
-            ResourceButton[][] buttons = new ResourceButton[rank][];
+            ResourceButton[][] buttons = new ResourceButton[sceneResCount][];
             for(int i = 0;
-                i < rank;
+                i < sceneResCount;
                 ++i)
             {
-                int len = modData[i].Length;
+                string[] currentResource = sceneResources[i];
+                int len = sceneResources[i].Length;
+
                 buttons[i] = new ResourceButton[len];
                 for(int j = 0;
                     j < len;
@@ -127,30 +130,28 @@ namespace RolePlayOverlord.UI
                 {
                     buttons[i][j] = Instantiate(_resourceList.ResourceButtonPrefab, _resourceList.transform)
                         .GetComponent<ResourceButton>();
-                    buttons[i][j].ResourceType = i;
-                    buttons[i][j].ResourcePath = modData[i][j];
-                    buttons[i][j].TextField.text = IO.FILENAME(modData[i][j]);
+                    buttons[i][j].ResourceType = (ResourceType)i;
+                    buttons[i][j].ResourcePath = currentResource[j];
+                    buttons[i][j].TextField.text = IO.FILENAME(currentResource[j]);
                     buttons[i][j].Cmd = _network.CmdOnResourceButtonClick;
                 }
             }
             _resourceList.Buttons = buttons;
             _resourceList.Initialize();
-            
 
             for(int i = 0;
-                i < modData[Mod.TEXT].Length;
+                i < modData.LocalData.Documents.Length;
                 ++i)
             {
                 var docListButton = Instantiate(_docList.DocButtonPrefab, _docList.transform)
                     .GetComponent<DocListButton>();
                 docListButton.DocList = _docList;
-                docListButton.TextField.text = IO.FILENAME(modData[Mod.TEXT][i]);
-                docListButton.DocPath = modData[Mod.TEXT][i];
+                docListButton.TextField.text = IO.FILENAME(modData.LocalData.Documents[i]);
+                docListButton.DocPath = modData.LocalData.Documents[i];
 
                 _docList.AddDocButton(docListButton);
             }
             _docList.AssignButtonIds();
-
 
             ShowUI();
         }

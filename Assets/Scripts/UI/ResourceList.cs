@@ -9,31 +9,31 @@ namespace RolePlayOverlord.UI
     {
         public GameObject ResourceButtonPrefab;
         [HideInInspector] public ResourceButton[][] Buttons;
-        int _activeResourceType;
+        int _activeTab;
 
-        public void ShowButtons(int resourceType)
+        public void ShowButtons(int tab)
         {
             DisableActiveButtons();
 
             for(int i = 0;
-                i < Buttons[resourceType].Length;
+                i < Buttons[tab].Length;
                 ++i)
             {
-                Buttons[resourceType][i].gameObject.SetActive(true);
+                Buttons[tab][i].gameObject.SetActive(true);
             }
-            _activeResourceType = resourceType;
+            _activeTab = tab;
         }
 
         void DisableActiveButtons()
         {
-            if(_activeResourceType == -1)
+            if(_activeTab == -1)
                 return;
 
             for(int i = 0;
-                i < Buttons[_activeResourceType].Length;
+                i < Buttons[_activeTab].Length;
                 ++i)
             {
-                Buttons[_activeResourceType][i].gameObject.SetActive(false);
+                Buttons[_activeTab][i].gameObject.SetActive(false);
             }
         }
 
@@ -50,7 +50,7 @@ namespace RolePlayOverlord.UI
                     Buttons[i][j].gameObject.SetActive(false);
                 }
             }
-            _activeResourceType = -1;
+            _activeTab = -1;
         }
     }
 }
