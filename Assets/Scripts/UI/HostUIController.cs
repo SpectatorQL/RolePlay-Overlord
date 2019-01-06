@@ -114,6 +114,7 @@ namespace RolePlayOverlord.UI
             
             string[][] sceneResources = modData.GetSceneResources();
             int sceneResCount = sceneResources.Length;
+            Debug.Assert(sceneResCount == (int)ResourceType.CharacterModel);
 
             ResourceButton[][] buttons = new ResourceButton[sceneResCount][];
             for(int i = 0;
@@ -139,6 +140,7 @@ namespace RolePlayOverlord.UI
             _resourceList.Buttons = buttons;
             _resourceList.Initialize();
 
+            // TODO: Make the Session window also use a ResourceList, though with a different set of buttons.
             for(int i = 0;
                 i < modData.LocalData.Documents.Length;
                 ++i)

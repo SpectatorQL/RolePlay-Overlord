@@ -191,9 +191,9 @@ namespace RolePlayOverlord
                 "Player 6 info",
             };
             
-            string defaultModManifest = DEFAULT_ASSETS_PATH + "Default.rmm";
-            _mod = new Mod();
-            LoadCurrentMod(ref _mod, defaultModManifest);
+            // TODO: Get the actual manifest file, probably from the NetworkManager or another script attached to it.
+            string modManifest = DEFAULT_ASSETS_PATH + "Default.rmm";
+            LoadCurrentMod(ref _mod, modManifest);
 
             _mod.LocalData = new LocalData();
             LoadLocalData(ref _mod.LocalData);

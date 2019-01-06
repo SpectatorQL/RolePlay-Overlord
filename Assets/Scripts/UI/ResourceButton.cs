@@ -10,6 +10,7 @@ namespace RolePlayOverlord.UI
     {
         [HideInInspector] public ResourceType ResourceType;
         [HideInInspector] public string ResourcePath;
+
         public Text TextField;
 
         [HideInInspector] public System.Action<ResourceType, string> Cmd;
