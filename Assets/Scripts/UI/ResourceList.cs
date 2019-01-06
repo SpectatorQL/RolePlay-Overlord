@@ -39,17 +39,6 @@ namespace RolePlayOverlord.UI
 
         public void Initialize()
         {
-            for(int i = 0;
-                i < Buttons.Length;
-                ++i)
-            {
-                for(int j = 0;
-                    j < Buttons[i].Length;
-                    ++j)
-                {
-                    Buttons[i][j].gameObject.SetActive(false);
-                }
-            }
             _activeTab = -1;
         }
     }
