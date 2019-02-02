@@ -22,6 +22,7 @@ namespace RolePlayOverlord.Editor
         [PostProcessBuild(0)]
         static void BuildTestAssets(BuildTarget target, string pathToBuiltProject)
         {
+            // TODO: Move to the Resource class. Every Resource should know its base directory.
             string[] defaultDataDirs =
             {
                 "Mods/Default/Textures/Walls/",
@@ -58,13 +59,26 @@ namespace RolePlayOverlord.Editor
 
             var defaultMod = new Mod();
             defaultMod.Name = "Default";
-            WriteResources(ref defaultMod.WallTextures, defaultDataDirs[0],buildDir);
+
+#if true
+            List<Resource> resourceList = new List<Resource>();
+            WriteResources(ref resourceList, ResourceType.WallTexture, defaultDataDirs[0], buildDir);
+            WriteResources(ref resourceList, ResourceType.FloorTexture, defaultDataDirs[1], buildDir);
+            WriteResources(ref resourceList, ResourceType.CeilingTexture, defaultDataDirs[2], buildDir);
+            WriteResources(ref resourceList, ResourceType.SkyboxTexture, defaultDataDirs[3], buildDir);
+            WriteResources(ref resourceList, ResourceType.Audio, defaultDataDirs[4], buildDir);
+            WriteResources(ref resourceList, ResourceType.CharacterModel, defaultDataDirs[5], buildDir);
+            WriteResources(ref resourceList, ResourceType.FigureModel, defaultDataDirs[6], buildDir);
+            defaultMod.Resources = resourceList.ToArray();
+#else
+            WriteResources(ref defaultMod.WallTextures, defaultDataDirs[0], buildDir);
             WriteResources(ref defaultMod.FloorTextures, defaultDataDirs[1], buildDir);
             WriteResources(ref defaultMod.CeilingTextures, defaultDataDirs[2], buildDir);
             WriteResources(ref defaultMod.SkyboxTextures, defaultDataDirs[3], buildDir);
             WriteResources(ref defaultMod.Audio, defaultDataDirs[4], buildDir);
             WriteResources(ref defaultMod.CharacterModels, defaultDataDirs[5], buildDir);
             WriteResources(ref defaultMod.FigureModels, defaultDataDirs[6], buildDir);
+#endif
             CopyResources(defaultDataDirs[7], buildDir);
             CopyResources(defaultDataDirs[8], buildDir);
 
@@ -74,6 +88,39 @@ namespace RolePlayOverlord.Editor
                 var formatter = new BinaryFormatter();
                 formatter.Serialize(fs, defaultMod);
             }
+        }
+
+        static void WriteResources(ref List<Resource> resList, ResourceType resType, string resTypeDir, string buildDir)
+        {
+            string dir = "Assets/" + resTypeDir;
+            string[] files = Directory.GetFiles(PATH(dir))
+                .Where(file =>
+                {
+                    return EXTENSION(file) != ".meta";
+                })
+                .ToArray();
+
+            Resource res = new Resource()
+            {
+                ID = resType,
+                Data = new string[files.Length]
+            };
+
+            for(int i = 0;
+                i < files.Length;
+                ++i)
+            {
+                string assetFile = Path.GetFileName(files[i]);
+                string srcFile = dir + assetFile;
+                string destFile = buildDir + resTypeDir + assetFile;
+
+                File.Copy(PATH(srcFile), PATH(destFile), true);
+                UnityEngine.Debug.Assert(File.Exists(PATH(destFile)));
+
+                res.Data[i] = resTypeDir + assetFile;
+            }
+
+            resList.Add(res);
         }
 
         static void WriteResources(ref string[] arr, string resTypeDir, string buildDir)

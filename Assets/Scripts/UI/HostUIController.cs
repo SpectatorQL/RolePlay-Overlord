@@ -108,6 +108,25 @@ namespace RolePlayOverlord.UI
             gameObject.SetActive(false);
         }
 
+        public void AddButtons(List<ResourceButton[]> list, Resource res)
+        {
+            int len = res.Data.Length;
+            ResourceButton[] buttons = new ResourceButton[len];
+            for(int i = 0;
+                i < len;
+                ++i)
+            {
+                buttons[i] = Instantiate(_resourceList.ResourceButtonPrefab, _resourceList.transform)
+                        .GetComponent<ResourceButton>();
+                buttons[i].ResourceType = res.ID;
+                buttons[i].ResourcePath = res.Data[i];
+                buttons[i].TextField.text = IO.FILENAME(res.Data[i]);
+                buttons[i].Cmd = _network.CmdOnResourceButtonClick;
+            }
+
+            list.Add(buttons);
+        }
+
         public void Setup(Network network, Mod modData)
         {
             /*
@@ -117,6 +136,21 @@ namespace RolePlayOverlord.UI
 
             _network = network;
 
+#if true
+            List<ResourceButton[]> buttonList = new List<ResourceButton[]>();
+            var wallTextures = modData.GetResource(ResourceType.WallTexture);
+            AddButtons(buttonList, wallTextures);
+            var floorTextures = modData.GetResource(ResourceType.FloorTexture);
+            AddButtons(buttonList, floorTextures);
+            var ceilingTextures = modData.GetResource(ResourceType.CeilingTexture);
+            AddButtons(buttonList, ceilingTextures);
+            var skyboxTextures = modData.GetResource(ResourceType.SkyboxTexture);
+            AddButtons(buttonList, skyboxTextures);
+            var audio = modData.GetResource(ResourceType.Audio);
+            AddButtons(buttonList, audio);
+
+            _resourceList.Buttons = buttonList.ToArray();
+#else
             string[][] sceneResources = modData.GetSceneResources();
             ResourceButton[][] sceneButtons = new ResourceButton[sceneResources.Length][];
             for(int i = 0;
@@ -140,7 +174,7 @@ namespace RolePlayOverlord.UI
                 }
             }
             _resourceList.Buttons = sceneButtons;
-
+#endif
             
             // TODO: Make the Session window also use a ResourceList, though with a different set of buttons.
             string[] documents = modData.LocalData.Documents;

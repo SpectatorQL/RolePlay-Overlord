@@ -22,6 +22,13 @@ namespace RolePlayOverlord
     }
 
     [Serializable]
+    public class Resource
+    {
+        public ResourceType ID;
+        public string[] Data;
+    }
+
+    [Serializable]
     public class Mod
     {
         public string Name;
@@ -35,7 +42,15 @@ namespace RolePlayOverlord
         public string[] CharacterModels;
         public string[] FigureModels;
 
+        public Resource[] Resources;
+
         [NonSerialized] public LocalData LocalData; 
+
+        public Resource GetResource(ResourceType type)
+        {
+            Resource res = Resources.Single(r => (r.ID == type));
+            return res;
+        }
 
         public string[][] GetSceneResources()
         {
