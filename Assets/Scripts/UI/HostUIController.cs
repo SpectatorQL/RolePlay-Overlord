@@ -110,46 +110,49 @@ namespace RolePlayOverlord.UI
 
         public void Setup(Network network, Mod modData)
         {
-            _network = network;
-            
-            string[][] sceneResources = modData.GetSceneResources();
-            int sceneResCount = sceneResources.Length;
-            Debug.Assert(sceneResCount == (int)ResourceType.CharacterModel);
+            /*
+               TODO: A lot of things need to be reconsidered before this can become
+               even remotely close to shippable code.
+            */
 
-            ResourceButton[][] buttons = new ResourceButton[sceneResCount][];
+            _network = network;
+
+            string[][] sceneResources = modData.GetSceneResources();
+            ResourceButton[][] sceneButtons = new ResourceButton[sceneResources.Length][];
             for(int i = 0;
-                i < sceneResCount;
+                i < sceneResources.Length;
                 ++i)
             {
                 string[] currentResource = sceneResources[i];
                 int len = sceneResources[i].Length;
 
-                buttons[i] = new ResourceButton[len];
+                sceneButtons[i] = new ResourceButton[len];
                 for(int j = 0;
                     j < len;
                     ++j)
                 {
-                    buttons[i][j] = Instantiate(_resourceList.ResourceButtonPrefab, _resourceList.transform)
+                    sceneButtons[i][j] = Instantiate(_resourceList.ResourceButtonPrefab, _resourceList.transform)
                         .GetComponent<ResourceButton>();
-                    buttons[i][j].ResourceType = (ResourceType)i;
-                    buttons[i][j].ResourcePath = currentResource[j];
-                    buttons[i][j].TextField.text = IO.FILENAME(currentResource[j]);
-                    buttons[i][j].Cmd = _network.CmdOnResourceButtonClick;
+                    sceneButtons[i][j].ResourceType = (ResourceType)i;
+                    sceneButtons[i][j].ResourcePath = currentResource[j];
+                    sceneButtons[i][j].TextField.text = IO.FILENAME(currentResource[j]);
+                    sceneButtons[i][j].Cmd = _network.CmdOnResourceButtonClick;
                 }
             }
-            _resourceList.Buttons = buttons;
-            _resourceList.Initialize();
+            _resourceList.Buttons = sceneButtons;
 
+            
             // TODO: Make the Session window also use a ResourceList, though with a different set of buttons.
+            string[] documents = modData.LocalData.Documents;
             for(int i = 0;
-                i < modData.LocalData.Documents.Length;
+                i < documents.Length;
                 ++i)
             {
                 var docListButton = Instantiate(_docList.DocButtonPrefab, _docList.transform)
                     .GetComponent<DocListButton>();
                 docListButton.DocList = _docList;
-                docListButton.TextField.text = IO.FILENAME(modData.LocalData.Documents[i]);
-                docListButton.DocPath = modData.LocalData.Documents[i];
+                docListButton.TextField.text = IO.FILENAME(documents[i]);
+                docListButton.DocPath = documents[i];
 
                 _docList.AddDocButton(docListButton);
             }

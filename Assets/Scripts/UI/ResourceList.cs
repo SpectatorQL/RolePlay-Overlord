@@ -9,10 +9,12 @@ namespace RolePlayOverlord.UI
     {
         public GameObject ResourceButtonPrefab;
         [HideInInspector] public ResourceButton[][] Buttons;
-        int _activeTab;
+        int _activeTab = -1;
 
         public void ShowButtons(int tab)
         {
+            Debug.Assert(tab < Buttons.Length);
+
             DisableActiveButtons();
 
             for(int i = 0;
@@ -35,11 +37,6 @@ namespace RolePlayOverlord.UI
             {
                 Buttons[_activeTab][i].gameObject.SetActive(false);
             }
-        }
-
-        public void Initialize()
-        {
-            _activeTab = -1;
         }
     }
 }

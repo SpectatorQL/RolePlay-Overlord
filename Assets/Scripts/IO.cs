@@ -50,23 +50,6 @@ namespace RolePlayOverlord
 
             return sceneRes;
         }
-
-        public string[][] GetResources()
-        {
-            string[][] sceneRes =
-            {
-                WallTextures,
-                FloorTextures,
-                CeilingTextures,
-                SkyboxTextures,
-                Audio,
-
-                CharacterModels,
-                FigureModels
-            };
-
-            return sceneRes;
-        }
     }
 
     public class LocalData
