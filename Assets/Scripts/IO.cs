@@ -22,7 +22,7 @@ namespace RolePlayOverlord
     }
 
     [Serializable]
-    public class Resource
+    public class ResourceBlob
     {
         public ResourceType ID;
         public string[] Data;
@@ -32,38 +32,26 @@ namespace RolePlayOverlord
     public class Mod
     {
         public string Name;
-
-        public string[] WallTextures;
-        public string[] FloorTextures;
-        public string[] CeilingTextures;
-        public string[] SkyboxTextures;
-        public string[] Audio;
-
-        public string[] CharacterModels;
-        public string[] FigureModels;
-
-        public Resource[] Resources;
+        public ResourceBlob[] Resources;
 
         [NonSerialized] public LocalData LocalData; 
 
-        public Resource GetResource(ResourceType type)
+        public ResourceBlob GetResource(ResourceType type)
         {
-            Resource res = Resources.Single(r => (r.ID == type));
-            return res;
-        }
+            ResourceBlob res = null;
 
-        public string[][] GetSceneResources()
-        {
-            string[][] sceneRes =
+            for(int i = 0;
+                i < Resources.Length;
+                ++i)
             {
-                WallTextures,
-                FloorTextures,
-                CeilingTextures,
-                SkyboxTextures,
-                Audio
-            };
+                if(type == Resources[i].ID)
+                {
+                    res = Resources[i];
+                    break;
+                }
+            }
 
-            return sceneRes;
+            return res;
         }
     }
 
@@ -92,16 +80,15 @@ namespace RolePlayOverlord
 #endif
         }
 
-        public static void LoadCurrentMod(ref Mod mod, string manifestFile)
+        public static void LoadMod(ref Mod mod, string manifestFile)
         {
             using(var modStream = new FileStream(PATH(manifestFile), FileMode.Open, FileAccess.Read, FileShare.Read))
             {
                 mod = (Mod)bFormatter.Deserialize(modStream);
             }
-        }
+            mod.LocalData = new LocalData();
 
-        public static void LoadLocalData(ref LocalData localData)
-        {
+
             string docsPath = DATA_PATH + ModPath + "Documents/";
             string[] docs = Directory.GetFiles(PATH(docsPath));
 
@@ -113,7 +100,8 @@ namespace RolePlayOverlord
                 docs[i] = ConvertToUnixPath(docs[i]);
             }
 #endif
-            localData.Documents = docs;
+
+            mod.LocalData.Documents = docs;
 
 
             string savesPath = DATA_PATH + ModPath + "Saves/";
@@ -127,7 +115,8 @@ namespace RolePlayOverlord
                 saves[i] = ConvertToUnixPath(saves[i]);
             }
 #endif
-            localData.Saves = saves;
+
+            mod.LocalData.Saves = saves;
         }
 
         public static string LoadDocument(string path)
