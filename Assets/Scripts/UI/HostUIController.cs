@@ -108,6 +108,12 @@ namespace RolePlayOverlord.UI
             gameObject.SetActive(false);
         }
 
+        public void SendChatMessage(MonoBehaviour go)
+        {
+            var inputField = (InputField)go;
+            _network.CmdOnChatMessage(inputField.text);
+        }
+
         public void AddButtons(List<ResourceButton[]> list, ResourceBlob blob)
         {
             int len = blob.Data.Length;

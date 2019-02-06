@@ -40,6 +40,18 @@ namespace RolePlayOverlord
 
             return result;
         }
+
+        [Command]
+        public void CmdOnChatMessage(string message)
+        {
+            RpcOnChatMessage(message);
+        }
+
+        [ClientRpc]
+        public void RpcOnChatMessage(string message)
+        {
+            Debug.LogError(message);
+        }
         
         IEnumerator LoadTex(Texture2D tex, string path)
         {
