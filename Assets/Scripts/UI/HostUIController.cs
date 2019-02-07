@@ -3,10 +3,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 namespace RolePlayOverlord.UI
 {
-    public class HostUIController : MonoBehaviour
+    public interface UIController
+    {
+        void UpdateChatWindow(string chat);
+    }
+
+    public class HostUIController : MonoBehaviour, UIController
     {
         Network _network;
         
@@ -22,6 +28,8 @@ namespace RolePlayOverlord.UI
         UIElementGroup _activeElementGroup;
 
         [SerializeField] GameObject _voiceIcon;
+
+        [SerializeField] TMP_Text _chatWindow;
 
         public void ShowElement(GameObject elem)
         {
@@ -106,6 +114,11 @@ namespace RolePlayOverlord.UI
         public void HideUI()
         {
             gameObject.SetActive(false);
+        }
+
+        void UIController.UpdateChatWindow(string chat)
+        {
+            _chatWindow.text = chat;
         }
 
         public void SendChatMessage(MonoBehaviour go)

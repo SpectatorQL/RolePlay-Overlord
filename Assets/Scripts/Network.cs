@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Text;
 using UnityEngine;
 using UnityEngine.Networking;
 using RolePlayOverlord.UI;
@@ -11,6 +12,9 @@ namespace RolePlayOverlord
 {
     /*
         TODO: Delete the cache dictionaries as we don't want to store assets in memory all the time.
+        TODO: Clean up all UI related code.
+        [?]TODO: Inline ServerStartup.
+        [?]TODO: Instantiate UIs.
     */
     public class Network : NetworkBehaviour
     {
@@ -26,9 +30,15 @@ namespace RolePlayOverlord
         Dictionary<string, Texture2D> _textureCache = new Dictionary<string, Texture2D>();
         
         Wall[] _walls;
-
+        
         [SerializeField] private GameObject _hostUI;
         [SerializeField] private GameObject _playerUI;
+        UIController _activeUI;
+
+        const int CAPACITY = 32;
+        const int LAST_INDEX = CAPACITY - 1;
+        string[] _chat = new string[CAPACITY];
+        int _count = 0;
 
         public string GetClientCharacterInfo(int clientIndex)
         {
@@ -50,7 +60,30 @@ namespace RolePlayOverlord
         [ClientRpc]
         public void RpcOnChatMessage(string message)
         {
-            Debug.LogError(message);
+            if(_count <= LAST_INDEX)
+            {
+                _chat[_count] = message;
+                _count++;
+            }
+            else
+            {
+                for(int i = 0;
+                    i < LAST_INDEX;
+                    ++i)
+                {
+                    _chat[i] = _chat[i + 1];
+                }
+                _chat[LAST_INDEX] = message;
+            }
+
+            StringBuilder sb = new StringBuilder();
+            for(int i = 0;
+                i < _count;
+                ++i)
+            {
+                sb.AppendLine(_chat[i]);
+            }
+            _activeUI.UpdateChatWindow(sb.ToString());
         }
         
         IEnumerator LoadTex(Texture2D tex, string path)
@@ -172,6 +205,7 @@ namespace RolePlayOverlord
             if(isServer)
             {
                 _hostUI.GetComponent<HostUIController>().Setup(this, _mod);
+                _activeUI = _hostUI.GetComponent<HostUIController>();
             }
             else
             {
