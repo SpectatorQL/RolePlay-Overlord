@@ -22,12 +22,7 @@ namespace RolePlayOverlord.Editor
         [PostProcessBuild(0)]
         static void BuildTestAssets(BuildTarget target, string pathToBuiltProject)
         {
-            /*
-                NOTE(SpectatorQL): On the one hand, we don't use these guys anywhere else,
-                so there is no reason to move them.
-                On the other hand, if we are going to ship our default assets as an AssetBundle
-                then all the code below needs to change.
-            */
+            // TODO: What is a resource path?
             string[] defaultDataDirs =
             {
                 "Mods/Default/Textures/Walls/",
@@ -62,17 +57,32 @@ namespace RolePlayOverlord.Editor
             }
 
 
-            var defaultMod = new Mod();
-            defaultMod.Name = "Default";
-            List<ResourceBlob> resourceList = new List<ResourceBlob>();
-            WriteResources(resourceList, ResourceType.WallTexture, defaultDataDirs[0], buildDir);
-            WriteResources(resourceList, ResourceType.FloorTexture, defaultDataDirs[1], buildDir);
-            WriteResources(resourceList, ResourceType.CeilingTexture, defaultDataDirs[2], buildDir);
-            WriteResources(resourceList, ResourceType.SkyboxTexture, defaultDataDirs[3], buildDir);
-            WriteResources(resourceList, ResourceType.Audio, defaultDataDirs[4], buildDir);
-            WriteResources(resourceList, ResourceType.CharacterModel, defaultDataDirs[5], buildDir);
-            WriteResources(resourceList, ResourceType.FigureModel, defaultDataDirs[6], buildDir);
-            defaultMod.Resources = resourceList.ToArray();
+            ModManifest defaultMod = new ModManifest
+            {
+                Name = "Default",
+                RMMCode = ModFormatInfo.RMMCode,
+                Version = ModFormatInfo.VERSION
+            };
+
+            int resourceTypeCount = (int)ResourceTypeID.Count;
+            ResourceType[] resourceTypeEntries = new ResourceType[resourceTypeCount];
+            for(int i = 0;
+                i < resourceTypeCount;
+                ++i)
+            {
+                resourceTypeEntries[i] = new ResourceType();
+            }
+            defaultMod.Data.ResourceTypeEntries = resourceTypeEntries;
+
+            List<ResourceType> resourceList = new List<ResourceType>();
+            WriteResources(resourceList, ResourceTypeID.WallTexture, defaultDataDirs[0], buildDir);
+            WriteResources(resourceList, ResourceTypeID.FloorTexture, defaultDataDirs[1], buildDir);
+            WriteResources(resourceList, ResourceTypeID.CeilingTexture, defaultDataDirs[2], buildDir);
+            WriteResources(resourceList, ResourceTypeID.SkyboxTexture, defaultDataDirs[3], buildDir);
+            WriteResources(resourceList, ResourceTypeID.Audio, defaultDataDirs[4], buildDir);
+            WriteResources(resourceList, ResourceTypeID.CharacterModel, defaultDataDirs[5], buildDir);
+            WriteResources(resourceList, ResourceTypeID.FigureModel, defaultDataDirs[6], buildDir);
+            defaultMod.Data.Resources = resourceList.ToArray();
             CopyResources(defaultDataDirs[7], buildDir);
             CopyResources(defaultDataDirs[8], buildDir);
 
@@ -85,7 +95,7 @@ namespace RolePlayOverlord.Editor
             }
         }
 
-        static void WriteResources(List<ResourceBlob> resList, ResourceType resType, string resTypeDir, string buildDir)
+        static void WriteResources(List<ResourceType> resList, ResourceTypeID resType, string resTypeDir, string buildDir)
         {
             string dir = "Assets/" + resTypeDir;
             string[] files = Directory.GetFiles(PATH(dir))
@@ -95,7 +105,7 @@ namespace RolePlayOverlord.Editor
                 })
                 .ToArray();
 
-            ResourceBlob res = new ResourceBlob()
+            ResourceType res = new ResourceType()
             {
                 ID = resType,
                 Data = new string[files.Length]

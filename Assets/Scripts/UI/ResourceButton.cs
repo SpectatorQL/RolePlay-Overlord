@@ -8,16 +8,15 @@ namespace RolePlayOverlord.UI
 {
     public class ResourceButton : MonoBehaviour, IPointerDownHandler
     {
-        [HideInInspector] public ResourceType ResourceType;
-        [HideInInspector] public string ResourcePath;
+        [HideInInspector] public ResourceData ResourceData;
 
         public Text TextField;
 
-        [HideInInspector] public System.Action<ResourceType, string> Cmd;
+        [HideInInspector] public System.Action<ResourceData> Cmd;
 
         public void OnPointerDown(PointerEventData eventData)
         {
-            Cmd(ResourceType, ResourcePath);
+            Cmd(ResourceData);
         }
     }
 }

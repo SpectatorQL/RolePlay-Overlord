@@ -2,14 +2,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine;
 using RolePlayOverlord.Utils;
 
 namespace RolePlayOverlord
 {
-    public enum ResourceType
+    // TODO: Move mod-related data definitions to a shared DLL once we have a proper writing tool.
+    public enum ResourceTypeID
     {
         WallTexture,
         FloorTexture,
@@ -19,46 +19,70 @@ namespace RolePlayOverlord
 
         CharacterModel,
         FigureModel,
+
+        Count
     }
 
     [Serializable]
-    public class ResourceBlob
+    public class ResourceType
     {
-        public ResourceType ID;
-        public string[] Data;
-    }
+        public int FirstResourceIndex;
+        public int OnePastLastResourceIndex;
 
-    [Serializable]
-    public class Mod
-    {
-        public string Name;
-        public ResourceBlob[] Resources;
-
-        [NonSerialized] public LocalData LocalData; 
-
-        public ResourceBlob GetResource(ResourceType type)
+        public int Count
         {
-            ResourceBlob res = null;
-
-            for(int i = 0;
-                i < Resources.Length;
-                ++i)
-            {
-                if(type == Resources[i].ID)
-                {
-                    res = Resources[i];
-                    break;
-                }
-            }
-
-            return res;
+            get { return OnePastLastResourceIndex - FirstResourceIndex; }
         }
+    }
+
+    [Serializable]
+    public class Resource
+    {
+        public string File;
     }
 
     public class LocalData
     {
         public string[] Documents;
         public string[] Saves;
+    }
+
+    [Serializable]
+    public class ModData
+    {
+        public ResourceType[] ResourceTypeEntries;
+        public Resource[] Resources;
+        [NonSerialized] public LocalData LocalData;
+    }
+
+    [Serializable]
+    public class ModManifest
+    {
+        public string Name;
+        public ulong RMMCode;
+        public uint Version;
+
+        public ModData Data;
+    }
+
+    public static class ModFormatInfo
+    {
+        // TODO: Make this a compile time constant _somehow_.
+        public static readonly ulong RMMCode = RIFFCode64('r', 'm', 'm', ' ');
+
+        public const uint VERSION = 0;
+
+        public static ulong RIFFCode64(char a, char b, char c, char d)
+        {
+            return (((ulong)(a) << 0) | (ulong)(b) << 16 | (ulong)(c) << 32 | (ulong)(d) << 48);
+        }
+    }
+
+
+    public struct ResourceData
+    {
+        public ResourceTypeID ResourceType;
+        public int ID;
     }
 
     public static class IO
@@ -80,11 +104,11 @@ namespace RolePlayOverlord
 #endif
         }
 
-        public static void LoadMod(ref Mod mod, string manifestFile)
+        public static void LoadMod(ref ModData mod, string manifestFile)
         {
             using(var modStream = new FileStream(PATH(manifestFile), FileMode.Open, FileAccess.Read, FileShare.Read))
             {
-                mod = (Mod)bFormatter.Deserialize(modStream);
+                mod = (ModData)bFormatter.Deserialize(modStream);
             }
             mod.LocalData = new LocalData();
 

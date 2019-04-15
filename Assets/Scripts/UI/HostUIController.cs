@@ -127,26 +127,39 @@ namespace RolePlayOverlord.UI
             _network.CmdOnChatMessage(inputField.text);
         }
 
-        public void AddButtons(List<ResourceButton[]> list, ResourceBlob blob)
+        public ResourceButton[] CreateResourceButtons(ModData modData, ResourceTypeID resourceType)
         {
-            int len = blob.Data.Length;
-            ResourceButton[] buttons = new ResourceButton[len];
+            ResourceButton[] result;
+
+            int len = modData.ResourceTypeEntries[(int)resourceType].Count;
+            int firstResourceIndex = modData.ResourceTypeEntries[(int)resourceType].FirstResourceIndex;
+            result = new ResourceButton[len];
             for(int i = 0;
                 i < len;
                 ++i)
             {
-                buttons[i] = Instantiate(_resourceList.ResourceButtonPrefab, _resourceList.transform)
+                ResourceData resData = new ResourceData
+                {
+                    ResourceType = resourceType,
+                    ID = i
+                };
+
+                result[i] = Instantiate(_resourceList.ResourceButtonPrefab, _resourceList.transform)
                         .GetComponent<ResourceButton>();
-                buttons[i].ResourceType = blob.ID;
-                buttons[i].ResourcePath = blob.Data[i];
-                buttons[i].TextField.text = IO.FILENAME(blob.Data[i]);
-                buttons[i].Cmd = _network.CmdOnResourceButtonClick;
+
+                result[i].ResourceData = resData;
+
+                int resIndex = firstResourceIndex + i;
+                Resource res = modData.Resources[resIndex];
+                result[i].TextField.text = IO.FILENAME(res.File);
+
+                result[i].Cmd = _network.CmdOnResourceButtonClick;
             }
 
-            list.Add(buttons);
+            return result;
         }
 
-        public void Setup(Network network, Mod modData)
+        public void Setup(Network network, ModData modData)
         {
             /*
                TODO: A lot of things need to be reconsidered before this can become
@@ -155,19 +168,16 @@ namespace RolePlayOverlord.UI
 
             _network = network;
             
-            List<ResourceButton[]> buttonList = new List<ResourceButton[]>();
-            var wallTextures = modData.GetResource(ResourceType.WallTexture);
-            AddButtons(buttonList, wallTextures);
-            var floorTextures = modData.GetResource(ResourceType.FloorTexture);
-            AddButtons(buttonList, floorTextures);
-            var ceilingTextures = modData.GetResource(ResourceType.CeilingTexture);
-            AddButtons(buttonList, ceilingTextures);
-            var skyboxTextures = modData.GetResource(ResourceType.SkyboxTexture);
-            AddButtons(buttonList, skyboxTextures);
-            var audio = modData.GetResource(ResourceType.Audio);
-            AddButtons(buttonList, audio);
+            List<ResourceButton[]> resButtonList = new List<ResourceButton[]>();
+            for(ResourceTypeID i = 0;
+                i < ResourceTypeID.Count;
+                ++i)
+            {
+                ResourceButton[] resButtons = CreateResourceButtons(modData, i);
+                resButtonList.Add(resButtons);
+            }
+            _resourceList.Buttons = resButtonList.ToArray();
 
-            _resourceList.Buttons = buttonList.ToArray();
             
             // TODO: Make the Session window also use a ResourceList, though with a different set of buttons.
             string[] documents = modData.LocalData.Documents;

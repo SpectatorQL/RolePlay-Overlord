@@ -23,7 +23,7 @@ namespace RolePlayOverlord
         // TODO: Does anything need to talk to the host directly?
         ClientEntity _host;
 
-        Mod _mod;
+        ModData _modData;
 
         string[] _characterStats;
         
@@ -97,39 +97,43 @@ namespace RolePlayOverlord
         }
 
         [Command]
-        public void CmdOnResourceButtonClick(ResourceType resourceType, string resource)
+        public void CmdOnResourceButtonClick(ResourceData resourceData)
         {
-            switch(resourceType)
+            ResourceTypeID resourceTypeID = resourceData.ResourceType;
+            int firstResourceIndex = _modData.ResourceTypeEntries[(int)resourceTypeID].FirstResourceIndex;
+            switch(resourceTypeID)
             {
-                case ResourceType.WallTexture:
+                case ResourceTypeID.WallTexture:
                 {
-                    RpcSetWallTexture(resource);
+                    int resourceOffset = firstResourceIndex + resourceData.ID;
+                    string wallTextureFile = _modData.Resources[resourceOffset].File;
+                    RpcSetWallTexture(wallTextureFile);
                     break;
                 }
-                case ResourceType.FloorTexture:
+                case ResourceTypeID.FloorTexture:
                 {
-                    Debug.LogError("Resource type: " + resourceType + " Resource: " + resource);
+                    Debug.LogError("Resource type: " + resourceTypeID + " Resource: " + resourceData.ID);
                     break;
                 }
-                case ResourceType.CeilingTexture:
+                case ResourceTypeID.CeilingTexture:
                 {
-                    Debug.LogError("Resource type: " + resourceType + " Resource: " + resource);
+                    Debug.LogError("Resource type: " + resourceTypeID + " Resource: " + resourceData.ID);
                     break;
                 }
-                case ResourceType.SkyboxTexture:
+                case ResourceTypeID.SkyboxTexture:
                 {
-                    Debug.LogError("Resource type: " + resourceType + " Resource: " + resource);
+                    Debug.LogError("Resource type: " + resourceTypeID + " Resource: " + resourceData.ID);
                     break;
                 }
-                case ResourceType.Audio:
+                case ResourceTypeID.Audio:
                 {
-                    Debug.LogError("Resource type: " + resourceType + " Resource: " + resource);
+                    Debug.LogError("Resource type: " + resourceTypeID + " Resource: " + resourceData.ID);
                     break;
                 }
 
                 default:
                 {
-                    Debug.LogError("Invalid resource " + resourceType + " assigned to a ResourceButton!");
+                    Debug.LogError("Invalid resource " + resourceTypeID + " assigned to a ResourceButton!");
                     break;
                 }
             }
@@ -204,7 +208,7 @@ namespace RolePlayOverlord
 
             if(isServer)
             {
-                _hostUI.GetComponent<HostUIController>().Setup(this, _mod);
+                _hostUI.GetComponent<HostUIController>().Setup(this, _modData);
                 _activeUI = _hostUI.GetComponent<HostUIController>();
             }
             else
@@ -238,8 +242,9 @@ namespace RolePlayOverlord
             };
             
             // TODO: Get the actual manifest file, probably from the NetworkManager or another script attached to it.
+            // TODO: Set the working directory to the manifest's directory.
             string modManifest = DEFAULT_ASSETS_PATH + "Default.rmm";
-            LoadMod(ref _mod, modManifest);
+            LoadMod(ref _modData, modManifest);
 
             ServerStartup();
 
