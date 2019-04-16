@@ -8,7 +8,7 @@ using static RolePlayOverlord.IO;
 
 namespace RolePlayOverlord.Editor
 {
-    public class PostBuildEvents : MonoBehaviour
+    public class EditorExtensions : MonoBehaviour
     {
         /* 
             NOTE(SpectatorQL): This guy may need to be changed frequently.
