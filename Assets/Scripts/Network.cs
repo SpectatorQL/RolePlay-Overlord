@@ -243,8 +243,8 @@ namespace RolePlayOverlord
             
             // TODO: Get the actual manifest file, probably from the NetworkManager or another script attached to it.
             // TODO: Set the working directory to the manifest's directory.
-            string modManifest = DEFAULT_ASSETS_PATH + "Default.rmm";
-            LoadMod(ref _modData, modManifest);
+            string modManifestName = DEFAULT_ASSETS_PATH + "Default.rmm";
+            LoadModData(ref _modData, modManifestName);
 
             ServerStartup();
 

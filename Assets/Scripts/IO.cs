@@ -104,43 +104,55 @@ namespace RolePlayOverlord
 #endif
         }
 
-        public static void LoadMod(ref ModData mod, string manifestFile)
+        public static void LoadModData(ref ModData mod, string manifestFileName)
         {
-            using(var modStream = new FileStream(PATH(manifestFile), FileMode.Open, FileAccess.Read, FileShare.Read))
+            using(var modStream = new FileStream(PATH(manifestFileName), FileMode.Open, FileAccess.Read, FileShare.Read))
             {
-                mod = (ModData)bFormatter.Deserialize(modStream);
-            }
-            mod.LocalData = new LocalData();
+                ModManifest modManifest = (ModManifest)bFormatter.Deserialize(modStream);
+                if(modManifest.Version <= ModFormatInfo.VERSION)
+                {
+                    if(modManifest.RMMCode == ModFormatInfo.RMMCode)
+                    {
+                        mod = modManifest.Data;
+                        mod.LocalData = new LocalData();
 
-
-            string docsPath = DATA_PATH + ModPath + "Documents/";
-            string[] docs = Directory.GetFiles(PATH(docsPath));
+                        string docsPath = DATA_PATH + ModPath + "Documents/";
+                        string[] docs = Directory.GetFiles(PATH(docsPath));
 
 #if UNITY_STANDALONE_WIN
-            for(int i = 0;
-                i < docs.Length;
-                ++i)
-            {
-                docs[i] = ConvertToUnixPath(docs[i]);
-            }
+                        for(int i = 0;
+                            i < docs.Length;
+                            ++i)
+                        {
+                            docs[i] = ConvertToUnixPath(docs[i]);
+                        }
 #endif
+                        mod.LocalData.Documents = docs;
 
-            mod.LocalData.Documents = docs;
 
-
-            string savesPath = DATA_PATH + ModPath + "Saves/";
-            string[] saves = Directory.GetFiles(PATH(savesPath));
+                        string savesPath = DATA_PATH + ModPath + "Saves/";
+                        string[] saves = Directory.GetFiles(PATH(savesPath));
 
 #if UNITY_STANDALONE_WIN
-            for(int i = 0;
-                i < saves.Length;
-                ++i)
-            {
-                saves[i] = ConvertToUnixPath(saves[i]);
-            }
+                        for(int i = 0;
+                            i < saves.Length;
+                            ++i)
+                        {
+                            saves[i] = ConvertToUnixPath(saves[i]);
+                        }
 #endif
-
-            mod.LocalData.Saves = saves;
+                        mod.LocalData.Saves = saves;
+                    }
+                    else
+                    {
+                        Debug.LogError("Error: File RMMCode does not match!");
+                    }
+                }
+                else
+                {
+                    Debug.LogError("Error: Unsupported manifest file version!");
+                }
+            }
         }
 
         public static string LoadDocument(string path)
