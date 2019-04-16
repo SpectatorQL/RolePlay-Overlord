@@ -4,6 +4,7 @@ using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine;
 using UnityEditor;
+using RolePlayOverlord.FileFormats;
 using static RolePlayOverlord.IO;
 
 namespace RolePlayOverlord.Editor

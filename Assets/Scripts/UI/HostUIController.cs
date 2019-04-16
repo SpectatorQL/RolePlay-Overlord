@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using RolePlayOverlord.FileFormats;
 using TMPro;
 
 namespace RolePlayOverlord.UI
