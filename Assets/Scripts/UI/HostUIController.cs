@@ -170,7 +170,7 @@ namespace RolePlayOverlord.UI
             
             List<ResourceButton[]> resButtonList = new List<ResourceButton[]>();
             for(ResourceTypeID i = 0;
-                i < ResourceTypeID.Count;
+                i < ResourceTypeID.CharacterModel;
                 ++i)
             {
                 ResourceButton[] resButtons = CreateResourceButtons(modData, i);

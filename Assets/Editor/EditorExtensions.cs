@@ -72,7 +72,8 @@ namespace RolePlayOverlord.Editor
                     j < resourceFiles.Length;
                     ++j)
                 {
-                    resources[j] = new Resource { File = resourceFiles[j] };
+                    string file = defaultResourceDirs[i] + Path.GetFileName(resourceFiles[j]);
+                    resources[j] = new Resource { File = file };
                 }
 
                 defaultModData.ResourceTypeEntries[i].FirstResourceIndex = runningResourceCount;

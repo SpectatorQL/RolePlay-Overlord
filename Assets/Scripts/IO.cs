@@ -87,36 +87,22 @@ namespace RolePlayOverlord
 
     public static class IO
     {
-        public static readonly string DEFAULT_ASSETS_PATH;
-
-        public static readonly string DATA_PATH = "Mods/";
-        // TODO: Clean this up after most of the game is finished.
-        public static string ModPath = "Default/";
-
+        public static string WorkingDirectory;
         static BinaryFormatter bFormatter = new BinaryFormatter();
-
-        static IO()
-        {
-#if UNITY_EDITOR
-            DEFAULT_ASSETS_PATH = "Assets/Mods/Default/";
-#else
-            DEFAULT_ASSETS_PATH = "Mods/Default/";
-#endif
-        }
 
         public static void LoadModData(ref ModData mod, string manifestFileName)
         {
             using(var modStream = new FileStream(PATH(manifestFileName), FileMode.Open, FileAccess.Read, FileShare.Read))
             {
                 ModManifest modManifest = (ModManifest)bFormatter.Deserialize(modStream);
-                if(modManifest.Version <= ModFormatInfo.VERSION)
+                if(modManifest.RMMCode == ModFormatInfo.RMMCode)
                 {
-                    if(modManifest.RMMCode == ModFormatInfo.RMMCode)
+                    if(modManifest.Version == ModFormatInfo.VERSION)
                     {
                         mod = modManifest.Data;
                         mod.LocalData = new LocalData();
 
-                        string docsPath = DATA_PATH + ModPath + "Documents/";
+                        string docsPath = WorkingDirectory + "Documents/";
                         string[] docs = Directory.GetFiles(PATH(docsPath));
 
 #if UNITY_STANDALONE_WIN
@@ -130,7 +116,7 @@ namespace RolePlayOverlord
                         mod.LocalData.Documents = docs;
 
 
-                        string savesPath = DATA_PATH + ModPath + "Saves/";
+                        string savesPath = WorkingDirectory + "Saves/";
                         string[] saves = Directory.GetFiles(PATH(savesPath));
 
 #if UNITY_STANDALONE_WIN
@@ -145,12 +131,12 @@ namespace RolePlayOverlord
                     }
                     else
                     {
-                        Debug.LogError("Error: File RMMCode does not match!");
+                        Debug.LogError("Error: Unsupported manifest file version!");
                     }
                 }
                 else
                 {
-                    Debug.LogError("Error: Unsupported manifest file version!");
+                    Debug.LogError("Error: The file is not a RoleplayOverlod manifest file!");
                 }
             }
         }
@@ -196,7 +182,7 @@ namespace RolePlayOverlord
             return result;
         }
 
-        static string ConvertToUnixPath(string str)
+        public static string ConvertToUnixPath(string str)
         {
             string result;
 

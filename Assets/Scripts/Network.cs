@@ -6,7 +6,6 @@ using System.Text;
 using UnityEngine;
 using UnityEngine.Networking;
 using RolePlayOverlord.UI;
-using static RolePlayOverlord.IO;
 
 namespace RolePlayOverlord
 {
@@ -88,7 +87,7 @@ namespace RolePlayOverlord
         
         IEnumerator LoadTex(Texture2D tex, string path)
         {
-            string url = "file:///" + path;
+            string url = "file:///" + IO.WorkingDirectory + path;
             using(WWW www = new WWW(url))
             {
                 yield return www;
@@ -219,13 +218,13 @@ namespace RolePlayOverlord
 
         public string GetDocument(string path)
         {
-            string result = LoadDocument(path);
+            string result = IO.LoadDocument(path);
             return result;
         }
 
         public void UpdateDocument(string path, string data)
         {
-            SaveDocument(path, data);
+            IO.SaveDocument(path, data);
         }
 
         void Start()
@@ -240,11 +239,11 @@ namespace RolePlayOverlord
                 "Player 5 info",
                 "Player 6 info",
             };
-            
+
             // TODO: Get the actual manifest file, probably from the NetworkManager or another script attached to it.
-            // TODO: Set the working directory to the manifest's directory.
-            string modManifestName = DEFAULT_ASSETS_PATH + "Default.rmm";
-            LoadModData(ref _modData, modManifestName);
+            IO.WorkingDirectory = "Mods/Default/";
+            string modManifestName = IO.WorkingDirectory + "Default.rmm";
+            IO.LoadModData(ref _modData, modManifestName);
 
             ServerStartup();
 
