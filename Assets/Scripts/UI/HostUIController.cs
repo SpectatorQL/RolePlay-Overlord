@@ -3,10 +3,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using RolePlayOverlord.FileFormats;
+using TMPro;
 
 namespace RolePlayOverlord.UI
 {
-    public class HostUIController : MonoBehaviour
+    public interface UIController
+    {
+        void UpdateChatWindow(string chat);
+    }
+
+    public class HostUIController : MonoBehaviour, UIController
     {
         Network _network;
         
@@ -17,10 +24,13 @@ namespace RolePlayOverlord.UI
         GameObject _mainElement;
 
         [SerializeField] DocList _docList;
+        [SerializeField] ResourceList _resourceList;
 
         UIElementGroup _activeElementGroup;
 
         [SerializeField] GameObject _voiceIcon;
+
+        [SerializeField] TMP_Text _chatWindow;
 
         public void ShowElement(GameObject elem)
         {
@@ -42,10 +52,11 @@ namespace RolePlayOverlord.UI
             {
                 ShowMainElement(_documentation);
 
-                string docName = activeDocButton.DocName;
+                string docPath = activeDocButton.DocPath;
                 var document = _documentation.GetComponent<UIDocument>();
-                document.ActiveDocument = docName;
-                document.InputField.text = _network.GetDocument(docName);
+                document.ActiveDocument = docPath;
+                document.DocumentTitle.text = IO.FILENAME(docPath);
+                document.InputField.text = _network.GetDocument(docPath);
             }
         }
 
@@ -53,9 +64,7 @@ namespace RolePlayOverlord.UI
         {
             var document = _documentation.GetComponent<UIDocument>();
             string docName = document.ActiveDocument;
-            // TODO: Make sure that copying is the correct approach here.
-            // TODO: Consult the .NET Reference on the behaviour of StreamWriter when string is passed to Write().
-            string text = string.Copy(document.InputField.text);
+            string text = document.InputField.text;
             _network.UpdateDocument(docName, text);
         }
 
@@ -108,18 +117,80 @@ namespace RolePlayOverlord.UI
             gameObject.SetActive(false);
         }
 
-        public void Setup(Network network)
+        void UIController.UpdateChatWindow(string chat)
         {
-            _network = network;
+            _chatWindow.text = chat;
+        }
 
-            List<string> docs = _network.DocNames;
-            for(int i = 0; i < docs.Count; ++i)
+        public void SendChatMessage(MonoBehaviour go)
+        {
+            var inputField = (InputField)go;
+            _network.CmdOnChatMessage(inputField.text);
+        }
+
+        public ResourceButton[] CreateResourceButtons(ModData modData, ResourceTypeID resourceType)
+        {
+            ResourceButton[] result;
+
+            int len = modData.ResourceTypeEntries[(int)resourceType].Count;
+            int firstResourceIndex = modData.ResourceTypeEntries[(int)resourceType].FirstResourceIndex;
+            result = new ResourceButton[len];
+            for(int i = 0;
+                i < len;
+                ++i)
+            {
+                ResourceData resData = new ResourceData
+                {
+                    ResourceType = resourceType,
+                    ID = i
+                };
+
+                result[i] = Instantiate(_resourceList.ResourceButtonPrefab, _resourceList.transform)
+                        .GetComponent<ResourceButton>();
+
+                result[i].ResourceData = resData;
+
+                int resIndex = firstResourceIndex + i;
+                Resource res = modData.Resources[resIndex];
+                result[i].TextField.text = IO.FILENAME(res.File);
+
+                result[i].Cmd = _network.CmdOnResourceButtonClick;
+            }
+
+            return result;
+        }
+
+        public void Setup(Network network, ModData modData)
+        {
+            /*
+               TODO: A lot of things need to be reconsidered before this can become
+               even remotely close to shippable code.
+            */
+
+            _network = network;
+            
+            List<ResourceButton[]> resButtonList = new List<ResourceButton[]>();
+            for(ResourceTypeID i = 0;
+                i < ResourceTypeID.CharacterModel;
+                ++i)
+            {
+                ResourceButton[] resButtons = CreateResourceButtons(modData, i);
+                resButtonList.Add(resButtons);
+            }
+            _resourceList.Buttons = resButtonList.ToArray();
+
+            
+            // TODO: Make the Session window also use a ResourceList, though with a different set of buttons.
+            string[] documents = modData.LocalData.Documents;
+            for(int i = 0;
+                i < documents.Length;
+                ++i)
             {
                 var docListButton = Instantiate(_docList.DocButtonPrefab, _docList.transform)
                     .GetComponent<DocListButton>();
                 docListButton.DocList = _docList;
-                docListButton.TextField.text = docs[i];
-                docListButton.DocName = docs[i];
+                docListButton.TextField.text = IO.FILENAME(documents[i]);
+                docListButton.DocPath = documents[i];
 
                 _docList.AddDocButton(docListButton);
             }

@@ -30,7 +30,7 @@ namespace RolePlayOverlord
                     _wallMaterialIndex = i;
                 }
             }
-            Utils.Debug.Assert(_wallMaterialIndex != -1);
+            Debug.Assert(_wallMaterialIndex != -1);
         }
     }
 }

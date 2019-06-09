@@ -39,6 +39,9 @@ sysinfo.txt
 # Local .gitconfig
 .gitconfig
 
+# Diffs
+*.diff
+
 # RPOverlord
 *.orig
 *.orig.*

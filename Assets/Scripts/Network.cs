@@ -1,15 +1,20 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Text;
 using UnityEngine;
 using UnityEngine.Networking;
+using RolePlayOverlord.FileFormats;
 using RolePlayOverlord.UI;
 
 namespace RolePlayOverlord
 {
     /*
-        TODO: Rework all of the I/O functions once the structure of mods' directories is agreed upon.
-        TODO: Make the game code work with forward slashes only when reading and manipulating paths, even on Windows.
+        TODO: Delete the cache dictionaries as we don't want to store assets in memory all the time.
+        TODO: Clean up all UI related code.
+        [?]TODO: Inline ServerStartup.
+        [?]TODO: Instantiate UIs.
     */
     public class Network : NetworkBehaviour
     {
@@ -18,17 +23,22 @@ namespace RolePlayOverlord
         // TODO: Does anything need to talk to the host directly?
         ClientEntity _host;
 
+        ModData _modData;
+
         string[] _characterStats;
-        public List<string> DocNames = new List<string>();
-        Dictionary<string, string> _docsData;
-
-        string _dataPath;
-        string _modPath;
+        
         Dictionary<string, Texture2D> _textureCache = new Dictionary<string, Texture2D>();
+        
         Wall[] _walls;
-
+        
         [SerializeField] private GameObject _hostUI;
         [SerializeField] private GameObject _playerUI;
+        UIController _activeUI;
+
+        const int CAPACITY = 32;
+        const int LAST_INDEX = CAPACITY - 1;
+        string[] _chat = new string[CAPACITY];
+        int _count = 0;
 
         public string GetClientCharacterInfo(int clientIndex)
         {
@@ -41,15 +51,44 @@ namespace RolePlayOverlord
             return result;
         }
 
-        string GetAssetFilePath(string file)
+        [Command]
+        public void CmdOnChatMessage(string message)
         {
-            string result = _dataPath + _modPath + file;
-            return result;
+            RpcOnChatMessage(message);
         }
 
-        // TODO: Turn this into something more reasonable.
-        IEnumerator LoadTex(Texture2D tex, string url)
+        [ClientRpc]
+        public void RpcOnChatMessage(string message)
         {
+            if(_count <= LAST_INDEX)
+            {
+                _chat[_count] = message;
+                _count++;
+            }
+            else
+            {
+                for(int i = 0;
+                    i < LAST_INDEX;
+                    ++i)
+                {
+                    _chat[i] = _chat[i + 1];
+                }
+                _chat[LAST_INDEX] = message;
+            }
+
+            StringBuilder sb = new StringBuilder();
+            for(int i = 0;
+                i < _count;
+                ++i)
+            {
+                sb.AppendLine(_chat[i]);
+            }
+            _activeUI.UpdateChatWindow(sb.ToString());
+        }
+        
+        IEnumerator LoadTex(Texture2D tex, string path)
+        {
+            string url = "file:///" + IO.WorkingDirectory + path;
             using(WWW www = new WWW(url))
             {
                 yield return www;
@@ -57,39 +96,72 @@ namespace RolePlayOverlord
             }
         }
 
-        [ClientRpc]
-        public void RpcSetTexture(string texName)
+        [Command]
+        public void CmdOnResourceButtonClick(ResourceData resourceData)
         {
+            ResourceTypeID resourceTypeID = resourceData.ResourceType;
+            int firstResourceIndex = _modData.ResourceTypeEntries[(int)resourceTypeID].FirstResourceIndex;
+            switch(resourceTypeID)
+            {
+                case ResourceTypeID.WallTexture:
+                {
+                    int resourceOffset = firstResourceIndex + resourceData.ID;
+                    string wallTextureFile = _modData.Resources[resourceOffset].File;
+                    RpcSetWallTexture(wallTextureFile);
+                    break;
+                }
+                case ResourceTypeID.FloorTexture:
+                {
+                    Debug.LogError("Resource type: " + resourceTypeID + " Resource: " + resourceData.ID);
+                    break;
+                }
+                case ResourceTypeID.CeilingTexture:
+                {
+                    Debug.LogError("Resource type: " + resourceTypeID + " Resource: " + resourceData.ID);
+                    break;
+                }
+                case ResourceTypeID.SkyboxTexture:
+                {
+                    Debug.LogError("Resource type: " + resourceTypeID + " Resource: " + resourceData.ID);
+                    break;
+                }
+                case ResourceTypeID.Audio:
+                {
+                    Debug.LogError("Resource type: " + resourceTypeID + " Resource: " + resourceData.ID);
+                    break;
+                }
+
+                default:
+                {
+                    Debug.LogError("Invalid resource " + resourceTypeID + " assigned to a ResourceButton!");
+                    break;
+                }
+            }
+        }
+
+        [ClientRpc]
+        public void RpcSetWallTexture(string texPath)
+        {
+            // NOTE(SpectatorQL): Do these two even matter?
             int textureWidth = 1024;
             int textureHeight = 1024;
-            string texUrl = GetAssetFilePath(texName);
 
             Texture2D tex;
-            if(_textureCache.ContainsKey(texUrl))
+            if(_textureCache.ContainsKey(texPath))
             {
-                tex = _textureCache[texUrl];
+                tex = _textureCache[texPath];
             }
             else
             {
                 tex = new Texture2D(textureWidth, textureHeight);
-                StartCoroutine(LoadTex(tex, texUrl));
-                _textureCache.Add(texUrl, tex);
+                StartCoroutine(LoadTex(tex, texPath));
+                _textureCache.Add(texPath, tex);
             }
-            
+
             for(int i = 0; i < _walls.Length; ++i)
             {
                 _walls[i].ChangeWallTexture(tex);
             }
-        }
-
-        void Awake()
-        {
-            // TODO: Remove file:/// from these, as it's only needed in WWW urls.
-#if UNITY_EDITOR
-            _dataPath = "file:///Assets/";
-#else
-            _dataPath = "file:///Test/";
-#endif
         }
 
         void ClientStartup(ClientEntity ent)
@@ -102,19 +174,11 @@ namespace RolePlayOverlord
                 ent.ProcessKeyboardInput = PlayerInput.ProcessHostKeyboard;
                 ent.ProcessMouseInput = PlayerInput.ProcessHostMouse;
 
-                ent.UI = _hostUI;
-                ent.HostUIController = _hostUI.GetComponent<HostUIController>();
-                ent.HostUIController.Setup(this);
-
                 _host = ent;
             }
             else
             {
                 Cursor.lockState = CursorLockMode.Locked;
-
-                ent.UI = _playerUI;
-                ent.PlayerUIController = _playerUI.GetComponent<PlayerUIController>();
-                ent.PlayerUIController.Setup();
             }
 
             ent.Network = this;
@@ -141,21 +205,27 @@ namespace RolePlayOverlord
                     }
                 }
             }
+
+            if(isServer)
+            {
+                _hostUI.GetComponent<HostUIController>().Setup(this, _modData);
+                _activeUI = _hostUI.GetComponent<HostUIController>();
+            }
+            else
+            {
+                _playerUI.GetComponent<PlayerUIController>().Setup();
+            }
         }
 
         public string GetDocument(string path)
         {
-            string result = _docsData[path]; 
+            string result = IO.LoadDocument(path);
             return result;
         }
 
         public void UpdateDocument(string path, string data)
         {
-            using(var fs = new FileStream(path, FileMode.Truncate, FileAccess.Write, FileShare.Read))
-            using(var sw = new StreamWriter(fs))
-            {
-                sw.Write(data);
-            }
+            IO.SaveDocument(path, data);
         }
 
         void Start()
@@ -171,30 +241,11 @@ namespace RolePlayOverlord
                 "Player 6 info",
             };
 
-            // TODO: Documents loading.
-#if UNITY_EDITOR
-            string win32TestAssetsPath = "Assets\\";
-#else
-            string win32TestAssetsPath = "Test\\";
-#endif
-            string testDoc1 = win32TestAssetsPath + "testDoc1.txt";
-            string testDoc2 = win32TestAssetsPath + "testDoc2.txt";
-            FileStream fs1 = new FileStream(testDoc1, FileMode.Open, FileAccess.Read, FileShare.Read);
-            FileStream fs2 = new FileStream(testDoc2, FileMode.Open, FileAccess.Read, FileShare.Read);
-            
-            DocNames.Add(testDoc1);
-            DocNames.Add(testDoc2);
+            // TODO: Get the actual manifest file, probably from the NetworkManager or another script attached to it.
+            IO.WorkingDirectory = "Mods/Default/";
+            string modManifestName = IO.WorkingDirectory + "Default.rmm";
+            IO.LoadModData(ref _modData, modManifestName);
 
-            _docsData = new Dictionary<string, string>(DocNames.Count)
-            {
-                { testDoc1, new StreamReader(fs1).ReadToEnd() },
-                { testDoc2, new StreamReader(fs2).ReadToEnd() }
-            };
-
-            /*
-                TODO: Put the mod data loading code inside ServerStartup and
-                make absolutely sure it's only going to be called on the server.
-            */
             ServerStartup();
 
             _walls = FindObjectsOfType<Wall>();

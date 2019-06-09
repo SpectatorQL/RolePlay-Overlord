@@ -2,12 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 namespace RolePlayOverlord.UI
 {
     public class UIPlayerInfo : MonoBehaviour
     {
         public Text PlayerNameField;
-        public InputField MainText;
+        public TMP_InputField MainText;
     }
 }
